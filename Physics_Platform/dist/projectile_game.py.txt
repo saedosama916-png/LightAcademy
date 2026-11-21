@@ -1,0 +1,231 @@
+import pygame
+import math
+import random
+import os
+import sys  # <-- مكتبة جديدة لمعرفة مكان الـ exe
+import arabic_reshaper
+from bidi.algorithm import get_display
+
+# تهيئة Pygame ونظام الصوت
+pygame.init()
+pygame.mixer.init()
+
+# إعدادات الشاشة
+WIDTH, HEIGHT = 1000, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("محاكاة حركة المقذوفات")
+
+# الألوان
+WHITE = (255, 255, 255)
+BLACK = (0, 0, 0)
+GRAY = (200, 200, 200)
+DARK_GRAY = (100, 100, 100)
+BLUE = (41, 128, 185)
+RED = (192, 57, 43)
+GREEN = (39, 174, 96)
+YELLOW = (241, 196, 15)
+
+# --- حل مشكلة الخطوط ---
+font_path = "C:\\Windows\\Fonts\\tahoma.ttf"
+if not os.path.exists(font_path):
+    font_path = "C:\\Windows\\Fonts\\arial.ttf"
+
+try:
+    font = pygame.font.Font(font_path, 22)
+    large_font = pygame.font.Font(font_path, 40)
+except:
+    font = pygame.font.SysFont('arial', 22, bold=True)
+    large_font = pygame.font.SysFont('arial', 40, bold=True)
+
+def render_arabic(text, font_type, color):
+    reshaped_text = arabic_reshaper.reshape(text)
+    bidi_text = get_display(reshaped_text)
+    return font_type.render(bidi_text, True, color)
+
+# === التحديث الذكي لمسار الأصوات ===
+if getattr(sys, 'frozen', False):
+    # إذا كانت تعمل كبرنامج exe
+    current_dir = os.path.dirname(sys.executable)
+else:
+    # إذا كانت تعمل ككود بايثون عادي
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+
+fire_sound_path = os.path.join(current_dir, "fire.wav")
+hit_sound_path = os.path.join(current_dir, "hit.wav")
+
+try:
+    fire_sound = pygame.mixer.Sound(fire_sound_path)
+    hit_sound = pygame.mixer.Sound(hit_sound_path)
+except:
+    fire_sound = None
+    hit_sound = None
+    print("تنبيه: لا يزال الصوت غير موجود.")
+# ==================================
+
+# ثوابت فيزيائية
+G = 9.8  
+SCALE = 10  
+START_X = 50
+GROUND_Y = HEIGHT - 100
+
+class Projectile:
+    def __init__(self, angle_deg, speed):
+        self.angle_rad = math.radians(angle_deg)
+        self.v0 = speed
+        self.time = 0
+        self.x = START_X
+        self.y = GROUND_Y
+        self.path = [(self.x, self.y)]
+        self.active = True
+        self.hit_target = False
+
+    def update(self):
+        if not self.active:
+            return
+
+        self.time += 0.05
+        t = self.time
+
+        x_meters = self.v0 * math.cos(self.angle_rad) * t
+        y_meters = self.v0 * math.sin(self.angle_rad) * t - 0.5 * G * (t ** 2)
+
+        self.x = START_X + (x_meters * SCALE)
+        self.y = GROUND_Y - (y_meters * SCALE)
+
+        self.path.append((self.x, self.y))
+
+        if self.y >= GROUND_Y and t > 0.1:
+            self.y = GROUND_Y
+            self.active = False
+
+class Target:
+    def __init__(self):
+        self.w = 80
+        self.h = 20
+        self.randomize()
+
+    def randomize(self):
+        random_meters = random.randint(30, 80)
+        self.x = START_X + (random_meters * SCALE)
+
+def draw_grid():
+    for x in range(START_X, WIDTH, SCALE * 10):
+        pygame.draw.line(screen, GRAY, (x, 0), (x, HEIGHT))
+        if x > START_X:
+            text = render_arabic(f"{(x - START_X) // SCALE} م", font, DARK_GRAY)
+            screen.blit(text, (x - 15, GROUND_Y + 10))
+
+    for y in range(GROUND_Y, 0, -SCALE * 10):
+        pygame.draw.line(screen, GRAY, (0, y), (WIDTH, y))
+        if y < GROUND_Y:
+            text = render_arabic(f"{(GROUND_Y - y) // SCALE} م", font, DARK_GRAY)
+            screen.blit(text, (START_X - 45, y - 10))
+
+def main():
+    clock = pygame.time.Clock()
+    running = True
+    
+    angle = 45
+    speed = 20
+    projectile = None
+    target = Target()
+    
+    show_success_message = 0
+
+    while running:
+        screen.fill(WHITE)
+        draw_grid()
+
+        # رسم الأرض والهدف
+        pygame.draw.rect(screen, GREEN, (0, GROUND_Y, WIDTH, HEIGHT - GROUND_Y))
+        pygame.draw.rect(screen, YELLOW, (target.x, GROUND_Y - target.h, target.w, target.h))
+
+        # رسم المدفع
+        angle_rad = math.radians(angle)
+        barrel_length = 50  
+        barrel_thickness = 16 
+        
+        end_x = START_X + barrel_length * math.cos(angle_rad)
+        end_y = GROUND_Y - barrel_length * math.sin(angle_rad)
+        
+        pygame.draw.line(screen, (80, 80, 80), (START_X, GROUND_Y), (end_x, end_y), barrel_thickness)
+        pygame.draw.circle(screen, DARK_GRAY, (START_X, GROUND_Y), 25)
+        pygame.draw.circle(screen, BLACK, (START_X, GROUND_Y), 25, 2) 
+        pygame.draw.circle(screen, (40, 40, 40), (START_X, GROUND_Y), 12)
+        pygame.draw.circle(screen, (200, 200, 200), (START_X, GROUND_Y), 4) 
+        
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP and angle < 90:
+                    angle += 5
+                if event.key == pygame.K_DOWN and angle > 0:
+                    angle -= 5
+                if event.key == pygame.K_RIGHT and speed < 40:
+                    speed += 1
+                if event.key == pygame.K_LEFT and speed > 5:
+                    speed -= 1
+                if event.key == pygame.K_SPACE:
+                    projectile = Projectile(angle, speed)
+                    show_success_message = 0
+                    if fire_sound:
+                        fire_sound.play()
+
+        if projectile:
+            projectile.update()
+            
+            if len(projectile.path) > 1:
+                pygame.draw.lines(screen, RED, False, projectile.path, 2)
+            
+            pygame.draw.circle(screen, BLACK, (int(projectile.x), int(projectile.y)), 8)
+
+            if not projectile.active and not projectile.hit_target:
+                if target.x <= projectile.x <= target.x + target.w:
+                    projectile.hit_target = True
+                    show_success_message = 60 
+                    target.randomize() 
+                    if hit_sound:
+                        hit_sound.play()
+
+        # واجهة المستخدم
+        ui_rect = pygame.Rect(WIDTH - 320, 20, 300, 150)
+        pygame.draw.rect(screen, (240, 240, 240), ui_rect, border_radius=10)
+        pygame.draw.rect(screen, DARK_GRAY, ui_rect, 2, border_radius=10)
+
+        controls = [
+            f"الزاوية (أسهم فوق/تحت): {angle}°",
+            f"السرعة (أسهم يمين/يسار): {speed} م/ث",
+            "اضغط (مسافة) للإطلاق 🚀"
+        ]
+        
+        for i, text in enumerate(controls):
+            img = render_arabic(text, font, BLACK)
+            screen.blit(img, (WIDTH - 300, 40 + (i * 35)))
+
+        if projectile:
+            curr_x_m = (projectile.x - START_X) / SCALE
+            curr_y_m = max(0, (GROUND_Y - projectile.y) / SCALE)
+            
+            stats_rect = pygame.Rect(WIDTH - 600, 20, 250, 90)
+            pygame.draw.rect(screen, (240, 240, 240), stats_rect, border_radius=10)
+            pygame.draw.rect(screen, DARK_GRAY, stats_rect, 2, border_radius=10)
+
+            x_text = render_arabic(f"المدى الأفقي (X): {curr_x_m:.2f} م", font, BLUE)
+            y_text = render_arabic(f"الارتفاع (Y): {curr_y_m:.2f} م", font, RED)
+            screen.blit(x_text, (WIDTH - 580, 30))
+            screen.blit(y_text, (WIDTH - 580, 65))
+
+        if show_success_message > 0:
+            success_text = render_arabic("🎉 إصابة دقيقة! أحسنت", large_font, BLUE)
+            screen.blit(success_text, (WIDTH//2 - 150, 150))
+            show_success_message -= 1
+
+        pygame.display.flip()
+        clock.tick(60) 
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()

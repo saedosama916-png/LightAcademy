@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الآلات البسيطة | منصة الفيزياء</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        header { background: linear-gradient(135deg, #c0392b, #e74c3c); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+        header h1 { margin: 0; font-size: 2.5em; }
+        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
+        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section h2 { color: #c0392b; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;}
+        .summary-list { font-size: 1.2em; line-height: 1.8; }
+        .highlight { color: #2980b9; font-weight: bold; }
+        
+        .sim-container { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start; justify-content: center; background: #ecf0f1; padding: 20px; border-radius: 10px;}
+        .controls { display: flex; flex-direction: column; gap: 15px; width: 300px; background: white; padding: 20px; border-radius: 8px;}
+        canvas { background: #fff; border-radius: 5px; border: 2px solid #bdc3c7; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);}
+        .stats-box { font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-top: 10px;}
+        
+        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #c0392b;}
+        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
+        .quiz-btn { background: #c0392b; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer;}
+        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🏗️ الآلات البسيطة</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="grade9.html">الصف التاسع</a> > 
+            <a href="unit3_g9.html">الوحدة الثالثة</a> > الآلات البسيطة
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>📝 1. ملخص الآلات</h2>
+            <ul class="summary-list">
+                <li><strong>الآلة البسيطة:</strong> أداة تسهل إنجاز الشغل بتغيير مقدار القوة أو اتجاهها أو المسافة. (الآلة لا تقلل الشغل المبذول).</li>
+                <li><strong>الفائدة الآلية (MA):</strong> النسبة بين المقاومة (الوزن) والقوة المطبقة (<span dir="ltr">MA = Load / Force</span>).</li>
+                <li><strong>المستوى المائل:</strong> فائدته الآلية = (طول المستوى / ارتفاعه). كلما زاد الطول، زادت الفائدة وقلت القوة.</li>
+                <li><strong>الروافع:</strong> تعتمد على نقطة الارتكاز. قانونها: (<span dir="ltr">القوة × ذراعها = المقاومة × ذراعها</span>).</li>
+                <li><strong>كفاءة الآلة:</strong> نسبة الشغل الناتج إلى الشغل المبذول (<span dir="ltr">%e = (W_out / W_in) × 100</span>). ولا تصل لـ 100% بسبب الاحتكاك.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>📐 2. مختبر المستوى المائل</h2>
+            <p>غيّر طول وارتفاع المستوى ولاحظ كيف تتغير (الفائدة الآلية) ويقل مقدار القوة اللازمة لرفع الصندوق الذي وزنه (1200 نيوتن)!</p>
+            <div class="sim-container">
+                <canvas id="rampCanvas" width="500" height="300"></canvas>
+                <div class="controls">
+                    <div>
+                        <label>طول المستوى (l): <span id="lVal">4</span> m</label>
+                        <input type="range" id="lSlider" min="2" max="10" value="4" style="width:100%;">
+                    </div>
+                    <div>
+                        <label>ارتفاع المستوى (h): <span id="hVal">2</span> m</label>
+                        <input type="range" id="hSlider" min="1" max="5" value="2" style="width:100%;">
+                    </div>
+                    <hr>
+                    <div class="stats-box">
+                        <div style="color:#8e44ad;">وزن الصندوق (المقاومة) = 1200 N</div>
+                        <div style="color:#27ae60; margin-top:10px;">الفائدة الآلية (MA) = <span id="maRamp">2.0</span></div>
+                        <div style="color:#e74c3c; margin-top:10px;">القوة اللازمة للدفع = <span id="forceRamp">600</span> N</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>⚖️ 3. تحدي الاتزان (الروافع)</h2>
+            <p>ضع الكتلة الحمراء (القوة) في المكان الصحيح على المسطرة لتحقيق التوازن مع الكتلة الزرقاء (المقاومة) حسب قانون الروافع.</p>
+            <div class="sim-container">
+                <canvas id="leverCanvas" width="600" height="200"></canvas>
+                <div class="controls" style="width: 100%;">
+                    <div style="display:flex; justify-content:space-around; width:100%;">
+                        <div style="text-align:center; color:#2980b9;">
+                            <strong>المقاومة (ثابتة)</strong><br>
+                            الكتلة: 40 kg<br>
+                            البعد (d2): 2 m
+                        </div>
+                        <div style="text-align:center; color:#c0392b;">
+                            <strong>القوة (تحكم بها)</strong><br>
+                            الكتلة: <span id="leverM1Val">20</span> kg<br>
+                            <input type="range" id="leverM1Slider" min="10" max="80" step="10" value="20"><br>
+                            البعد (d1): <span id="leverD1Val">3.0</span> m<br>
+                            <input type="range" id="leverD1Slider" min="0.5" max="5.0" step="0.5" value="3.0">
+                        </div>
+                    </div>
+                    <div id="leverStatus" style="text-align:center; font-size:1.5em; font-weight:bold; margin-top:15px; padding:10px; border-radius:8px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❓ 4. اختبر فهمك (5 أسئلة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: الآلة البسيطة تساعدنا على إنجاز الشغل عن طريق:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> تقليل مقدار الشغل المبذول</label>
+                        <label><input type="radio" name="q1" value="b"> إنتاج طاقة إضافية من العدم</label>
+                        <label><input type="radio" name="q1" value="c"> تغيير مقدار القوة أو اتجاهها أو كليهما</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: لزيادة الفائدة الآلية للمستوى المائل وتقليل القوة التي تبذلها لرفع جسم، يجب عليك:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> زيادة طول المستوى المائل</label>
+                        <label><input type="radio" name="q2" value="b"> زيادة ارتفاع المستوى المائل</label>
+                        <label><input type="radio" name="q2" value="c"> استخدام مستوى خشن جداً</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: مقص الورق ينتمي إلى مجموعة الروافع التي تكون فيها (نقطة الارتكاز) في طرف، والمقاومة في المنتصف، والقوة في الطرف الآخر. فائدتها الآلية:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> دائماً أقل من واحد</label>
+                        <label><input type="radio" name="q3" value="b"> دائماً أكبر من واحد (توفر القوة)</label>
+                        <label><input type="radio" name="q3" value="c"> تساوي واحد دائماً</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: البكرة الثابتة المفردة، فائدتها الآلية تساوي 1. ما الفائدة من استخدامها؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> تضاعف القوة المبذولة</label>
+                        <label><input type="radio" name="q4" value="b"> تغير اتجاه القوة للأسفل لجعله أسهل بالاعتماد على وزن الجسم</label>
+                        <label><input type="radio" name="q4" value="c"> تقلل الشغل المبذول للنصف</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: لا يمكن أن تصل كفاءة أي آلة إلى 100% في الواقع بسبب ضياع جزء من الطاقة (الشغل المبذول) على شكل:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> طاقة حرارية ناتجة عن الاحتكاك</label>
+                        <label><input type="radio" name="q5" value="b"> طاقة حركية مفيدة</label>
+                        <label><input type="radio" name="q5" value="c"> طاقة وضع جاذبية</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playTone(freq, type, dur) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type; osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + dur);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + dur);
+        }
+
+        // ==========================================
+        // 1. Level: Inclined Plane
+        // ==========================================
+        const rampCanvas = document.getElementById('rampCanvas');
+        const ctxR = rampCanvas.getContext('2d');
+        let l = 4, h = 2;
+        const loadWeight = 1200;
+
+        document.getElementById('lSlider').oninput = function() { 
+            l = parseFloat(this.value); 
+            if(l < h) { l = h + 0.1; this.value = l; } // Length must be > height
+            document.getElementById('lVal').innerText = l.toFixed(1);
+            updateRamp();
+        }
+        document.getElementById('hSlider').oninput = function() { 
+            h = parseFloat(this.value); 
+            if(h > l) { h = l - 0.1; this.value = h; } // Height must be < length
+            document.getElementById('hVal').innerText = h.toFixed(1);
+            updateRamp();
+        }
+
+        function updateRamp() {
+            let MA = l / h;
+            let reqForce = loadWeight / MA;
+            
+            document.getElementById('maRamp').innerText = MA.toFixed(2);
+            document.getElementById('forceRamp').innerText = Math.round(reqForce);
+            
+            drawRamp(MA, reqForce);
+        }
+
+        function drawRamp(MA, force) {
+            ctxR.clearRect(0,0, rampCanvas.width, rampCanvas.height);
+            
+            let scale = 30; // pixels per meter
+            let pxH = h * scale;
+            let pxBase = Math.sqrt(l*l - h*h) * scale;
+            
+            let startX = 50;
+            let startY = 250; // bottom left
+            
+            // Draw Ground
+            ctxR.fillStyle = '#95a5a6'; ctxR.fillRect(0, 250, rampCanvas.width, 50);
+            
+            // Draw Ramp Triangle
+            ctxR.beginPath();
+            ctxR.moveTo(startX, startY); // bottom left
+            ctxR.lineTo(startX + pxBase, startY); // bottom right
+            ctxR.lineTo(startX, startY - pxH); // top left
+            ctxR.closePath();
+            ctxR.fillStyle = '#f39c12'; ctxR.fill();
+            ctxR.strokeStyle = '#d35400'; ctxR.lineWidth = 3; ctxR.stroke();
+            
+            // Draw Box on Ramp
+            ctxR.save();
+            let angle = Math.asin(h/l);
+            // Translate to middle of ramp hypotenuse
+            let midX = startX + pxBase/2;
+            let midY = startY - pxH/2;
+            
+            ctxR.translate(midX, midY);
+            ctxR.rotate(angle); // Rotate to match ramp slope
+            
+            // Draw Box
+            ctxR.fillStyle = '#8e44ad';
+            ctxR.fillRect(-20, -40, 40, 40);
+            
+            // Draw Push Force Arrow (Red)
+            let fLen = (force / 1200) * 80 + 20; // Scale arrow by force
+            ctxR.beginPath(); ctxR.moveTo(-20 - fLen, -20); ctxR.lineTo(-20, -20);
+            ctxR.lineTo(-30, -25); ctxR.moveTo(-20, -20); ctxR.lineTo(-30, -15);
+            ctxR.strokeStyle = '#e74c3c'; ctxR.lineWidth = 4; ctxR.stroke();
+            
+            ctxR.restore();
+        }
+        updateRamp();
+
+        // ==========================================
+        // 2. Level: Lever Balance
+        // ==========================================
+        const levCanvas = document.getElementById('leverCanvas');
+        const ctxL = levCanvas.getContext('2d');
+        
+        let m2 = 40, d2 = 2; // المقاومة ثابتة على اليسار
+        let m1 = 20, d1 = 3.0; // القوة متغيرة على اليمين
+
+        document.getElementById('leverM1Slider').oninput = function() { 
+            m1 = parseFloat(this.value); document.getElementById('leverM1Val').innerText = m1; updateLever();
+        }
+        document.getElementById('leverD1Slider').oninput = function() { 
+            d1 = parseFloat(this.value); document.getElementById('leverD1Val').innerText = d1.toFixed(1); updateLever();
+        }
+
+        function updateLever() {
+            let torqueLeft = m2 * d2; // المقاومة
+            let torqueRight = m1 * d1; // القوة
+            
+            let statusEl = document.getElementById('leverStatus');
+            
+            // Calculate tilt angle (- max to + max)
+            let diff = torqueRight - torqueLeft;
+            let maxDiff = 400; // arbitrary max torque diff
+            let angle = (diff / maxDiff) * (Math.PI / 6); // max 30 degrees tilt
+            if(angle > Math.PI/6) angle = Math.PI/6;
+            if(angle < -Math.PI/6) angle = -Math.PI/6;
+            
+            drawLever(angle);
+            
+            if(Math.abs(diff) < 0.1) {
+                statusEl.innerText = "✔️ متزن! (F1 × d1 = F2 × d2)";
+                statusEl.style.backgroundColor = "#d4edda"; statusEl.style.color = "#155724";
+                if(diff === 0) playTone(800, 'sine', 0.5); // Success tone if perfectly balanced
+            } else {
+                statusEl.innerText = "❌ غير متزن";
+                statusEl.style.backgroundColor = "#f8d7da"; statusEl.style.color = "#721c24";
+            }
+        }
+
+        function drawLever(angle) {
+            ctxL.clearRect(0,0, levCanvas.width, levCanvas.height);
+            let cx = levCanvas.width / 2;
+            let cy = 130;
+            let pxPerMeter = 40;
+            
+            // Draw Fulcrum (Triangle)
+            ctxL.beginPath(); ctxL.moveTo(cx, cy); ctxL.lineTo(cx - 20, cy + 40); ctxL.lineTo(cx + 20, cy + 40); ctxL.closePath();
+            ctxL.fillStyle = '#2c3e50'; ctxL.fill();
+            
+            // Draw Lever Plank
+            ctxL.save();
+            ctxL.translate(cx, cy);
+            ctxL.rotate(angle);
+            
+            ctxL.fillStyle = '#d35400';
+            ctxL.fillRect(-220, -5, 440, 10);
+            
+            // Draw Distance Markers on Plank
+            ctxL.fillStyle = 'white'; ctxL.textAlign='center';
+            for(let i=1; i<=5; i++) {
+                ctxL.fillRect(i*pxPerMeter, -5, 2, 10); ctxL.fillRect(-i*pxPerMeter, -5, 2, 10);
+            }
+            
+            // Draw Mass 2 (Left - Load)
+            let loadPx = -d2 * pxPerMeter;
+            let size2 = 20 + (m2 * 0.5);
+            ctxL.fillStyle = '#2980b9'; ctxL.fillRect(loadPx - size2/2, -5 - size2, size2, size2);
+            ctxL.fillStyle = 'white'; ctxL.font="12px Arial"; ctxL.fillText(m2+"kg", loadPx, -5 - size2/2 + 4);
+            
+            // Draw Mass 1 (Right - Force)
+            let forcePx = d1 * pxPerMeter;
+            let size1 = 20 + (m1 * 0.5);
+            ctxL.fillStyle = '#c0392b'; ctxL.fillRect(forcePx - size1/2, -5 - size1, size1, size1);
+            ctxL.fillStyle = 'white'; ctxL.fillText(m1+"kg", forcePx, -5 - size1/2 + 4);
+            
+            ctxL.restore();
+        }
+        updateLever();
+
+        // --- Quiz ---
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let res = document.getElementById('quiz-result');
+            
+            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة!"); return; }
+            if(q1.value === 'c') score++;
+            if(q2.value === 'a') score++;
+            if(q3.value === 'b') score++;
+            if(q4.value === 'b') score++;
+            if(q5.value === 'a') score++;
+            
+            res.style.display = "block";
+            if(score === 5) {
+                res.innerHTML = `🎉 بطل الآلات! علامتك (${score}/5).`; res.style.background = "#d4edda"; res.style.color = "#155724"; playTone(1000, 'sine', 0.5);
+            } else if (score >= 3) {
+                res.innerHTML = `👍 جيد، علامتك (${score}/5).`; res.style.background = "#fff3cd"; res.style.color = "#856404";
+            } else {
+                res.innerHTML = `💡 علامتك (${score}/5). راجع الملخص والقوانين!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درس المقذوفات | منصة الفيزياء</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        header { background: linear-gradient(135deg, #2c3e50, #3498db); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+        header h1 { margin: 0; font-size: 2.5em; }
+        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
+        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
+        .breadcrumb a:hover { color: #f1c40f; text-decoration: underline; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section h2 { color: #2980b9; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px; justify-content: space-between;}
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
+        .summary-list { font-size: 1.2em; line-height: 1.8; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        .fullscreen-btn { background-color: #2c3e50; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: bold; display: flex; align-items: center; gap: 5px; transition: background 0.3s;}
+        .fullscreen-btn:hover { background-color: #1a252f; }
+        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #3498db;}
+        .quiz-question p { font-weight: bold; font-size: 1.1em; margin-top: 0; }
+        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
+        .quiz-btn { background: #27ae60; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.3s;}
+        .quiz-btn:hover { background: #2ecc71; }
+        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🚀 درس الحركة في بُعدين (المقذوفات)</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="index.html">الوحدة الثانية</a> > المقذوفات
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>📺 1. فيديو الشرح</h2>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/p1Uhw4yCkiQ?autoplay=0&hl=ar" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 2. ملخص القوانين الهامة</h2>
+            <ul class="summary-list">
+                <li>حركة المقذوف تتكون من حركتين مستقلتين: حركة <span class="highlight">أفقية</span> وحركة <span class="highlight">عمودية</span>.</li>
+                <li><strong>السرعة الأفقية (Vx):</strong> تبقى <span class="highlight">ثابتة</span> دائماً (بإهمال مقاومة الهواء).</li>
+                <li><strong>السرعة العمودية (Vy):</strong> تتغير باستمرار تحت تأثير <span class="highlight">الجاذبية الأرضية (g)</span>.</li>
+                <li>تصل القذيفة إلى <strong>أقصى ارتفاع</strong> عندما تصبح سرعتها العمودية (Vy) تساوي صفراً.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span>🎮 3. المختبر التفاعلي</span>
+                <button class="fullscreen-btn" onclick="openFullscreen()">⛶ تكبير الشاشة</button>
+            </h2>
+            <p>حان وقت التطبيق! جرب تغيير زاوية وسرعة المدفع لتلاحظ كيف يتأثر كل من المدى الأفقي وأقصى ارتفاع.</p>
+            <iframe id="lab-iframe" src="projectile_lab.html" width="100%" height="650px" style="border:none; border-radius:10px; box-shadow: 0 0 15px rgba(0,0,0,0.1);" allowfullscreen></iframe>
+        </div>
+
+        <div class="section">
+            <h2>❓ 4. اختبر فهمك (5 أسئلة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: ما هي زاوية الإطلاق التي تعطي أقصى مدى أفقي للقذيفة (بإهمال مقاومة الهواء)؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> 30 درجة</label>
+                        <label><input type="radio" name="q1" value="b"> 45 درجة</label>
+                        <label><input type="radio" name="q1" value="c"> 90 درجة</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: ماذا يحدث لـ (السرعة الأفقية) للقذيفة أثناء تحليقها في الهواء؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> تزداد تدريجياً بسبب الجاذبية</label>
+                        <label><input type="radio" name="q2" value="b"> تقل تدريجياً حتى تصل للصفر</label>
+                        <label><input type="radio" name="q2" value="c"> تبقى ثابتة لا تتغير</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: المسار المنحني الذي يتخذه المقذوف في الهواء يُسمى رياضياً:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> قطعاً مكافئاً</label>
+                        <label><input type="radio" name="q3" value="b"> خطاً مستقيماً</label>
+                        <label><input type="radio" name="q3" value="c"> دائرة كاملة</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: عند وصول المقذوف إلى (أقصى ارتفاع)، فإن مركبته العمودية للسرعة (Vy) تساوي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> صفراً</label>
+                        <label><input type="radio" name="q4" value="b"> 9.8 م/ث</label>
+                        <label><input type="radio" name="q4" value="c"> أقصى قيمة لها</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: الحركة في بعدين (المقذوفات) تعتبر دمجاً لحركتين (أفقية وعمودية). العلاقة بين هاتين الحركتين هي أنهما:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> تؤثر كل منهما على الأخرى بشكل مباشر</label>
+                        <label><input type="radio" name="q5" value="b"> مستقلتان تماماً عن بعضهما البعض (الرابط الوحيد هو الزمن)</label>
+                        <label><input type="radio" name="q5" value="c"> متساويتان دائماً في المقدار</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openFullscreen() {
+            let elem = document.getElementById("lab-iframe");
+            if (elem.requestFullscreen) { elem.requestFullscreen(); } 
+            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } 
+            else if (elem.msRequestFullscreen) { elem.msRequestFullscreen(); }
+        }
+
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let res = document.getElementById('quiz-result');
+            
+            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!"); return; }
+            
+            if(q1.value === 'b') score++;
+            if(q2.value === 'c') score++;
+            if(q3.value === 'a') score++;
+            if(q4.value === 'a') score++;
+            if(q5.value === 'b') score++;
+            
+            res.style.display = "block";
+            if(score === 5) {
+                res.innerHTML = `🎉 بطل! علامتك (${score}/5). لقد أتقنت درس المقذوفات بجدارة.`; res.style.background = "#d4edda"; res.style.color = "#155724";
+            } else if (score >= 3) {
+                res.innerHTML = `👍 أداء جيد، علامتك (${score}/5). ركز أكثر في التفاصيل الدقيقة.`; res.style.background = "#fff3cd"; res.style.color = "#856404";
+            } else {
+                res.innerHTML = `💡 علامتك (${score}/5). لا مشكلة، شاهد الفيديو مرة أخرى وأعد المحاولة!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
+            }
+        }
+    </script>
+</body>
+</html>
