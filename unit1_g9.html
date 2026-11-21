@@ -3,46 +3,663 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الوحدة الأولى: القياس | Light Academy</title>
+    <title>الوحدة 1: القياس وأدواته - تاسع | Light Academy للفيزياء</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh;}
-        header { background: linear-gradient(135deg, #16a085, #1abc9c); color: white; width: 100%; text-align: center; padding: 30px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.5em; }
-        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
-        .breadcrumb a { color: #ecf0f1; text-decoration: none; font-weight: bold;}
-        .breadcrumb a:hover { text-decoration: underline; color: #f1c40f;}
-        .container { display: flex; gap: 30px; margin-top: 50px; flex-wrap: wrap; justify-content: center; max-width: 1200px; padding: 20px; }
-        .card { background: white; width: 300px; border-radius: 15px; padding: 30px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.3s; text-decoration: none; color: #333; display: flex; flex-direction: column; align-items: center; }
-        .card:hover { transform: translateY(-10px); border-bottom: 5px solid #16a085; }
-        .icon { font-size: 4em; margin-bottom: 15px; }
-        .card h2 { color: #16a085; margin-bottom: 15px; font-size: 1.6em;}
-        .card p { color: #7f8c8d; line-height: 1.6; margin-bottom: 20px; }
-        .btn { background-color: #16a085; color: white; padding: 10px 25px; border-radius: 25px; font-weight: bold; width: 80%; }
-        .card:hover .btn { background-color: #117a65; }
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.disabled { opacity: 0.45; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
+.disabled:hover { transform: none; border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.035); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+.disabled .btn { background-color: #2c2c34; color: #8c8c98; }
+.disabled:hover .btn { background-color: #2c2c34; color: #8c8c98; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+</style>
 </head>
 <body>
+    <div class="bg-lines"></div>
     <header>
-        <h1>📏 الوحدة الأولى: القياس</h1>
-        <div class="breadcrumb">
-            <a href="index.html">الرئيسية</a> > 
-            <a href="grade9.html">الصف التاسع</a> > 
-            <a href="grade9_sem1.html">الفصل الأول</a> > الوحدة الأولى
-        </div>
+        <h1>📏 الوحدة الأولى: القياس وأدواته (الصف التاسع)</h1>
+        <div class="breadcrumb"><a href="index.html">Light Academy</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="grade9_sem1.html">الفصل الأول</a> &gt; القياس</div>
     </header>
     <div class="container">
-        <a href="measurement_tools.html" class="card">
-            <div class="icon">📐</div>
-            <h2>أدوات القياس الدقيقة</h2>
-            <p>تعلم استخدام الورنية والميكروميتر وتحديد الأخطاء الصفرية.</p>
-            <div class="btn">دخول</div>
-        </a>
-        <a href="sig_figs.html" class="card">
-            <div class="icon">🔢</div>
-            <h2>الأرقام المعنوية والبادئات</h2>
-            <p>قواعد الأرقام المعنوية واستخدام البادئات في النظام العالمي.</p>
-            <div class="btn">دخول</div>
-        </a>
+        <div class="section">
+            <h2>📝 شرح الدرس وأهم المفاهيم</h2>
+            <ul class="summary-list"><li>القياس الفيزيائي هو مقارنة كمية مجهولة بأخرى معيارية معلومة من النوع نفسه، وتُقسم الكميات إلى <span class="highlight">أساسية</span> (الطول، الكتلة، الزمن) و<span class="highlight">مشتقة</span> (السرعة، القوة، المساحة).</li>
+<li><span class="highlight">القدمة ذات الورنية:</span> تقيس الأطوال بدقة <span dir="ltr" class="formula-pill">0.1 mm</span>؛ القراءة = قراءة التدريج الرئيس + (رقم الشرطة المنطبقة × 0.1 mm).</li>
+<li><span class="highlight">المايكروميتر:</span> يقيس الأبعاد الدقيقة جداً بدقة <span dir="ltr" class="formula-pill">0.01 mm</span>؛ القراءة = قراءة الذراع الرئيسة (mm و 0.5 mm) + (قراءة الأسطوانة × 0.01 mm).</li></ul>
+        </div>
+        
+<style>
+.game-box {
+    background: rgba(15, 15, 18, 0.85);
+    border: 1px solid rgba(253, 197, 0, 0.25);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.score-badge {
+    background: rgba(253, 197, 0, 0.14);
+    border: 1px solid #fdc500;
+    color: #fdc500;
+    padding: 4px 16px;
+    border-radius: 25px;
+    font-size: 0.78em;
+    font-weight: 900;
+}
+.game-canvas {
+    width: 100%;
+    max-width: 940px;
+    background: #141419;
+    border-radius: 12px;
+    border: 2px solid rgba(253, 197, 0, 0.35);
+    display: block;
+}
+.input-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.input-row label { font-weight: 700; font-size: 1.06em; }
+.num-input {
+    font-family: 'Cairo', sans-serif;
+    background: #1b1b22;
+    border: 2px solid rgba(253, 197, 0, 0.45);
+    color: #ffffff;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 1.12em;
+    font-weight: 800;
+    width: 165px;
+    text-align: center;
+    direction: ltr;
+}
+.num-input:focus { outline: none; border-color: #fdc500; }
+.btn-sec {
+    font-family: 'Cairo', sans-serif;
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 1.02em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.btn-sec:hover { background: rgba(253, 197, 0, 0.2); border-color: #fdc500; }
+.feedback {
+    width: 100%;
+    text-align: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.05em;
+    display: none;
+}
+.hint-text { font-size: 0.96em; color: #b8b8c4; margin: 0; text-align: center; }
+</style>
+
+<div class="section">
+    <h2>
+        <span>🎮 لعبة الورنية الافتراضية (دقة 0.1 mm)</span>
+        <span class="score-badge">النقاط: <span id="vernierScore">0</span></span>
+    </h2>
+    <div class="game-box">
+        <p class="hint-text">اقرأ التدريج الرئيس بالمليمتر (mm) قبل صفر الورنية، ثم أضف رقم شرطة الورنية المنطبقة مع التدريج العلوي × 0.1 mm.</p>
+        <canvas id="vernierCanvas" class="game-canvas" width="940" height="265"></canvas>
+        <div class="input-row">
+            <label for="vernierInput">القياس الظاهر (mm):</label>
+            <input type="number" id="vernierInput" class="num-input" step="0.1" placeholder="مثال: 23.4">
+            <button type="button" class="quiz-btn" onclick="checkVernier()">تحقق من القراءة ✔️</button>
+            <button type="button" class="btn-sec" onclick="newVernierChallenge()">🔄 قياس جديد</button>
+        </div>
+        <div id="vernierFeedback" class="feedback"></div>
     </div>
+</div>
+
+<div class="section">
+    <h2>
+        <span>🔬 لعبة المايكروميتر الافتراضية (دقة 0.01 mm)</span>
+        <span class="score-badge">النقاط: <span id="microScore">0</span></span>
+    </h2>
+    <div class="game-box">
+        <p class="hint-text">اقرأ آخر تدريج ظاهر على الذراع الرئيسة (انتبه لشرطات الأنصاف 0.5 mm أسفل الخط الأفقي)، ثم أضف رقم شرطة الأسطوانة الدوّارة المقابلة للخط الأفقي × 0.01 mm.</p>
+        <canvas id="microCanvas" class="game-canvas" width="940" height="285"></canvas>
+        <div class="input-row">
+            <label for="microInput">القياس الظاهر (mm):</label>
+            <input type="number" id="microInput" class="num-input" step="0.01" placeholder="مثال: 7.73">
+            <button type="button" class="quiz-btn" onclick="checkMicro()">تحقق من القراءة ✔️</button>
+            <button type="button" class="btn-sec" onclick="newMicroChallenge()">🔄 قياس جديد</button>
+        </div>
+        <div id="microFeedback" class="feedback"></div>
+    </div>
+</div>
+
+        <div class="section">
+            <h2>❓ اختبر فهمك (5 أسئلة ضع دائرة)</h2>
+            <form id="quiz-form">
+                
+        <div class="quiz-question">
+            <p>س1: أي من الكميات الآتية تُعد كمية فيزيائية أساسية في النظام الدولي؟</p>
+            <div class="quiz-options"><label><input type="radio" name="q1" value="a"> السرعة</label><label><input type="radio" name="q1" value="b"> الكتلة</label><label><input type="radio" name="q1" value="c"> القوة</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س2: الأداة الأنسب لقياس سمك ورقة أو قطر سلك رفيع بدقة 0.01 mm هي:</p>
+            <div class="quiz-options"><label><input type="radio" name="q2" value="a"> المسطرة المترية</label><label><input type="radio" name="q2" value="b"> الشريط المتري</label><label><input type="radio" name="q2" value="c"> المايكروميتر</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س3: في القدمة ذات الورنية (دقة 0.1 mm)، إذا كان صفر الورنية بعد 14 mm مباشرة وانطبقت الشرطة 6، فإن القراءة تساوي:</p>
+            <div class="quiz-options"><label><input type="radio" name="q3" value="a"> 14.6 mm</label><label><input type="radio" name="q3" value="b"> 14.06 mm</label><label><input type="radio" name="q3" value="c"> 20.0 mm</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س4: في المايكروميتر، إذا أظهرت الذراع الرئيسة 5.5 mm وكانت شرطة الأسطوانة المقابلة للخط الأفقي 24، فإن القراءة تساوي:</p>
+            <div class="quiz-options"><label><input type="radio" name="q4" value="a"> 5.24 mm</label><label><input type="radio" name="q4" value="b"> 5.74 mm</label><label><input type="radio" name="q4" value="c"> 29.5 mm</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س5: كم متراً يساوي 2.5 كيلومتر (km)؟</p>
+            <div class="quiz-options"><label><input type="radio" name="q5" value="a"> 250 m</label><label><input type="radio" name="q5" value="b"> 2500 m</label><label><input type="radio" name="q5" value="c"> 0.025 m</label></div>
+        </div>
+        
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+        <div class="footer-nav">
+            <a href="grade9_sem1.html" class="back-btn">🔙 العودة لفصل التاسع الأول</a>
+        </div>
+    </div>
+    <script>
+        
+function checkQuiz() {
+    const correct = ['b', 'c', 'a', 'b', 'b'];
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+        const chosen = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!chosen) {
+            alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!");
+            return;
+        }
+        if (chosen.value === correct[i - 1]) score++;
+    }
+    const res = document.getElementById('quiz-result');
+    res.style.display = "block";
+    if (score === 5) {
+        res.innerHTML = "🎉 ممتاز! علامتك (" + score + "/5). أتقنت الدرس بنجاح.";
+        res.style.background = "rgba(46, 204, 113, 0.2)";
+        res.style.color = "#2ecc71";
+        res.style.border = "1px solid #2ecc71";
+    } else if (score >= 3) {
+        res.innerHTML = "👍 جيد جداً، علامتك (" + score + "/5). راجع النقاط التي أخطأت فيها.";
+        res.style.background = "rgba(253, 197, 0, 0.2)";
+        res.style.color = "#fdc500";
+        res.style.border = "1px solid #fdc500";
+    } else {
+        res.innerHTML = "💡 علامتك (" + score + "/5). أعد قراءة الشرح ثم جرّب مرة أخرى.";
+        res.style.background = "rgba(231, 76, 60, 0.2)";
+        res.style.color = "#ff6b6b";
+        res.style.border = "1px solid #e74c3c";
+    }
+}
+
+        
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+function playTone(ok) {
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    if (ok) {
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(523.25, audioCtx.currentTime);
+        osc.frequency.setValueAtTime(659.25, audioCtx.currentTime + 0.12);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+    } else {
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(190, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.12, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
+        osc.start(); osc.stop(audioCtx.currentTime + 0.3);
+    }
+}
+
+// --- الورنية ---
+const vCanvas = document.getElementById('vernierCanvas');
+const vCtx = vCanvas.getContext('2d');
+let vMain = 18, vVernier = 4, vScore = 0, vSolved = false, vShowSol = false;
+
+function newVernierChallenge() {
+    vMain = Math.floor(Math.random() * 42) + 3;
+    vVernier = Math.floor(Math.random() * 10);
+    vSolved = false;
+    vShowSol = false;
+    document.getElementById('vernierInput').value = '';
+    document.getElementById('vernierFeedback').style.display = 'none';
+    drawVernier();
+}
+
+function drawVernier() {
+    vCtx.clearRect(0, 0, vCanvas.width, vCanvas.height);
+    const pxPerMm = 16, originX = 110, beamTop = 62, beamH = 56;
+    const total = vMain + vVernier * 0.1;
+    const zeroX = originX + total * pxPerMm;
+
+    vCtx.fillStyle = '#a0a0ab';
+    vCtx.font = 'bold 14px Cairo, sans-serif';
+    vCtx.textAlign = 'right';
+    vCtx.fillText('التدريج الرئيس (mm) — المسطرة الثابتة', 915, 32);
+
+    vCtx.fillStyle = '#25252e';
+    vCtx.strokeStyle = 'rgba(253, 197, 0, 0.45)';
+    vCtx.lineWidth = 2;
+    vCtx.beginPath();
+    vCtx.moveTo(45, beamTop); vCtx.lineTo(originX, beamTop);
+    vCtx.lineTo(originX, beamTop + beamH + 92); vCtx.lineTo(75, beamTop + beamH + 92);
+    vCtx.lineTo(45, beamTop + beamH + 54); vCtx.closePath();
+    vCtx.fill(); vCtx.stroke();
+
+    vCtx.fillStyle = '#2c2c36';
+    vCtx.fillRect(originX, beamTop, 800, beamH);
+    vCtx.strokeRect(originX, beamTop, 800, beamH);
+
+    vCtx.textAlign = 'center';
+    for (let mm = 0; mm <= 48; mm++) {
+        const x = originX + mm * pxPerMm;
+        let h = (mm % 10 === 0) ? 24 : ((mm % 5 === 0) ? 18 : 12);
+        vCtx.strokeStyle = (mm === vMain && vShowSol) ? '#2ecc71' : '#ffffff';
+        vCtx.lineWidth = (mm % 10 === 0) ? 2 : 1.3;
+        vCtx.beginPath(); vCtx.moveTo(x, beamTop + beamH); vCtx.lineTo(x, beamTop + beamH - h); vCtx.stroke();
+        if (mm % 10 === 0) {
+            vCtx.fillStyle = '#fdc500';
+            vCtx.font = 'bold 14px Cairo, sans-serif';
+            vCtx.fillText(mm.toString(), x, beamTop + 22);
+        }
+    }
+
+    const objW = total * pxPerMm;
+    vCtx.fillStyle = 'rgba(253, 197, 0, 0.22)';
+    vCtx.strokeStyle = '#fdc500';
+    vCtx.fillRect(originX, beamTop + beamH + 22, objW, 44);
+    vCtx.strokeRect(originX, beamTop + beamH + 22, objW, 44);
+
+    const vTop = beamTop + beamH, vH = 60, vW = 10 * 0.9 * pxPerMm + 45;
+    vCtx.fillStyle = '#1f1f27';
+    vCtx.strokeStyle = '#fdc500';
+    vCtx.lineWidth = 2;
+    vCtx.beginPath();
+    vCtx.moveTo(zeroX, vTop); vCtx.lineTo(zeroX + vW, vTop); vCtx.lineTo(zeroX + vW, vTop + vH);
+    vCtx.lineTo(zeroX + 26, vTop + vH); vCtx.lineTo(zeroX + 26, vTop + vH + 52);
+    vCtx.lineTo(zeroX, vTop + vH + 34); vCtx.closePath();
+    vCtx.fill(); vCtx.stroke();
+
+    for (let k = 0; k <= 10; k++) {
+        const vx = zeroX + k * 0.9 * pxPerMm;
+        const aligned = (k === vVernier);
+        const th = (k === 0 || k === 5 || k === 10) ? 22 : 14;
+        vCtx.strokeStyle = (aligned && vShowSol) ? '#fdc500' : (k === 0 ? '#2ecc71' : '#e4e4ec');
+        vCtx.lineWidth = (aligned && vShowSol) ? 2.6 : 1.5;
+        vCtx.beginPath(); vCtx.moveTo(vx, vTop); vCtx.lineTo(vx, vTop + th); vCtx.stroke();
+        if (k === 0 || k === 5 || k === 10 || (aligned && vShowSol)) {
+            vCtx.fillStyle = (aligned && vShowSol) ? '#fdc500' : '#ffffff';
+            vCtx.font = 'bold 12px Cairo, sans-serif';
+            vCtx.fillText(k.toString(), vx, vTop + 37);
+        }
+        if (aligned && vShowSol) {
+            vCtx.save();
+            vCtx.strokeStyle = 'rgba(253, 197, 0, 0.85)';
+            vCtx.setLineDash([4, 4]);
+            vCtx.lineWidth = 2;
+            vCtx.beginPath(); vCtx.moveTo(vx, beamTop + 26); vCtx.lineTo(vx, vTop + 25); vCtx.stroke();
+            vCtx.restore();
+        }
+    }
+
+    vCtx.fillStyle = '#a0a0ab';
+    vCtx.font = 'bold 13px Cairo, sans-serif';
+    vCtx.textAlign = 'right';
+    vCtx.fillText('تدريج الورنية المتحرك (0.1 mm)', 915, 242);
+}
+
+function checkVernier() {
+    const val = parseFloat(document.getElementById('vernierInput').value);
+    const fb = document.getElementById('vernierFeedback');
+    const expected = parseFloat((vMain + vVernier * 0.1).toFixed(1));
+    if (isNaN(val)) { alert('الرجاء إدخال قيمة القياس بالمليمتر أولاً!'); return; }
+    vShowSol = true;
+    drawVernier();
+    fb.style.display = 'block';
+    if (Math.abs(val - expected) < 0.01) {
+        playTone(true);
+        if (!vSolved) { vScore += 10; document.getElementById('vernierScore').textContent = vScore; vSolved = true; }
+        fb.innerHTML = '🎉 أحسنت! القراءة صحيحة: <span dir="ltr">' + expected.toFixed(1) + ' mm</span> (الرئيس: ' + vMain + ' mm + الورنية: ' + vVernier + ' × 0.1 = ' + (vVernier * 0.1).toFixed(1) + ' mm).';
+        fb.style.background = 'rgba(46, 204, 113, 0.18)'; fb.style.color = '#2ecc71'; fb.style.border = '1px solid #2ecc71';
+    } else {
+        playTone(false);
+        fb.innerHTML = '❌ حاول مرة أخرى! القراءة الصحيحة هي <span dir="ltr">' + expected.toFixed(1) + ' mm</span> لأن صفر الورنية تجاوز <span dir="ltr">' + vMain + ' mm</span> وانطبقت الشرطة <span dir="ltr">' + vVernier + '</span>.';
+        fb.style.background = 'rgba(231, 76, 60, 0.18)'; fb.style.color = '#ff6b6b'; fb.style.border = '1px solid #e74c3c';
+    }
+}
+
+// --- المايكروميتر ---
+const mCanvas = document.getElementById('microCanvas');
+const mCtx = mCanvas.getContext('2d');
+let mMainBase = 6, mHasHalf = true, mThimble = 28, mScore = 0, mSolved = false, mShowSol = false;
+
+function newMicroChallenge() {
+    mMainBase = Math.floor(Math.random() * 14) + 1;
+    mHasHalf = Math.random() < 0.5;
+    mThimble = Math.floor(Math.random() * 50);
+    mSolved = false;
+    mShowSol = false;
+    document.getElementById('microInput').value = '';
+    document.getElementById('microFeedback').style.display = 'none';
+    drawMicro();
+}
+
+function drawMicro() {
+    mCtx.clearRect(0, 0, mCanvas.width, mCanvas.height);
+    const centerY = 142, sleeveStartX = 290, pxPerMm = 26;
+    const reading = mMainBase + (mHasHalf ? 0.5 : 0) + mThimble * 0.01;
+    const thimbleEdgeX = sleeveStartX + (mMainBase + (mHasHalf ? 0.5 : 0)) * pxPerMm + 10;
+
+    mCtx.strokeStyle = '#3c3c48';
+    mCtx.lineWidth = 22;
+    mCtx.beginPath();
+    mCtx.arc(175, centerY + 35, 95, Math.PI * 0.15, Math.PI * 1.65, false);
+    mCtx.stroke();
+
+    mCtx.fillStyle = '#2a2a34';
+    mCtx.strokeStyle = 'rgba(253, 197, 0, 0.5)';
+    mCtx.lineWidth = 2;
+    mCtx.fillRect(85, centerY - 14, 38, 28); mCtx.strokeRect(85, centerY - 14, 38, 28);
+
+    const gapPx = 25 + reading * 4.5;
+    const spindleX = 123 + gapPx;
+    mCtx.fillRect(spindleX, centerY - 14, sleeveStartX - spindleX, 28);
+    mCtx.strokeRect(spindleX, centerY - 14, sleeveStartX - spindleX, 28);
+
+    mCtx.fillStyle = 'rgba(253, 197, 0, 0.25)';
+    mCtx.strokeStyle = '#fdc500';
+    mCtx.fillRect(123, centerY - 22, gapPx, 44);
+    mCtx.strokeRect(123, centerY - 22, gapPx, 44);
+
+    const sleeveH = 88;
+    mCtx.fillStyle = '#25252f';
+    mCtx.strokeStyle = 'rgba(253, 197, 0, 0.45)';
+    mCtx.fillRect(sleeveStartX, centerY - sleeveH / 2, 410, sleeveH);
+    mCtx.strokeRect(sleeveStartX, centerY - sleeveH / 2, 410, sleeveH);
+
+    mCtx.strokeStyle = '#fdc500';
+    mCtx.lineWidth = 2;
+    mCtx.beginPath(); mCtx.moveTo(sleeveStartX, centerY); mCtx.lineTo(thimbleEdgeX, centerY); mCtx.stroke();
+
+    mCtx.textAlign = 'center';
+    for (let mm = 0; mm <= 15; mm++) {
+        const x = sleeveStartX + mm * pxPerMm;
+        if (x < thimbleEdgeX - 2) {
+            const isLastMain = (!mHasHalf && mm === mMainBase);
+            mCtx.strokeStyle = (isLastMain && mShowSol) ? '#2ecc71' : '#ffffff';
+            mCtx.lineWidth = (mm % 5 === 0) ? 2.2 : 1.5;
+            mCtx.beginPath(); mCtx.moveTo(x, centerY); mCtx.lineTo(x, centerY - (mm % 5 === 0 ? 24 : 16)); mCtx.stroke();
+            if (mm % 5 === 0 || mm === mMainBase) {
+                mCtx.fillStyle = '#fdc500';
+                mCtx.font = 'bold 13px Cairo, sans-serif';
+                mCtx.fillText(mm.toString(), x, centerY - 28);
+            }
+        }
+        const hx = x + pxPerMm * 0.5;
+        if (hx < thimbleEdgeX - 2) {
+            const isLastHalf = (mHasHalf && mm === mMainBase);
+            mCtx.strokeStyle = (isLastHalf && mShowSol) ? '#2ecc71' : '#b8b8c4';
+            mCtx.lineWidth = 1.6;
+            mCtx.beginPath(); mCtx.moveTo(hx, centerY); mCtx.lineTo(hx, centerY + 18); mCtx.stroke();
+        }
+    }
+
+    const thimbleW = 155, thimbleH = 136;
+    mCtx.fillStyle = '#1b1b23';
+    mCtx.strokeStyle = '#fdc500';
+    mCtx.lineWidth = 2;
+    mCtx.beginPath();
+    mCtx.moveTo(thimbleEdgeX, centerY - sleeveH / 2);
+    mCtx.lineTo(thimbleEdgeX + 26, centerY - thimbleH / 2);
+    mCtx.lineTo(thimbleEdgeX + thimbleW, centerY - thimbleH / 2);
+    mCtx.lineTo(thimbleEdgeX + thimbleW, centerY + thimbleH / 2);
+    mCtx.lineTo(thimbleEdgeX + 26, centerY + thimbleH / 2);
+    mCtx.lineTo(thimbleEdgeX, centerY + sleeveH / 2);
+    mCtx.closePath();
+    mCtx.fill(); mCtx.stroke();
+
+    const stepY = 8.5;
+    mCtx.textAlign = 'left';
+    for (let offset = -7; offset <= 7; offset++) {
+        let tickVal = (mThimble + offset) % 50;
+        if (tickVal < 0) tickVal += 50;
+        const ty = centerY - offset * stepY;
+        if (ty >= centerY - thimbleH / 2 + 8 && ty <= centerY + thimbleH / 2 - 8) {
+            const isCenter = (offset === 0);
+            const isMajor = (tickVal % 5 === 0);
+            mCtx.strokeStyle = isCenter ? '#fdc500' : '#d0d0da';
+            mCtx.lineWidth = isCenter ? 2.6 : 1.3;
+            mCtx.beginPath(); mCtx.moveTo(thimbleEdgeX + 10, ty); mCtx.lineTo(thimbleEdgeX + 10 + (isMajor ? 22 : 13), ty); mCtx.stroke();
+            if (isMajor || (isCenter && mShowSol)) {
+                mCtx.fillStyle = isCenter ? '#fdc500' : '#ffffff';
+                mCtx.font = 'bold 13px Cairo, sans-serif';
+                mCtx.fillText(tickVal.toString(), thimbleEdgeX + 38, ty + 4);
+            }
+        }
+    }
+
+    mCtx.fillStyle = '#a0a0ab';
+    mCtx.font = 'bold 13px Cairo, sans-serif';
+    mCtx.textAlign = 'right';
+    mCtx.fillText('الذراع الرئيسة (0.5 mm)', 680, 32);
+    mCtx.fillText('الأسطوانة الدوّارة (0.01 mm)', 895, 32);
+}
+
+function checkMicro() {
+    const val = parseFloat(document.getElementById('microInput').value);
+    const fb = document.getElementById('microFeedback');
+    const mainTotal = mMainBase + (mHasHalf ? 0.5 : 0);
+    const expected = parseFloat((mainTotal + mThimble * 0.01).toFixed(2));
+    if (isNaN(val)) { alert('الرجاء إدخال قيمة القياس بالمليمتر أولاً!'); return; }
+    mShowSol = true;
+    drawMicro();
+    fb.style.display = 'block';
+    if (Math.abs(val - expected) < 0.005) {
+        playTone(true);
+        if (!mSolved) { mScore += 10; document.getElementById('microScore').textContent = mScore; mSolved = true; }
+        fb.innerHTML = '🎉 ممتاز! القراءة صحيحة: <span dir="ltr">' + expected.toFixed(2) + ' mm</span> (الذراع: ' + mainTotal.toFixed(1) + ' mm + الأسطوانة: ' + mThimble + ' × 0.01 = ' + (mThimble * 0.01).toFixed(2) + ' mm).';
+        fb.style.background = 'rgba(46, 204, 113, 0.18)'; fb.style.color = '#2ecc71'; fb.style.border = '1px solid #2ecc71';
+    } else {
+        playTone(false);
+        fb.innerHTML = '❌ حاول مرة أخرى! القراءة الصحيحة هي <span dir="ltr">' + expected.toFixed(2) + ' mm</span> (الذراع: <span dir="ltr">' + mainTotal.toFixed(1) + ' mm</span> والأسطوانة: <span dir="ltr">' + mThimble + '</span>).';
+        fb.style.background = 'rgba(231, 76, 60, 0.18)'; fb.style.color = '#ff6b6b'; fb.style.border = '1px solid #e74c3c';
+    }
+}
+
+newVernierChallenge();
+newMicroChallenge();
+
+    </script>
 </body>
 </html>

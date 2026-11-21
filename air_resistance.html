@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مقاومة الهواء والسرعة الحدية | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0f0f12; color: #fff; margin: 0; padding: 0; line-height: 1.85; }
+        header { background: linear-gradient(135deg, #1b1a14, #09090b); border-bottom: 1px solid rgba(253, 197, 0, 0.3); padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; color: #fdc500; font-size: 2em; }
+        .breadcrumb { margin-top: 8px; color: #bbb; font-size: 0.95em; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1020px; margin: 25px auto; padding: 0 15px; }
+        .card { background: #18181f; border: 1px solid rgba(253, 197, 0, 0.25); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        h2 { color: #fdc500; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { color: #fdc500; margin: 18px 0 8px 0; font-size: 1.2em; }
+        .law-box { background: rgba(253, 197, 0, 0.08); border-right: 4px solid #fdc500; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .controls { display: flex; flex-wrap: wrap; gap: 18px; background: #111116; padding: 16px; border-radius: 12px; margin-bottom: 15px; align-items: center; justify-content: center; }
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 210px; }
+        label { font-weight: bold; color: #e2e2ea; margin-bottom: 6px; font-size: 0.95em; }
+        input[type="range"] { width: 100%; accent-color: #fdc500; cursor: pointer; }
+        .btn { background: #fdc500; color: #111; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; font-size: 1em; }
+        .btn:hover { background: #fff; }
+        .btn-parachute { background: #2ecc71; color: #111; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        canvas { width: 100%; max-width: 960px; height: 340px; background: linear-gradient(180deg, #0c1826 0%, #19283d 100%); border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); display: block; margin: 0 auto; }
+        .stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; margin-top: 15px; background: #111116; padding: 14px; border-radius: 10px; font-weight: bold; }
+        .stats span { color: #fdc500; }
+        .back-link { display: inline-block; margin-top: 10px; color: #fdc500; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🪂 مقاومة الهواء والسرعة الحدية</h1>
+        <div class="breadcrumb"><a href="index.html">الرئيسية</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="unit2_g9.html">الوحدة الثانية: القوى والحركة</a></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>📘 شرح تفصيلي: مقاومة الهواء والسرعة الحدية</h2>
+            <div class="law-box">
+                <strong>مفهوم مقاومة الهواء:</strong> هي قوة احتكاك ممانعة يؤثر بها الهواء في الأجسام المتحركة خلاله، وتكون دائماً <strong>بعكس اتجاه حركة الجسم</strong>.
+            </div>
+
+            <h3>1. العوامل التي تعتمد عليها مقاومة الهواء</h3>
+            <ul>
+                <li><strong>سرعة الجسم:</strong> تزداد مقاومة الهواء بزيادة سرعة الجسم المتحرك في الهواء.</li>
+                <li><strong>مساحة السطح المعرض للهواء:</strong> كلما زادت مساحة السطح المواجهة للهواء (مثل فتح مظلة الهبوط أو فرد ورقة مقارنة بكرمشتها)، زادت مقاومة الهواء.</li>
+                <li><strong>شكل الجسم وانسيابيته:</strong> الأجسام الانسيابية تقلل مقاومة الهواء مقارنة بالأجسام المسطحة.</li>
+            </ul>
+
+            <h3>2. كيف تنشأ السرعة الحدية (Terminal Velocity)؟</h3>
+            <p>عند سقوط جسم نحو الأسفل: تبدأ سرعته بالازدياد تحت تأثير الوزن ($F_g$)، ومع زيادة السرعة تزداد مقاومة الهواء للأعلى ($F_{	ext{air}}$) تدريجياً حتى تتساوى مع الوزن ($F_{	ext{air}} = F_g$). عند هذه اللحظة تصبح القوة المحصلة صفراً ($\Sigma F = 0$) ويثبت الجسم على سرعة ثابتة تُسمّى <strong>السرعة الحدية</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h2>🎮 لعبة المحاكاة: قفزة المظلي والسرعة الحدية</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>كتلة المظلي (m): <span id="massVal" style="color:#fdc500;">70</span> كغ</label>
+                    <input type="range" id="massSlider" min="40" max="110" step="5" value="70">
+                </div>
+                <button class="btn" onclick="startDrop()">🪂 ابدأ السقوط</button>
+                <button class="btn btn-parachute" onclick="openParachute()">☂️ افتح المظلة</button>
+                <button class="btn btn-danger" onclick="resetDrop()">🔄 إعادة ضبط</button>
+            </div>
+
+            <canvas id="simCanvas" width="960" height="340"></canvas>
+
+            <div class="stats">
+                <div>قوة الوزن (Fg): <span id="fgStat" dir="ltr">686</span> N</div>
+                <div>مقاومة الهواء (Fair): <span id="fairStat" dir="ltr">0</span> N</div>
+                <div>السرعة (v): <span id="velStat" dir="ltr">0.0</span> م/ث</div>
+                <div>الحالة: <span id="statusStat">جاهز للقفز</span></div>
+            </div>
+        </div>
+        <a href="unit2_g9.html" class="back-link">🔙 العودة إلى قائمة ألعاب الوحدة الثانية</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const massSlider = document.getElementById('massSlider');
+
+        let m = 70, g = 9.8;
+        let y = 50, v = 0, parachuteOpen = false, running = false, animId = null;
+
+        massSlider.oninput = () => {
+            m = parseFloat(massSlider.value);
+            document.getElementById('massVal').textContent = m;
+            document.getElementById('fgStat').textContent = Math.round(m * g);
+            draw();
+        };
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#27ae60';
+            ctx.fillRect(0, 305, canvas.width, 35);
+
+            let cx = canvas.width / 2;
+
+            if (parachuteOpen) {
+                ctx.beginPath();
+                ctx.arc(cx, y - 28, 38, Math.PI, 0);
+                ctx.fillStyle = '#fdc500';
+                ctx.fill();
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 1.5;
+                ctx.beginPath(); ctx.moveTo(cx - 38, y - 28); ctx.lineTo(cx, y); ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(cx + 38, y - 28); ctx.lineTo(cx, y); ctx.stroke();
+            }
+
+            ctx.fillStyle = '#3498db';
+            ctx.beginPath(); ctx.arc(cx, y, 12, 0, Math.PI * 2); ctx.fill();
+
+            let fg = m * g;
+            let k = parachuteOpen ? 1.8 : 0.22;
+            let fair = k * v * v;
+
+            let fgLen = Math.min(fg * 0.08, 90);
+            ctx.beginPath(); ctx.moveTo(cx, y + 12); ctx.lineTo(cx, y + 12 + fgLen);
+            ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 4; ctx.stroke();
+            ctx.fillStyle = '#e74c3c'; ctx.font = 'bold 13px Cairo';
+            ctx.fillText('Fg الوزن', cx + 16, y + 22 + fgLen / 2);
+
+            if (fair > 5) {
+                let fairLen = Math.min(fair * 0.08, 90);
+                ctx.beginPath(); ctx.moveTo(cx, y - 12); ctx.lineTo(cx, y - 12 - fairLen);
+                ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 4; ctx.stroke();
+                ctx.fillStyle = '#2ecc71';
+                ctx.fillText('Fair مقاومة الهواء', cx + 16, y - 12 - fairLen / 2);
+            }
+        }
+
+        function step() {
+            if (!running) return;
+            let dt = 0.04;
+            let fg = m * g;
+            let k = parachuteOpen ? 1.8 : 0.22;
+            let fair = k * v * v;
+            let a = (fg - fair) / m;
+
+            v += a * dt;
+            if (v < 0) v = 0;
+            y += v * 0.65 * dt;
+
+            document.getElementById('fairStat').textContent = Math.round(fair);
+            document.getElementById('velStat').textContent = v.toFixed(1);
+
+            if (Math.abs(fg - fair) < 15) {
+                document.getElementById('statusStat').textContent = parachuteOpen ? "سرعة حدية آمنة بالمظلة" : "وصل للسرعة الحدية (ΣF = 0)";
+            } else {
+                document.getElementById('statusStat').textContent = a > 0 ? "يتسارع للأسفل" : "يتباطأ بعد فتح المظلة";
+            }
+
+            if (y >= 293) {
+                y = 293;
+                running = false;
+                document.getElementById('statusStat').textContent = v < 12 ? "🎉 هبوط آمن ممتاز!" : "⚠️ هبوط سريع! افتح المظلة مبكراً";
+            }
+
+            draw();
+            if (running) animId = requestAnimationFrame(step);
+        }
+
+        function startDrop() {
+            if (!running) {
+                if (y >= 290) resetDrop();
+                running = true;
+                step();
+            }
+        }
+
+        function openParachute() {
+            parachuteOpen = true;
+            draw();
+        }
+
+        function resetDrop() {
+            running = false;
+            if (animId) cancelAnimationFrame(animId);
+            y = 50; v = 0; parachuteOpen = false;
+            document.getElementById('fairStat').textContent = "0";
+            document.getElementById('velStat').textContent = "0.0";
+            document.getElementById('statusStat').textContent = "جاهز للقفز";
+            draw();
+        }
+
+        draw();
+    </script>
+</body>
+</html>

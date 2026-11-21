@@ -3,42 +3,214 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الصف التاسع | Light Academy</title>
+    <title>الصف التاسع | Light Academy للفيزياء</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333; display: flex; flex-direction: column; align-items: center; min-height: 100vh;}
-        header { background: linear-gradient(135deg, #16a085, #1abc9c); color: white; width: 100%; text-align: center; padding: 30px 0; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        h1 { margin: 0; font-size: 2.5em; }
-        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
-        .breadcrumb a { color: #ecf0f1; text-decoration: none; font-weight: bold;}
-        .breadcrumb a:hover { text-decoration: underline; color: #f1c40f;}
-        .container { display: flex; gap: 30px; margin-top: 50px; flex-wrap: wrap; justify-content: center; max-width: 1200px; padding: 20px; }
-        .card { background: white; width: 300px; border-radius: 15px; padding: 30px; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.1); transition: transform 0.3s; text-decoration: none; color: #333; display: flex; flex-direction: column; align-items: center; }
-        .card:hover { transform: translateY(-10px); border-bottom: 5px solid #16a085; }
-        .icon { font-size: 4em; margin-bottom: 15px; }
-        .card h2 { color: #16a085; margin-bottom: 15px; }
-        .btn { background-color: #16a085; color: white; padding: 10px 25px; border-radius: 25px; font-weight: bold; width: 80%; }
-        .card:hover .btn { background-color: #117a65; }
-        .disabled { opacity: 0.6; cursor: not-allowed; }
-        .disabled:hover { transform: none; border-bottom: none; }
-        .disabled .btn { background-color: #95a5a6; }
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.disabled { opacity: 0.45; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
+.disabled:hover { transform: none; border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.035); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+.disabled .btn { background-color: #2c2c34; color: #8c8c98; }
+.disabled:hover .btn { background-color: #2c2c34; color: #8c8c98; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+</style>
 </head>
 <body>
+    <div class="bg-lines"></div>
     <header>
         <h1>🏫 فيزياء الصف التاسع</h1>
-        <div class="breadcrumb"><a href="index.html">Light Academy</a> > الصف التاسع</div>
+        <div class="breadcrumb"><a href="index.html">Light Academy</a> &gt; الصف التاسع</div>
     </header>
     <div class="container">
-        <a href="grade9_sem1.html" class="card">
-            <div class="icon">🍂</div>
-            <h2>الفصل الدراسي الأول</h2>
-            <div class="btn">اختر الفصل</div>
-        </a>
-        <a href="#" class="card disabled" onclick="event.preventDefault();">
-            <div class="icon">🌸</div>
-            <h2>الفصل الدراسي الثاني</h2>
-            <div class="btn">قريباً</div>
-        </a>
+        <div class="cards-grid">
+            <a href="grade9_sem1.html" class="card">
+                <div>
+                    <div class="icon">🍂</div>
+                    <h2>الفصل الدراسي الأول</h2>
+                    <p>الوحدة 1: القياس وأدواته — الوحدة 2: القوى والحركة — الوحدة 3: الشغل والآلات.</p>
+                </div>
+                <div class="btn">اختر الفصل</div>
+            </a>
+            <a href="#" class="card disabled" onclick="event.preventDefault();">
+                <div>
+                    <div class="icon">🌸</div>
+                    <h2>الفصل الدراسي الثاني</h2>
+                    <p>دروس الفصل الثاني للصف التاسع قيد الإضافة.</p>
+                </div>
+                <div class="btn">قريباً</div>
+            </a>
+        </div>
+        <div class="footer-nav">
+            <a href="index.html" class="back-btn">🔙 العودة للرئيسية</a>
+        </div>
     </div>
 </body>
 </html>

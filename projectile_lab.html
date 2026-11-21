@@ -3,356 +3,453 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محاكاة حركة المقذوفات</title>
+    <title>مختبر حركة المقذوفات | Light Academy للفيزياء</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 20px;
-            background-color: #f0f4f8;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            user-select: none;
-        }
-        h1 { margin-bottom: 10px; color: #2c3e50; }
+        
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.disabled { opacity: 0.45; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
+.disabled:hover { transform: none; border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.035); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+.disabled .btn { background-color: #2c2c34; color: #8c8c98; }
+.disabled:hover .btn { background-color: #2c2c34; color: #8c8c98; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+
         .controls-container {
-            background: white;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-            display: flex;
-            gap: 30px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
+            background: rgba(255, 255, 255, 0.035); border: 1px solid rgba(253, 197, 0, 0.25);
+            padding: 20px 28px; border-radius: 16px; margin-bottom: 22px;
+            display: flex; gap: 30px; align-items: center; flex-wrap: wrap; justify-content: center;
         }
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .control-group label { font-weight: bold; font-size: 1.1em;}
-        .control-group input { width: 150px; cursor: pointer; }
-        .value-display { font-size: 1.2em; color: #2980b9; font-weight: bold; }
-        button {
-            background-color: #e74c3c;
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            font-size: 1.2em;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background 0.3s;
-            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.3);
-        }
-        button:hover { background-color: #c0392b; }
+        .control-group { display: flex; flex-direction: column; gap: 6px; }
+        .control-group label { font-weight: 700; font-size: 1.08em; }
+        .control-group input { width: 170px; cursor: pointer; accent-color: #fdc500; }
+        .value-display { font-size: 1.15em; color: #fdc500; font-weight: 900; }
         .canvas-container {
-            position: relative;
-            background: white;
-            border: 2px solid #bdc3c7;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative; background: #141419; border: 2px solid rgba(253, 197, 0, 0.4);
+            border-radius: 16px; overflow: hidden; max-width: 100%;
         }
-        canvas { display: block; }
+        canvas { display: block; max-width: 100%; height: auto; }
         .stats {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #bdc3c7;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            font-size: 1.1em;
-            min-width: 200px;
+            position: absolute; top: 18px; right: 18px; background: rgba(15, 15, 18, 0.88);
+            padding: 14px 18px; border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); font-size: 1.1em;
         }
-        .stats p { margin: 8px 0; font-weight: bold; }
-        .stat-x { color: #2980b9; }
-        .stat-y { color: #c0392b; }
-        .stat-max-x { color: #8e44ad; }
-        .stat-max-y { color: #d35400; }
+        .stats p { margin: 4px 0; font-weight: 800; }
+        .stat-x { color: #fdc500; }
+        .stat-y { color: #3498db; }
         .message {
-            position: absolute;
-            top: 150px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3em;
-            color: #2980b9;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
+            position: absolute; top: 140px; left: 50%; transform: translateX(-50%);
+            font-size: 2.6em; color: #fdc500; font-weight: 900; opacity: 0; transition: opacity 0.3s; pointer-events: none;
         }
     </style>
 </head>
 <body>
-
-    <h1>🎮 مختبر حركة المقذوفات</h1>
-    
-    <div class="controls-container">
-        <div class="control-group">
-            <label for="angle">الزاوية (درجة): <span id="angleValue" class="value-display">45</span>°</label>
-            <input type="range" id="angle" min="0" max="90" value="45">
+    <div class="bg-lines"></div>
+    <header>
+        <h1>🎮 مختبر حركة المقذوفات</h1>
+        <div class="breadcrumb">
+            <a href="index.html">Light Academy</a> &gt;
+            <a href="grade10.html">الصف العاشر</a> &gt;
+            <a href="unit2.html">الوحدة الثانية</a> &gt; الحركة في بُعدين
         </div>
-        
-        <div class="control-group">
-            <label for="speed">السرعة الابتدائية (م/ث): <span id="speedValue" class="value-display">20</span></label>
-            <input type="range" id="speed" min="5" max="40" value="20">
+    </header>
+    <div class="container">
+        <div class="controls-container">
+            <div class="control-group">
+                <label for="angle">الزاوية (درجة): <span id="angleValue" class="value-display">45</span>°</label>
+                <input type="range" id="angle" min="0" max="90" value="45">
+            </div>
+            <div class="control-group">
+                <label for="speed">السرعة الابتدائية (م/ث): <span id="speedValue" class="value-display">20</span></label>
+                <input type="range" id="speed" min="5" max="40" value="20">
+            </div>
+            <button type="button" class="quiz-btn" id="fireBtn">🚀 إطلاق القذيفة (Space)</button>
         </div>
 
-        <button id="fireBtn">🚀 إطلاق القذيفة (Space)</button>
+        <div class="canvas-container">
+            <canvas id="gameCanvas" width="1000" height="540"></canvas>
+            <div class="stats">
+                <p class="stat-x">المدى الأفقي (X): <span id="valX" dir="ltr">0.00</span> م</p>
+                <p class="stat-y">الارتفاع (Y): <span id="valY" dir="ltr">0.00</span> م</p>
+            </div>
+            <div id="successMsg" class="message">🎉 إصابة دقيقة!</div>
+        </div>
+
+        <div class="section" style="margin-top:26px;">
+            <h2>📝 شرح حركة المقذوفات</h2>
+            <ul class="summary-list">
+                <li>تجمع حركة المقذوف بين حركة أفقية منتظمة (<span dir="ltr" class="formula-pill">aₓ = 0</span>) وحركة رأسية بتسارع الجاذبية (<span dir="ltr" class="formula-pill">g = 9.8 m/s²</span>).</li>
+                <li>أقصى مدى أفقي على سطح أفقي يتحقق عند زاوية الإطلاق <span class="highlight">45°</span>.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>❓ اختبر فهمك (5 أسئلة ضع دائرة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: بإهمال مقاومة الهواء، ما مقدار التسارع الأفقي (aₓ) للمقذوف أثناء طيرانه؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> صفر</label>
+                        <label><input type="radio" name="q1" value="b"> 9.8 m/s²</label>
+                        <label><input type="radio" name="q1" value="c"> يزداد تدريجياً</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: زاوية الإطلاق التي تعطي أكبر مدى أفقي على سطح مستوٍ هي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> 30°</label>
+                        <label><input type="radio" name="q2" value="b"> 45°</label>
+                        <label><input type="radio" name="q2" value="c"> 90°</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: عند أقصى ارتفاع يصل إليه المقذوف، فإن المركبة الرأسية لسرعته (vᵧ) تساوي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> صفراً</label>
+                        <label><input type="radio" name="q3" value="b"> v₀</label>
+                        <label><input type="radio" name="q3" value="c"> v₀ cos θ</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: المركبة الأفقية للسرعة الابتدائية تُحسب بالعلاقة:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> v₀ sin θ</label>
+                        <label><input type="radio" name="q4" value="b"> v₀ cos θ</label>
+                        <label><input type="radio" name="q4" value="c"> g t</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: مسار المقذوف في الهواء بإهمال مقاومة الهواء يكون على شكل:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> خط مستقيم</label>
+                        <label><input type="radio" name="q5" value="b"> دائرة كاملة</label>
+                        <label><input type="radio" name="q5" value="c"> قطع مكافئ</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+
+        <div class="footer-nav">
+            <a href="unit2.html" class="back-btn">🔙 العودة للوحدة الثانية</a>
+        </div>
     </div>
-
-    <div class="canvas-container">
-        <canvas id="gameCanvas" width="1000" height="600"></canvas>
-        <div class="stats">
-            <p class="stat-x">الإزاحة الأفقية الحالية: <span id="valX" dir="ltr">0.00</span> م</p>
-            <p class="stat-y">الارتفاع الحالي: <span id="valY" dir="ltr">0.00</span> م</p>
-            <hr style="border: 0; border-top: 2px dashed #ddd; margin: 12px 0;">
-            <p class="stat-max-x">🎯 أقصى مدى أفقي: <span id="maxX" dir="ltr">0.00</span> م</p>
-            <p class="stat-max-y">⛰️ أقصى ارتفاع: <span id="maxY" dir="ltr">0.00</span> م</p>
-        </div>
-        <div id="successMsg" class="message">🎉 إصابة دقيقة!</div>
-    </div>
-
     <script>
-        // --- نظام الصوت المدمج ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
+function checkQuiz() {
+    const correct = ['a', 'b', 'a', 'b', 'c'];
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+        const chosen = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!chosen) {
+            alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!");
+            return;
+        }
+        if (chosen.value === correct[i - 1]) score++;
+    }
+    const res = document.getElementById('quiz-result');
+    res.style.display = "block";
+    if (score === 5) {
+        res.innerHTML = "🎉 ممتاز! علامتك (" + score + "/5). أتقنت الدرس بنجاح.";
+        res.style.background = "rgba(46, 204, 113, 0.2)";
+        res.style.color = "#2ecc71";
+        res.style.border = "1px solid #2ecc71";
+    } else if (score >= 3) {
+        res.innerHTML = "👍 جيد جداً، علامتك (" + score + "/5). راجع النقاط التي أخطأت فيها.";
+        res.style.background = "rgba(253, 197, 0, 0.2)";
+        res.style.color = "#fdc500";
+        res.style.border = "1px solid #fdc500";
+    } else {
+        res.innerHTML = "💡 علامتك (" + score + "/5). أعد قراءة الشرح ثم جرّب مرة أخرى.";
+        res.style.background = "rgba(231, 76, 60, 0.2)";
+        res.style.color = "#ff6b6b";
+        res.style.border = "1px solid #e74c3c";
+    }
+}
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         function playFireSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+            osc.connect(gain); gain.connect(audioCtx.destination);
             osc.type = 'square';
             osc.frequency.setValueAtTime(300, audioCtx.currentTime);
             osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.3);
             gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.3);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.3);
         }
-
         function playHitSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
             [523.25, 659.25, 783.99].forEach((freq, i) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.type = 'sine';
-                osc.frequency.value = freq;
+                const osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.type = 'sine'; osc.frequency.value = freq;
                 gain.gain.setValueAtTime(0.2, audioCtx.currentTime + i * 0.1);
                 gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.1 + 0.5);
-                osc.start(audioCtx.currentTime + i * 0.1);
-                osc.stop(audioCtx.currentTime + i * 0.1 + 0.5);
+                osc.start(audioCtx.currentTime + i * 0.1); osc.stop(audioCtx.currentTime + i * 0.1 + 0.5);
             });
         }
-        // -------------------------
-
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const angleSlider = document.getElementById('angle');
-        const speedSlider = document.getElementById('speed');
-        const fireBtn = document.getElementById('fireBtn');
-        const valX = document.getElementById('valX');
-        const valY = document.getElementById('valY');
-        const maxValX = document.getElementById('maxX');
-        const maxValY = document.getElementById('maxY');
-        const successMsg = document.getElementById('successMsg');
-
-        // الثوابت الفيزيائية
-        const g = 9.8; 
-        const scale = 10; 
-        const startX = 60; // إزاحة بسيطة لليمين لظهور الأرقام بوضوح
-        const groundY = canvas.height - 80;
-        
-        let projectile = null;
-        let target = { x: 800, w: 80, h: 20 };
-        let animationId = null;
-
-        angleSlider.addEventListener('input', () => document.getElementById('angleValue').textContent = angleSlider.value);
-        speedSlider.addEventListener('input', () => document.getElementById('speedValue').textContent = speedSlider.value);
-
+        const canvas = document.getElementById('gameCanvas'), ctx = canvas.getContext('2d');
+        const angleSlider = document.getElementById('angle'), speedSlider = document.getElementById('speed'), fireBtn = document.getElementById('fireBtn');
+        const valX = document.getElementById('valX'), valY = document.getElementById('valY'), successMsg = document.getElementById('successMsg');
+        const g = 9.8, scale = 10, startX = 50, groundY = canvas.height - 90;
+        let projectile = null, target = { x: 800, w: 80, h: 20 }, animationId = null;
+        angleSlider.addEventListener('input', () => {
+            document.getElementById('angleValue').textContent = angleSlider.value;
+            if (!projectile || !projectile.active) drawScene();
+        });
+        speedSlider.addEventListener('input', () => { document.getElementById('speedValue').textContent = speedSlider.value; });
         function drawGrid() {
-            // خطوط الشبكة الخفيفة
-            ctx.strokeStyle = '#bdc3c7';
-            ctx.lineWidth = 1;
-            ctx.fillStyle = '#2c3e50'; 
-            ctx.font = 'bold 15px Tahoma';
-            
-            // خطوط عمودية (المحور السيني)
-            ctx.textAlign = 'center';
-            for(let i = startX; i < canvas.width; i += scale * 10) {
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.07)'; ctx.lineWidth = 1;
+            for (let i = startX; i < canvas.width; i += scale * 10) {
                 ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, canvas.height); ctx.stroke();
-                if(i >= startX) {
-                    ctx.fillText(((i - startX)/scale) + 'm', i, groundY + 25);
+                if (i > startX) {
+                    ctx.fillStyle = '#8e8e9a'; ctx.font = 'bold 13px Cairo, sans-serif';
+                    ctx.fillText(((i - startX) / scale) + 'm', i - 14, groundY + 26);
                 }
             }
-
-            // خطوط أفقية (المحور الصادي)
-            ctx.textAlign = 'right';
-            for(let i = groundY; i > 0; i -= scale * 10) {
+            for (let i = groundY; i > 0; i -= scale * 10) {
                 ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(canvas.width, i); ctx.stroke();
-                if(i <= groundY && i > 20) {
-                    ctx.fillText(((groundY - i)/scale) + 'm', startX - 8, i + 5);
+                if (i < groundY) {
+                    ctx.fillStyle = '#8e8e9a'; ctx.font = 'bold 13px Cairo, sans-serif';
+                    ctx.fillText(((groundY - i) / scale) + 'm', startX - 38, i + 5);
                 }
             }
-
-            // رسم المحاور الرئيسية بخط سميك وواضح جداً
-            ctx.strokeStyle = '#2c3e50';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(startX, 0); ctx.lineTo(startX, canvas.height); // محور الصادات
-            ctx.moveTo(0, groundY); ctx.lineTo(canvas.width, groundY); // محور السينات
-            ctx.stroke();
         }
-
         function drawScene() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawGrid();
-
-            // الأرض والهدف
-            ctx.fillStyle = '#27ae60';
-            ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
-            ctx.fillStyle = '#f1c40f';
-            ctx.fillRect(target.x, groundY - target.h, target.w, target.h);
-            
-            // رسم المدفع
+            ctx.fillStyle = '#1e1e26'; ctx.fillRect(0, groundY, canvas.width, canvas.height - groundY);
+            ctx.fillStyle = 'rgba(253, 197, 0, 0.5)'; ctx.fillRect(0, groundY, canvas.width, 3);
+            ctx.fillStyle = '#fdc500'; ctx.fillRect(target.x, groundY - target.h, target.w, target.h);
+            ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.strokeRect(target.x, groundY - target.h, target.w, target.h);
             const angleRad = angleSlider.value * Math.PI / 180;
-            ctx.save();
-            ctx.translate(startX, groundY);
-            ctx.rotate(-angleRad);
-            ctx.fillStyle = '#555';
-            ctx.fillRect(0, -10, 60, 20); 
-            ctx.restore();
-            
-            ctx.fillStyle = '#7f8c8d';
-            ctx.beginPath(); ctx.arc(startX, groundY, 30, Math.PI, 0); ctx.fill();
-            ctx.strokeStyle = '#2c3e50'; ctx.lineWidth = 3; ctx.stroke();
-            ctx.fillStyle = '#2c3e50';
-            ctx.beginPath(); ctx.arc(startX, groundY, 12, 0, Math.PI * 2); ctx.fill();
-            ctx.fillStyle = '#bdc3c7';
-            ctx.beginPath(); ctx.arc(startX, groundY, 4, 0, Math.PI * 2); ctx.fill();
-            
-            // مسار القذيفة
+            ctx.save(); ctx.translate(startX, groundY); ctx.rotate(-angleRad);
+            ctx.fillStyle = '#fdc500'; ctx.fillRect(0, -10, 62, 20); ctx.restore();
+            ctx.fillStyle = '#3a3a46'; ctx.beginPath(); ctx.arc(startX, groundY, 30, Math.PI, 0); ctx.fill();
+            ctx.strokeStyle = '#fdc500'; ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.fillStyle = '#0f0f12'; ctx.beginPath(); ctx.arc(startX, groundY, 13, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = '#fdc500'; ctx.beginPath(); ctx.arc(startX, groundY, 5, 0, Math.PI * 2); ctx.fill();
             if (projectile && projectile.path.length > 0) {
-                ctx.beginPath();
-                ctx.moveTo(projectile.path[0].x, projectile.path[0].y);
-                for(let p of projectile.path) ctx.lineTo(p.x, p.y);
-                ctx.strokeStyle = '#e74c3c';
-                ctx.lineWidth = 2;
-                ctx.stroke();
+                ctx.beginPath(); ctx.moveTo(projectile.path[0].x, projectile.path[0].y);
+                for (let p of projectile.path) ctx.lineTo(p.x, p.y);
+                ctx.strokeStyle = '#fdc500'; ctx.lineWidth = 2.5; ctx.stroke();
             }
-
-            // القذيفة
             if (projectile && projectile.active) {
-                ctx.beginPath();
-                ctx.arc(projectile.currentX, projectile.currentY, 8, 0, Math.PI * 2);
-                ctx.fillStyle = '#2c3e50';
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(projectile.currentX, projectile.currentY, 8, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff'; ctx.fill(); ctx.strokeStyle = '#fdc500'; ctx.lineWidth = 2; ctx.stroke();
             }
         }
-
         function generateRandomTarget() {
-            const randomMeters = Math.floor(Math.random() * 60) + 30; 
-            target.x = startX + (randomMeters * scale);
+            target.x = startX + ((Math.floor(Math.random() * 60) + 30) * scale);
         }
-
         function updatePhysics() {
             if (!projectile || !projectile.active) return;
-
             projectile.time += 0.05;
             let t = projectile.time;
-
             let xMeters = projectile.v0 * Math.cos(projectile.angle) * t;
             let yMeters = projectile.v0 * Math.sin(projectile.angle) * t - 0.5 * g * t * t;
-
-            // تحديث العدادات الحالية
             valX.textContent = xMeters.toFixed(2);
             valY.textContent = Math.max(0, yMeters).toFixed(2);
-
-            // تتبع أقصى مدى وأقصى ارتفاع
-            projectile.maxX = Math.max(projectile.maxX, xMeters);
-            projectile.maxY = Math.max(projectile.maxY, yMeters);
-            
-            maxValX.textContent = projectile.maxX.toFixed(2);
-            maxValY.textContent = projectile.maxY.toFixed(2);
-
             projectile.currentX = startX + (xMeters * scale);
             projectile.currentY = groundY - (yMeters * scale);
-            projectile.path.push({x: projectile.currentX, y: projectile.currentY});
-
+            projectile.path.push({ x: projectile.currentX, y: projectile.currentY });
             if (projectile.currentY >= groundY && t > 0.1) {
-                projectile.currentY = groundY;
-                projectile.active = false;
-                
+                projectile.currentY = groundY; projectile.active = false;
                 if (projectile.currentX >= target.x && projectile.currentX <= target.x + target.w) {
-                    playHitSound();
-                    successMsg.style.opacity = '1';
-                    setTimeout(() => {
-                        successMsg.style.opacity = '0';
-                        generateRandomTarget();
-                        drawScene();
-                    }, 2000);
+                    playHitSound(); successMsg.style.opacity = '1';
+                    setTimeout(() => { successMsg.style.opacity = '0'; generateRandomTarget(); drawScene(); }, 2000);
                 }
             }
         }
-
         function gameLoop() {
-            updatePhysics();
-            drawScene();
-            if (projectile && projectile.active) {
-                animationId = requestAnimationFrame(gameLoop);
-            }
+            updatePhysics(); drawScene();
+            if (projectile && projectile.active) animationId = requestAnimationFrame(gameLoop);
         }
-
         function fire() {
-            if(animationId) cancelAnimationFrame(animationId);
-            playFireSound();
-            
-            valX.textContent = "0.00";
-            valY.textContent = "0.00";
-            maxValX.textContent = "0.00";
-            maxValY.textContent = "0.00";
-            successMsg.style.opacity = '0';
-
-            projectile = {
-                v0: parseFloat(speedSlider.value),
-                angle: parseFloat(angleSlider.value) * Math.PI / 180,
-                time: 0,
-                currentX: startX,
-                currentY: groundY,
-                active: true,
-                path: [],
-                maxX: 0,
-                maxY: 0
-            };
+            if (animationId) cancelAnimationFrame(animationId);
+            playFireSound(); valX.textContent = "0.00"; valY.textContent = "0.00"; successMsg.style.opacity = '0';
+            projectile = { v0: parseFloat(speedSlider.value), angle: parseFloat(angleSlider.value) * Math.PI / 180, time: 0, currentX: startX, currentY: groundY, active: true, path: [] };
             gameLoop();
         }
-
         fireBtn.addEventListener('click', fire);
-
         document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault(); 
-                fire();
-            }
-            if (e.code === 'ArrowUp' && angleSlider.value < 90) { angleSlider.value++; angleSlider.dispatchEvent(new Event('input')); drawScene();}
-            if (e.code === 'ArrowDown' && angleSlider.value > 0) { angleSlider.value--; angleSlider.dispatchEvent(new Event('input')); drawScene();}
+            if (e.code === 'Space') { e.preventDefault(); fire(); }
+            if (e.code === 'ArrowUp' && angleSlider.value < 90) { angleSlider.value++; angleSlider.dispatchEvent(new Event('input')); }
+            if (e.code === 'ArrowDown' && angleSlider.value > 0) { angleSlider.value--; angleSlider.dispatchEvent(new Event('input')); }
             if (e.code === 'ArrowRight' && speedSlider.value < 40) { speedSlider.value++; speedSlider.dispatchEvent(new Event('input')); }
             if (e.code === 'ArrowLeft' && speedSlider.value > 5) { speedSlider.value--; speedSlider.dispatchEvent(new Event('input')); }
         });
-
-        generateRandomTarget();
-        drawScene();
+        generateRandomTarget(); drawScene();
     </script>
 </body>
 </html>

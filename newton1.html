@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قانون نيوتن الأول (القصور الذاتي) | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0f0f12; color: #fff; margin: 0; padding: 0; line-height: 1.85; }
+        header { background: linear-gradient(135deg, #1b1a14, #09090b); border-bottom: 1px solid rgba(253, 197, 0, 0.3); padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; color: #fdc500; font-size: 2em; }
+        .breadcrumb { margin-top: 8px; color: #bbb; font-size: 0.95em; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1020px; margin: 25px auto; padding: 0 15px; }
+        .card { background: #18181f; border: 1px solid rgba(253, 197, 0, 0.25); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        h2 { color: #fdc500; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { color: #fdc500; margin: 18px 0 8px 0; font-size: 1.2em; }
+        .law-box { background: rgba(253, 197, 0, 0.08); border-right: 4px solid #fdc500; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .controls { display: flex; flex-wrap: wrap; gap: 18px; background: #111116; padding: 16px; border-radius: 12px; margin-bottom: 15px; align-items: center; justify-content: center; }
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 200px; }
+        label { font-weight: bold; color: #e2e2ea; margin-bottom: 6px; font-size: 0.95em; }
+        input[type="range"] { width: 100%; accent-color: #fdc500; cursor: pointer; }
+        .btn { background: #fdc500; color: #111; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; font-size: 1em; }
+        .btn:hover { background: #fff; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        canvas { width: 100%; max-width: 960px; height: 270px; background: #12131a; border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); display: block; margin: 0 auto; }
+        .stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; margin-top: 15px; background: #111116; padding: 14px; border-radius: 10px; font-weight: bold; }
+        .stats span { color: #fdc500; }
+        .back-link { display: inline-block; margin-top: 10px; color: #fdc500; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🧊 قانون نيوتن الأول (القصور الذاتي والاتزان)</h1>
+        <div class="breadcrumb"><a href="index.html">الرئيسية</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="unit2_g9.html">الوحدة الثانية: القوى والحركة</a></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>📘 شرح تفصيلي: قانون نيوتن الأول والقصور الذاتي</h2>
+            <div class="law-box">
+                <strong>نص قانون نيوتن الأول:</strong> «يبقى الجسم على حالته من حيث السكون أو الحركة في خط مستقيم بسرعة ثابتة ما لم تؤثر فيه قوة محصلة تغير من حالته الحركية» ($\Sigma ec{F} = 0$).
+            </div>
+
+            <h3>1. ما المقصود بالقصور الذاتي (Inertia)؟</h3>
+            <p>القصور الذاتي هو خاصية فيزيائية تعبّر عن <strong>ممانعة الجسم لأي تغير في حالته الحركية</strong> (سواء كان ساكناً يقاوم الحركة، أو متحركاً يقاوم التوقف أو تغيير اتجاهه).</p>
+            <ul>
+                <li><strong>علاقة القصور الذاتي بالكتلة:</strong> يعتمد القصور الذاتي طردياً على <strong>الكتلة</strong>؛ فالشاحنة الثقيلة تمتلك قصوراً ذاتياً أكبر بكثير من سيارة صغيرة، لذا تحتاج إلى قوة أكبر لتحريكها أو لإيقافها.</li>
+            </ul>
+
+            <h3>2. حالة الاتزان (<span dir="ltr">ΣF = 0</span>)</h3>
+            <ul>
+                <li><strong>اتزان سكوني:</strong> جسم ساكن تؤثر فيه قوتان متساويتان في المقدار ومتعاكستان في الاتجاه (مثل كتاب موضوع على طاولة)، فتكون القوة المحصلة صفراً ويبقى ساكناً.</li>
+                <li><strong>اتزان حركي (ديناميكي):</strong> جسم يتحرك بسرعة ثابتة في خط مستقيم لأن القوة الدافعة تساوي قوة الاحتكاك أو المقاومة تماماً في المقدار وتعاكسها في الاتجاه.</li>
+            </ul>
+
+            <h3>3. أمثلة حياتية من واقعنا</h3>
+            <ul>
+                <li><strong>اندفاع الركاب للأمام عند التوقف المفاجئ للحافلة:</strong> لأن أجسام الركاب كانت متحركة بسرعة الحافلة فتستمر في حركتها بفعل القصور الذاتي بينما تتوقف الحافلة بفعل المكابح.</li>
+                <li><strong>سحب مفرش المائدة بسرعة:</strong> تبقى الأطباق الساكنة في مكانها تقريباً إذا كان الاحتكاك قصير الزمن والكتلة مناسبة.</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h2>🎮 لعبة المحاكاة: تجربة القصور الذاتي والاحتكاك</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>قوة الدفع الابتدائية: <span id="pushVal" style="color:#fdc500;">20</span> نيوتن</label>
+                    <input type="range" id="pushSlider" min="5" max="40" value="20">
+                </div>
+                <div class="control-group">
+                    <label>كتلة الجسم (القصور الذاتي): <span id="massVal" style="color:#fdc500;">5</span> كغ</label>
+                    <input type="range" id="massSlider" min="2" max="20" value="5">
+                </div>
+                <div class="control-group">
+                    <label>السطح ومعامل الاحتكاك: <span id="fricVal" style="color:#fdc500;">0.00 (جليد أملس)</span></label>
+                    <input type="range" id="fricSlider" min="0" max="0.5" step="0.05" value="0">
+                </div>
+                <button class="btn" onclick="launchBox()">🚀 ادفع الجسم</button>
+                <button class="btn btn-danger" onclick="resetBox()">🔄 إعادة ضبط</button>
+            </div>
+
+            <canvas id="simCanvas" width="960" height="270"></canvas>
+
+            <div class="stats">
+                <div>السرعة الحالية: <span id="velDisplay" dir="ltr">0.00</span> م/ث</div>
+                <div>قوة الاحتكاك (f): <span id="fricForceDisplay" dir="ltr">0.00</span> نيوتن</div>
+                <div>المحصلة (ΣF): <span id="netForceDisplay" dir="ltr">0.00</span> نيوتن</div>
+                <div>الحالة: <span id="stateDisplay">ساكن (ΣF = 0)</span></div>
+            </div>
+        </div>
+        <a href="unit2_g9.html" class="back-link">🔙 العودة إلى قائمة ألعاب الوحدة الثانية</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const pushSlider = document.getElementById('pushSlider');
+        const massSlider = document.getElementById('massSlider');
+        const fricSlider = document.getElementById('fricSlider');
+
+        let x = 80, v = 0, mu = 0, mass = 5;
+        const g = 9.8;
+        let animId = null;
+
+        function updateControlsLabel() {
+            mass = parseFloat(massSlider.value);
+            mu = parseFloat(fricSlider.value);
+            document.getElementById('pushVal').textContent = pushSlider.value;
+            document.getElementById('massVal').textContent = mass;
+            let sLabel = mu === 0 ? "0.00 (جليد أملس)" : mu <= 0.2 ? mu.toFixed(2) + " (بلاط)" : mu.toFixed(2) + " (سطح خشن)";
+            document.getElementById('fricVal').textContent = sLabel;
+            draw();
+        }
+
+        pushSlider.oninput = updateControlsLabel;
+        massSlider.oninput = updateControlsLabel;
+        fricSlider.oninput = updateControlsLabel;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = mu === 0 ? '#18324a' : mu <= 0.2 ? '#252936' : '#3d2c1e';
+            ctx.fillRect(0, 210, canvas.width, 60);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.35)';
+            ctx.font = '12px Cairo';
+            for (let i = 60; i < canvas.width; i += 100) {
+                ctx.fillRect(i, 210, 2, 10);
+                ctx.fillText(((i - 60) / 10) + 'م', i - 10, 236);
+            }
+
+            let boxSize = 46 + mass * 1.2;
+            let topY = 210 - boxSize;
+            ctx.fillStyle = '#fdc500';
+            ctx.fillRect(x, topY, boxSize, boxSize);
+            ctx.strokeStyle = '#fff';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(x, topY, boxSize, boxSize);
+
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 13px Cairo';
+            ctx.fillText(mass + ' كغ', x + 8, topY + boxSize / 2 + 4);
+
+            if (v > 0.05) {
+                let vLen = Math.min(v * 7, 150);
+                ctx.beginPath(); ctx.moveTo(x + boxSize, topY + boxSize / 2); ctx.lineTo(x + boxSize + vLen, topY + boxSize / 2);
+                ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 4; ctx.stroke();
+                ctx.fillStyle = '#2ecc71'; ctx.fillText('v (اتجاه الحركة)', x + boxSize + 5, topY + boxSize / 2 - 10);
+
+                if (mu > 0) {
+                    let fk = mu * mass * g;
+                    let fLen = Math.min(fk * 2.5, 120);
+                    ctx.beginPath(); ctx.moveTo(x, topY + boxSize - 8); ctx.lineTo(x - fLen, topY + boxSize - 8);
+                    ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 4; ctx.stroke();
+                    ctx.fillStyle = '#e74c3c'; ctx.fillText('f احتكاك', Math.max(10, x - fLen), topY + boxSize - 16);
+                }
+            }
+        }
+
+        function step() {
+            let dt = 0.04;
+            let fk = mu * mass * g;
+            if (v > 0) {
+                let a = -(fk / mass);
+                v += a * dt;
+                if (v <= 0) {
+                    v = 0;
+                    document.getElementById('stateDisplay').textContent = "توقف بفعل الاحتكاك (ΣF = 0)";
+                    document.getElementById('netForceDisplay').textContent = "0.00";
+                } else {
+                    document.getElementById('stateDisplay').textContent = mu === 0 ? "سرعة ثابتة — قصور ذاتي (ΣF = 0)" : "يتباطأ بسبب الاحتكاك";
+                    document.getElementById('netForceDisplay').textContent = (-fk).toFixed(2);
+                }
+                x += v * 14 * dt;
+                if (x > canvas.width) x = -80;
+            }
+            document.getElementById('velDisplay').textContent = v.toFixed(2);
+            document.getElementById('fricForceDisplay').textContent = (v > 0 ? fk : 0).toFixed(2);
+            draw();
+            if (v > 0) animId = requestAnimationFrame(step);
+        }
+
+        function launchBox() {
+            if (animId) cancelAnimationFrame(animId);
+            let pushF = parseFloat(pushSlider.value);
+            v = (pushF * 0.6) / Math.sqrt(mass / 5);
+            step();
+        }
+
+        function resetBox() {
+            if (animId) cancelAnimationFrame(animId);
+            x = 80; v = 0;
+            document.getElementById('velDisplay').textContent = "0.00";
+            document.getElementById('fricForceDisplay').textContent = "0.00";
+            document.getElementById('netForceDisplay').textContent = "0.00";
+            document.getElementById('stateDisplay').textContent = "ساكن (ΣF = 0)";
+            updateControlsLabel();
+        }
+
+        updateControlsLabel();
+    </script>
+</body>
+</html>

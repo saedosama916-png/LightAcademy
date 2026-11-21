@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حد المرونة للنابض (قانون هوك) | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0f0f12; color: #fff; margin: 0; padding: 0; line-height: 1.85; }
+        header { background: linear-gradient(135deg, #1b1a14, #09090b); border-bottom: 1px solid rgba(253, 197, 0, 0.3); padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; color: #fdc500; font-size: 2em; }
+        .breadcrumb { margin-top: 8px; color: #bbb; font-size: 0.95em; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1020px; margin: 25px auto; padding: 0 15px; }
+        .card { background: #18181f; border: 1px solid rgba(253, 197, 0, 0.25); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        h2 { color: #fdc500; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { color: #fdc500; margin: 18px 0 8px 0; font-size: 1.2em; }
+        .law-box { background: rgba(253, 197, 0, 0.08); border-right: 4px solid #fdc500; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .controls { display: flex; flex-wrap: wrap; gap: 18px; background: #111116; padding: 16px; border-radius: 12px; margin-bottom: 15px; align-items: center; justify-content: center; }
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 220px; }
+        label { font-weight: bold; color: #e2e2ea; margin-bottom: 6px; font-size: 0.95em; }
+        input[type="range"] { width: 100%; accent-color: #fdc500; cursor: pointer; }
+        .btn-danger { background: #e74c3c; color: #fff; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; font-size: 1em; }
+        .sim-grid { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; align-items: center; }
+        canvas { background: #12131a; border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); max-width: 100%; }
+        .stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; margin-top: 15px; background: #111116; padding: 14px; border-radius: 10px; font-weight: bold; }
+        .stats span { color: #fdc500; }
+        .back-link { display: inline-block; margin-top: 10px; color: #fdc500; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🌀 حد المرونة للنابض (قانون هوك)</h1>
+        <div class="breadcrumb"><a href="index.html">الرئيسية</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="unit2_g9.html">الوحدة الثانية: القوى والحركة</a></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>📘 شرح تفصيلي: مرونة النابض وحد المرونة</h2>
+            <div class="law-box">
+                <strong>قانون هوك:</strong> «تتناسب استطالة النابض ($\Delta x$) طردياً مع قوة الشد المؤثرة فيه ($F$) ضمن حدود المرونة»؛ <span dir="ltr" style="color:#fdc500; font-weight:bold;">F = k × Δx</span> حيث ($k$) ثابت النابض بوحدة (N/m).
+            </div>
+
+            <h3>1. منطقة المرونة وحد المرونة (Elastic Limit)</h3>
+            <ul>
+                <li><strong>المرونة:</strong> قدرة الجسم على استعادة شكله وطوله الأصلي بعد زوال القوة المؤثرة فيه.</li>
+                <li><strong>حد المرونة:</strong> أقصى مقدار للقوة (أو الاستطالة) يمكن أن يتحمله النابض ويعود بعده إلى طوله الأصلي دون تشوه دائم.</li>
+            </ul>
+
+            <h3>2. ماذا يحدث عند تجاوز حد المرونة؟</h3>
+            <p>إذا زادت القوة عن <strong>حد المرونة</strong>، تفقد المادة خاصية الاستعادة الكاملة ويحدث لها <strong>تشوه دائم</strong> فلا يعود النابض لطوله الأصلي حتى لو أزلنا الثقل؛ وإذا استمرت زيادة القوة أكثر من أقصى تحمل فإن النابض <strong>ينقطع/ينكسر</strong>.</p>
+        </div>
+
+        <div class="card">
+            <h2>🎮 لعبة المحاكاة: اختبار استطالة النابض وحد المرونة</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>قوة الشد المعلقة (F): <span id="forceVal" style="color:#fdc500;">0</span> نيوتن</label>
+                    <input type="range" id="forceSlider" min="0" max="100" step="5" value="0">
+                </div>
+                <div class="control-group">
+                    <label>ثابت النابض (k): <span id="kVal" style="color:#fdc500;">500</span> نيوتن/م</label>
+                    <input type="range" id="kSlider" min="250" max="1000" step="250" value="500">
+                </div>
+                <button class="btn-danger" onclick="resetSpring()">🔄 استبدال النابض</button>
+            </div>
+
+            <div class="sim-grid">
+                <canvas id="springCanvas" width="380" height="340"></canvas>
+                <canvas id="graphCanvas" width="490" height="340"></canvas>
+            </div>
+
+            <div class="stats">
+                <div>الاستطالة (Δx): <span id="extStat" dir="ltr">0.0</span> سم</div>
+                <div>حد المرونة: <span style="color:#2ecc71;">60 نيوتن</span></div>
+                <div>حالة النابض: <span id="springState">مرن (يعود لطوله الأصلي)</span></div>
+            </div>
+        </div>
+        <a href="unit2_g9.html" class="back-link">🔙 العودة إلى قائمة ألعاب الوحدة الثانية</a>
+    </div>
+
+    <script>
+        const sCanvas = document.getElementById('springCanvas');
+        const sCtx = sCanvas.getContext('2d');
+        const gCanvas = document.getElementById('graphCanvas');
+        const gCtx = gCanvas.getContext('2d');
+
+        const forceSlider = document.getElementById('forceSlider');
+        const kSlider = document.getElementById('kSlider');
+
+        let F = 0, k = 500, permanentDeform = 0, broken = false;
+        const elasticLimitForce = 60, breakForce = 95;
+
+        function update() {
+            F = parseFloat(forceSlider.value);
+            k = parseFloat(kSlider.value);
+            document.getElementById('forceVal').textContent = F;
+            document.getElementById('kVal').textContent = k;
+
+            let extCm = 0;
+            if (!broken) {
+                if (F >= breakForce) {
+                    broken = true;
+                } else if (F > elasticLimitForce) {
+                    let elasticPart = (elasticLimitForce / k) * 100;
+                    let plasticPart = ((F - elasticLimitForce) / k) * 180;
+                    permanentDeform = Math.max(permanentDeform, ((F - elasticLimitForce) / k) * 90);
+                    extCm = elasticPart + plasticPart;
+                } else {
+                    extCm = ((F / k) * 100) + permanentDeform;
+                }
+            }
+
+            document.getElementById('extStat').textContent = broken ? "انكسر!" : extCm.toFixed(1);
+            let stateEl = document.getElementById('springState');
+            if (broken) {
+                stateEl.textContent = "💥 انكسر النابض لتجاوز أقصى تحمل!";
+                stateEl.style.color = "#e74c3c";
+            } else if (F > elasticLimitForce) {
+                stateEl.textContent = "⚠️ تجاوز حد المرونة (تشوه دائم)";
+                stateEl.style.color = "#f39c12";
+            } else if (permanentDeform > 0) {
+                stateEl.textContent = "⚠️ تشوه دائم سابق (لا يعود لطوله الأصلي)";
+                stateEl.style.color = "#f39c12";
+            } else {
+                stateEl.textContent = "✅ مرن (يخضع لقانون هوك)";
+                stateEl.style.color = "#2ecc71";
+            }
+
+            drawSpring(extCm);
+            drawGraph(extCm);
+        }
+
+        forceSlider.oninput = update;
+        kSlider.oninput = resetSpring;
+
+        function drawSpring(extCm) {
+            sCtx.clearRect(0, 0, sCanvas.width, sCanvas.height);
+            sCtx.fillStyle = '#555';
+            sCtx.fillRect(110, 15, 160, 12);
+
+            let baseLen = 90;
+            sCtx.strokeStyle = 'rgba(255,255,255,0.25)';
+            sCtx.setLineDash([5, 5]);
+            sCtx.beginPath(); sCtx.moveTo(60, 27 + baseLen); sCtx.lineTo(320, 27 + baseLen); sCtx.stroke();
+            sCtx.setLineDash([]);
+            sCtx.fillStyle = '#aaa'; sCtx.font = '12px Cairo';
+            sCtx.fillText('الطول الأصلي', 62, 23 + baseLen);
+
+            if (broken) {
+                sCtx.fillStyle = '#e74c3c';
+                sCtx.font = 'bold 18px Cairo';
+                sCtx.fillText('💥 انقطع النابض!', 125, 160);
+                return;
+            }
+
+            let totalLen = baseLen + extCm * 6;
+            let coils = 12, stepY = totalLen / coils, cx = 190;
+
+            sCtx.beginPath();
+            sCtx.moveTo(cx, 27);
+            for (let i = 1; i <= coils; i++) {
+                let offsetX = (i % 2 === 0) ? -22 : 22;
+                if (i === coils) offsetX = 0;
+                sCtx.lineTo(cx + offsetX, 27 + i * stepY);
+            }
+            sCtx.strokeStyle = (F > elasticLimitForce || permanentDeform > 0) ? '#f39c12' : '#fdc500';
+            sCtx.lineWidth = 4;
+            sCtx.stroke();
+
+            let weightY = 27 + totalLen;
+            sCtx.fillStyle = '#3498db';
+            sCtx.fillRect(cx - 25, weightY, 50, 35);
+            sCtx.fillStyle = '#fff';
+            sCtx.font = 'bold 13px Cairo';
+            sCtx.fillText(F + ' N', cx - 16, weightY + 22);
+        }
+
+        function drawGraph(extCm) {
+            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+            let ox = 60, oy = 290;
+
+            gCtx.strokeStyle = '#aaa'; gCtx.lineWidth = 2;
+            gCtx.beginPath(); gCtx.moveTo(ox, 30); gCtx.lineTo(ox, oy); gCtx.lineTo(450, oy); gCtx.stroke();
+
+            gCtx.fillStyle = '#fff'; gCtx.font = 'bold 13px Cairo';
+            gCtx.fillText('القوة F (نيوتن)', 18, 22);
+            gCtx.fillText('الاستطالة Δx (سم)', 340, 325);
+
+            let maxElasticX = (elasticLimitForce / k) * 100;
+            let pxLimit = ox + maxElasticX * 10;
+            let pyLimit = oy - elasticLimitForce * 2.4;
+
+            gCtx.beginPath(); gCtx.moveTo(ox, oy); gCtx.lineTo(pxLimit, pyLimit);
+            gCtx.strokeStyle = '#2ecc71'; gCtx.lineWidth = 3; gCtx.stroke();
+
+            gCtx.fillStyle = '#e74c3c';
+            gCtx.beginPath(); gCtx.arc(pxLimit, pyLimit, 5, 0, Math.PI * 2); gCtx.fill();
+            gCtx.fillText('حد المرونة (60N)', pxLimit - 35, pyLimit - 10);
+
+            let maxNonLinX = maxElasticX + ((90 - elasticLimitForce) / k) * 180;
+            gCtx.beginPath(); gCtx.moveTo(pxLimit, pyLimit);
+            gCtx.quadraticCurveTo(pxLimit + 40, pyLimit - 45, ox + maxNonLinX * 10, oy - 90 * 2.4);
+            gCtx.strokeStyle = '#f39c12'; gCtx.lineWidth = 3; gCtx.stroke();
+
+            if (!broken) {
+                let curX = Math.min(ox + extCm * 10, 445);
+                let curY = oy - F * 2.4;
+                gCtx.fillStyle = '#fdc500';
+                gCtx.beginPath(); gCtx.arc(curX, curY, 7, 0, Math.PI * 2); gCtx.fill();
+            }
+        }
+
+        function resetSpring() {
+            permanentDeform = 0; broken = false; forceSlider.value = 0; update();
+        }
+
+        update();
+    </script>
+</body>
+</html>

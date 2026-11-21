@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قانون نيوتن الثالث (الفعل ورد الفعل) | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0f0f12; color: #fff; margin: 0; padding: 0; line-height: 1.85; }
+        header { background: linear-gradient(135deg, #1b1a14, #09090b); border-bottom: 1px solid rgba(253, 197, 0, 0.3); padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; color: #fdc500; font-size: 2em; }
+        .breadcrumb { margin-top: 8px; color: #bbb; font-size: 0.95em; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1020px; margin: 25px auto; padding: 0 15px; }
+        .card { background: #18181f; border: 1px solid rgba(253, 197, 0, 0.25); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        h2 { color: #fdc500; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { color: #fdc500; margin: 18px 0 8px 0; font-size: 1.2em; }
+        .law-box { background: rgba(253, 197, 0, 0.08); border-right: 4px solid #fdc500; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .controls { display: flex; flex-wrap: wrap; gap: 18px; background: #111116; padding: 16px; border-radius: 12px; margin-bottom: 15px; align-items: center; justify-content: center; }
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 190px; }
+        label { font-weight: bold; color: #e2e2ea; margin-bottom: 6px; font-size: 0.95em; }
+        input[type="range"] { width: 100%; accent-color: #fdc500; cursor: pointer; }
+        .btn { background: #fdc500; color: #111; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; font-size: 1em; }
+        .btn:hover { background: #fff; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        canvas { width: 100%; max-width: 960px; height: 270px; background: #12131a; border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); display: block; margin: 0 auto; }
+        .stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; margin-top: 15px; background: #111116; padding: 14px; border-radius: 10px; font-weight: bold; }
+        .stats span { color: #fdc500; }
+        .back-link { display: inline-block; margin-top: 10px; color: #fdc500; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔄 قانون نيوتن الثالث (الفعل ورد الفعل)</h1>
+        <div class="breadcrumb"><a href="index.html">الرئيسية</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="unit2_g9.html">الوحدة الثانية: القوى والحركة</a></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>📘 شرح تفصيلي: قانون نيوتن الثالث</h2>
+            <div class="law-box">
+                <strong>نص قانون نيوتن الثالث:</strong> «لكل فعل رد فعل مساوٍ له في المقدار ومعاكس له في الاتجاه».<br>
+                <strong>الصيغة الرياضية:</strong> <span dir="ltr" style="color:#fdc500; font-weight:bold;">F₁₂ = -F₂₁</span>
+            </div>
+
+            <h3>1. خصائص قوتي الفعل ورد الفعل</h3>
+            <ul>
+                <li><strong>متساويتان في المقدار ومتعاكستان في الاتجاه:</strong> إذا دفع جسم (1) جسماً (2) بقوة <span dir="ltr">60 N</span> يميناً، فإن الجسم (2) يدفع الجسم (1) بقوة <span dir="ltr">60 N</span> يساراً.</li>
+                <li><strong>تؤثران في جسمين مختلفين:</strong> لذلك <strong>لا تلغي إحداهما الأخرى</strong> (لأن القوى المتزنة التي تلغي بعضها يجب أن تؤثر في الجسم نفسه).</li>
+                <li><strong>من النوع نفسه وفي اللحظة نفسها:</strong> تظهر وتختفي معاً لحظة التلامس أو التفاعل.</li>
+            </ul>
+
+            <h3>2. لماذا تختلف سرعة أو تسارع الجسمين بعد الدفع؟</h3>
+            <p>رغم تساوي مقدار القوة المؤثرة في كل من الجسمين، فإن تسارع كل جسم يعتمد على كتلته ($a = F / m$)؛ فالجسم الأقل كتلة يتحرك بسرعة أكبر بعد الدفع مقارنة بالجسم الأكبر كتلة.</p>
+        </div>
+
+        <div class="card">
+            <h2>🎮 لعبة المحاكاة: مختبر التنافر وارتداد المتزلجين</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>قوة التفاعل المتبادلة: <span id="pushFVal" style="color:#fdc500;">60</span> نيوتن</label>
+                    <input type="range" id="pushFSlider" min="20" max="120" step="10" value="60">
+                </div>
+                <div class="control-group">
+                    <label>كتلة الجسم الأيسر (m₁): <span id="m1Val" style="color:#fdc500;">40</span> كغ</label>
+                    <input type="range" id="m1Slider" min="20" max="100" step="10" value="40">
+                </div>
+                <div class="control-group">
+                    <label>كتلة الجسم الأيمن (m₂): <span id="m2Val" style="color:#fdc500;">80</span> كغ</label>
+                    <input type="range" id="m2Slider" min="20" max="100" step="10" value="80">
+                </div>
+                <button class="btn" onclick="pushSkaters()">💥 نفّذ الدفع المتبادل</button>
+                <button class="btn btn-danger" onclick="resetSkaters()">🔄 إعادة ضبط</button>
+            </div>
+
+            <canvas id="simCanvas" width="960" height="270"></canvas>
+
+            <div class="stats">
+                <div>قوة الفعل ورد الفعل: <span id="fPairDisplay" dir="ltr">60 N ⇄ 60 N</span></div>
+                <div>سرعة الأيسر (v₁): <span id="v1Display" dir="ltr">0.00</span> م/ث</div>
+                <div>سرعة الأيمن (v₂): <span id="v2Display" dir="ltr">0.00</span> م/ث</div>
+            </div>
+        </div>
+        <a href="unit2_g9.html" class="back-link">🔙 العودة إلى قائمة ألعاب الوحدة الثانية</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const pushFSlider = document.getElementById('pushFSlider');
+        const m1Slider = document.getElementById('m1Slider');
+        const m2Slider = document.getElementById('m2Slider');
+
+        let F = 60, m1 = 40, m2 = 80;
+        let x1 = 470, x2 = 490;
+        let v1 = 0, v2 = 0, showArrows = false, animId = null;
+
+        function updateVals() {
+            F = parseFloat(pushFSlider.value);
+            m1 = parseFloat(m1Slider.value);
+            m2 = parseFloat(m2Slider.value);
+            document.getElementById('pushFVal').textContent = F;
+            document.getElementById('m1Val').textContent = m1;
+            document.getElementById('m2Val').textContent = m2;
+            document.getElementById('fPairDisplay').textContent = `${F} N ⇄ ${F} N`;
+            draw();
+        }
+
+        pushFSlider.oninput = updateVals;
+        m1Slider.oninput = updateVals;
+        m2Slider.oninput = updateVals;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#192f45';
+            ctx.fillRect(0, 210, canvas.width, 60);
+
+            let w1 = 44 + m1 * 0.25;
+            ctx.fillStyle = '#3498db';
+            ctx.fillRect(x1 - w1, 140, w1, 70);
+            ctx.fillStyle = '#fff';
+            ctx.font = 'bold 13px Cairo';
+            ctx.fillText(m1 + ' كغ', x1 - w1 + 10, 180);
+
+            let w2 = 44 + m2 * 0.25;
+            ctx.fillStyle = '#fdc500';
+            ctx.fillRect(x2, 140, w2, 70);
+            ctx.fillStyle = '#111';
+            ctx.fillText(m2 + ' كغ', x2 + 10, 180);
+
+            if (showArrows) {
+                let len = F * 0.85;
+                ctx.beginPath(); ctx.moveTo(x1 - w1, 175); ctx.lineTo(x1 - w1 - len, 175);
+                ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 4; ctx.stroke();
+                ctx.fillStyle = '#e74c3c'; ctx.fillText('رد الفعل ' + F + 'N', Math.max(10, x1 - w1 - len), 163);
+
+                ctx.beginPath(); ctx.moveTo(x2 + w2, 175); ctx.lineTo(x2 + w2 + len, 175);
+                ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 4; ctx.stroke();
+                ctx.fillStyle = '#2ecc71'; ctx.fillText('الفعل ' + F + 'N', x2 + w2 + 8, 163);
+            }
+        }
+
+        function animate() {
+            let dt = 0.05;
+            x1 -= v1 * 18 * dt;
+            x2 += v2 * 18 * dt;
+            draw();
+            if (x1 > 30 && x2 < canvas.width - 30) {
+                animId = requestAnimationFrame(animate);
+            } else {
+                showArrows = false;
+                draw();
+            }
+        }
+
+        function pushSkaters() {
+            if (animId) cancelAnimationFrame(animId);
+            x1 = 470; x2 = 490;
+            v1 = (F * 0.7) / m1;
+            v2 = (F * 0.7) / m2;
+            showArrows = true;
+            document.getElementById('v1Display').textContent = v1.toFixed(2);
+            document.getElementById('v2Display').textContent = v2.toFixed(2);
+            animate();
+        }
+
+        function resetSkaters() {
+            if (animId) cancelAnimationFrame(animId);
+            x1 = 470; x2 = 490; v1 = 0; v2 = 0; showArrows = false;
+            document.getElementById('v1Display').textContent = "0.00";
+            document.getElementById('v2Display').textContent = "0.00";
+            draw();
+        }
+
+        updateVals();
+    </script>
+</body>
+</html>

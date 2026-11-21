@@ -3,89 +3,244 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحركة الدورانية | منصة الفيزياء</title>
+    <title>الحركة الدورانية | Light Academy للفيزياء</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
-        header { background: linear-gradient(135deg, #8e44ad, #9b59b6); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
-        header h1 { margin: 0; font-size: 2.5em; }
-        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
-        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
-        .breadcrumb a:hover { color: #f1c40f; text-decoration: underline; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .section h2 { color: #8e44ad; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px; justify-content: space-between;}
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
-        .summary-list { font-size: 1.2em; line-height: 1.8; }
-        .highlight { color: #e74c3c; font-weight: bold; }
-        .fullscreen-btn { background-color: #8e44ad; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: bold; display: flex; align-items: center; gap: 5px; transition: background 0.3s;}
         
-        .sim-container { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap;}
-        .controls { display: flex; flex-direction: column; gap: 20px; background: #f9f9f9; padding: 20px; border-radius: 10px; width: 300px; }
-        canvas { background: #1a252f; border-radius: 10px; border: 2px solid #ccc; width: 400px; height: 400px; cursor: pointer;}
-        .stats-box { display: flex; flex-direction: column; gap: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-top: 20px;}
-        
-        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #8e44ad;}
-        .quiz-question p { font-weight: bold; font-size: 1.1em; margin-top: 0; }
-        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
-        .quiz-btn { background: #8e44ad; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.3s;}
-        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.disabled { opacity: 0.45; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
+.disabled:hover { transform: none; border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.035); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+.disabled .btn { background-color: #2c2c34; color: #8c8c98; }
+.disabled:hover .btn { background-color: #2c2c34; color: #8c8c98; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+
+        .sim-container { display: flex; gap: 25px; align-items: center; justify-content: center; flex-wrap: wrap; }
+        .controls {
+            display: flex; flex-direction: column; gap: 20px; background: rgba(15, 15, 18, 0.85);
+            border: 1px solid rgba(253, 197, 0, 0.25); padding: 22px; border-radius: 14px; width: 320px; max-width: 100%;
+        }
+        .controls label { font-weight: 700; display: block; margin-bottom: 6px; }
+        .controls label span { color: #fdc500; font-weight: 900; }
+        input[type="range"] { accent-color: #fdc500; cursor: pointer; width: 100%; }
+        canvas { background: #141419; border-radius: 14px; border: 2px solid rgba(253, 197, 0, 0.35); width: 400px; max-width: 100%; height: 400px; cursor: pointer; }
+        .stats-box {
+            display: flex; flex-direction: column; gap: 14px; font-size: 1.1em; font-weight: 800;
+            background: rgba(255,255,255,0.03); padding: 15px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.08);
+        }
     </style>
 </head>
 <body>
+    <div class="bg-lines"></div>
     <header>
         <h1>🎡 الحركة الدورانية</h1>
         <div class="breadcrumb">
-            <a href="index.html">الرئيسية</a> > 
-            <a href="grade10.html">الصف العاشر</a> > 
-            <a href="unit2.html">الوحدة الثانية</a> > الحركة الدورانية
+            <a href="index.html">Light Academy</a> &gt;
+            <a href="grade10.html">الصف العاشر</a> &gt;
+            <a href="unit2.html">الوحدة الثانية</a> &gt; الحركة الدورانية
         </div>
     </header>
-
     <div class="container">
         <div class="section">
-            <h2>📺 1. فيديو الشرح</h2>
-            <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/placeholder?autoplay=0" allowfullscreen></iframe>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>📝 2. ملخص الحركة الدورانية</h2>
+            <h2>📝 ملخص الحركة الدورانية</h2>
             <ul class="summary-list">
-                <li>في الحركة الدائرية المنتظمة، يكون مقدار السرعة ثابتاً، ولكن <span class="highlight">اتجاه السرعة (المماسية)</span> يتغير باستمرار.</li>
-                <li>بسبب تغير اتجاه السرعة، ينشأ <strong>تسارع مركزي (ac)</strong> يتجه دائماً نحو مركز الدوران.</li>
-                <li>قانون التسارع المركزي: <span dir="ltr" class="highlight">ac = v² / r</span> (حيث v السرعة، و r نصف القطر).</li>
+                <li>في الحركة الدائرية المنتظمة يتغير <span class="highlight">اتجاه السرعة المماسية</span> باستمرار، فينشأ <span class="highlight">تسارع مركزي (ac)</span> نحو المركز.</li>
+                <li>قانون التسارع المركزي: <span dir="ltr" class="formula-pill">ac = v² / r</span>.</li>
             </ul>
         </div>
-
         <div class="section">
             <h2>
-                <span>🎮 3. المختبر التفاعلي</span>
-                <button class="fullscreen-btn" onclick="openFullscreen()">⛶ تكبير الشاشة</button>
+                <span>🎮 المختبر التفاعلي</span>
+                <button type="button" class="quiz-btn" id="soundToggleBtn" onclick="toggleSound()">🔇 الصوت: متوقف</button>
             </h2>
-            <div class="sim-container" id="lab-container">
+            <div class="sim-container">
                 <canvas id="simCanvas" width="400" height="400"></canvas>
                 <div class="controls">
                     <div>
                         <label>السرعة المماسية (v): <span id="vVal">5</span> م/ث</label>
-                        <input type="range" id="vSlider" min="2" max="15" value="5" style="width:100%;">
+                        <input type="range" id="vSlider" min="2" max="15" value="5">
                     </div>
                     <div>
                         <label>نصف القطر (r): <span id="rVal">100</span> متر</label>
-                        <input type="range" id="rSlider" min="50" max="180" value="100" style="width:100%;">
+                        <input type="range" id="rSlider" min="50" max="180" value="100">
                     </div>
-                    
                     <div class="stats-box">
-                        <span style="color:#e74c3c;">🔴 التسارع المركزي (ac): <br><span id="acStat" dir="ltr">0.25</span> م/ث²</span>
-                        <span style="color:#3498db;">🔵 القوة الجاذبة المركزية:<br> (باعتبار الكتلة 1 كغ) = <span id="fcStat" dir="ltr">0.25</span> نيوتن</span>
+                        <span style="color:#ff6b6b;">🔴 التسارع المركزي (ac): <br><span id="acStat" dir="ltr" style="color:#ffffff;">0.25</span> م/ث²</span>
+                        <span style="color:#fdc500;">🟡 القوة الجاذبة المركزية (m = 1 kg): <br><span id="fcStat" dir="ltr" style="color:#ffffff;">0.25</span> نيوتن</span>
                     </div>
                 </div>
             </div>
         </div>
-
         <div class="section">
-            <h2>❓ 4. اختبر فهمك (5 أسئلة)</h2>
+            <h2>❓ اختبر فهمك (5 أسئلة ضع دائرة)</h2>
             <form id="quiz-form">
                 <div class="quiz-question">
                     <p>س1: جسم يتحرك حركة دائرية منتظمة، سرعته القياسية 10 م/ث. هل يتسارع هذا الجسم؟</p>
@@ -131,122 +286,89 @@
                 <div id="quiz-result"></div>
             </form>
         </div>
+        <div class="footer-nav">
+            <a href="unit2.html" class="back-btn">🔙 العودة للوحدة الثانية</a>
+        </div>
     </div>
-
     <script>
-        function openFullscreen() {
-            let elem = document.getElementById("lab-container");
-            if (elem.requestFullscreen) { elem.requestFullscreen(); } 
-            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } 
+        
+function checkQuiz() {
+    const correct = ['b', 'c', 'b', 'a', 'b'];
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+        const chosen = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!chosen) {
+            alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!");
+            return;
         }
+        if (chosen.value === correct[i - 1]) score++;
+    }
+    const res = document.getElementById('quiz-result');
+    res.style.display = "block";
+    if (score === 5) {
+        res.innerHTML = "🎉 ممتاز! علامتك (" + score + "/5). أتقنت الدرس بنجاح.";
+        res.style.background = "rgba(46, 204, 113, 0.2)";
+        res.style.color = "#2ecc71";
+        res.style.border = "1px solid #2ecc71";
+    } else if (score >= 3) {
+        res.innerHTML = "👍 جيد جداً، علامتك (" + score + "/5). راجع النقاط التي أخطأت فيها.";
+        res.style.background = "rgba(253, 197, 0, 0.2)";
+        res.style.color = "#fdc500";
+        res.style.border = "1px solid #fdc500";
+    } else {
+        res.innerHTML = "💡 علامتك (" + score + "/5). أعد قراءة الشرح ثم جرّب مرة أخرى.";
+        res.style.background = "rgba(231, 76, 60, 0.2)";
+        res.style.color = "#ff6b6b";
+        res.style.border = "1px solid #e74c3c";
+    }
+}
 
-        // --- نظام الصوت الديناميكي ---
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let spinOsc, spinGain;
-
+        let spinOsc = null, spinGain = null, soundEnabled = false;
+        function toggleSound() {
+            const btn = document.getElementById('soundToggleBtn');
+            soundEnabled = !soundEnabled;
+            if (soundEnabled) {
+                btn.innerText = "🔊 الصوت: يعمل";
+                updateSound(v);
+            } else {
+                btn.innerText = "🔇 الصوت: متوقف";
+                if (spinOsc) { spinOsc.stop(); spinOsc = null; }
+            }
+        }
         function updateSound(vel) {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            if(!spinOsc) {
-                spinOsc = audioCtx.createOscillator();
-                spinGain = audioCtx.createGain();
-                spinOsc.type = 'sine';
-                spinOsc.connect(spinGain);
-                spinGain.connect(audioCtx.destination);
-                spinGain.gain.value = 0.1;
-                spinOsc.start();
+            if (!soundEnabled) return;
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            if (!spinOsc) {
+                spinOsc = audioCtx.createOscillator(); spinGain = audioCtx.createGain();
+                spinOsc.type = 'sine'; spinOsc.connect(spinGain); spinGain.connect(audioCtx.destination);
+                spinGain.gain.value = 0.08; spinOsc.start();
             }
             spinOsc.frequency.setValueAtTime(100 + (vel * 15), audioCtx.currentTime);
         }
-        // ------------------------------
-
-        const canvas = document.getElementById('simCanvas');
-        const ctx = canvas.getContext('2d');
-        let angle = 0;
-        let v = 5;
-        let r = 100;
-        
-        document.getElementById('vSlider').oninput = function() { 
-            document.getElementById('vVal').innerText = this.value; 
-            v = parseFloat(this.value); 
-            updateSound(v);
-        }
-        document.getElementById('rSlider').oninput = function() { 
-            document.getElementById('rVal').innerText = this.value; 
-            r = parseFloat(this.value); 
-        }
-
+        const canvas = document.getElementById('simCanvas'), ctx = canvas.getContext('2d');
+        let angle = 0, v = 5, r = 100;
+        document.getElementById('vSlider').oninput = function() { document.getElementById('vVal').innerText = this.value; v = parseFloat(this.value); updateSound(v); };
+        document.getElementById('rSlider').oninput = function() { document.getElementById('rVal').innerText = this.value; r = parseFloat(this.value); };
         function drawLoop() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            let cx = canvas.width / 2;
-            let cy = canvas.height / 2;
-
-            // Draw Orbit
-            ctx.beginPath();
-            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
-            ctx.strokeStyle = '#7f8c8d';
-            ctx.setLineDash([5, 5]);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Draw Center
-            ctx.beginPath(); ctx.arc(cx, cy, 5, 0, 2 * Math.PI); ctx.fillStyle = 'white'; ctx.fill();
-
-            // Calculate Ball Position
-            angle += (v / r);
-            if(angle > Math.PI * 2) angle -= Math.PI * 2;
-            let bx = cx + r * Math.cos(angle);
-            let by = cy + r * Math.sin(angle);
-
-            // Draw Ball
-            ctx.beginPath(); ctx.arc(bx, by, 12, 0, 2 * Math.PI); ctx.fillStyle = '#f1c40f'; ctx.fill();
-
-            // Draw Velocity Vector (Tangent)
-            let vx = -Math.sin(angle) * (v * 5); // Scale for visual
-            let vy = Math.cos(angle) * (v * 5);
-            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + vx, by + vy);
-            ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 3; ctx.stroke();
-            
-            // Draw Acceleration Vector (Inward)
-            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(cx, cy);
-            ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2; ctx.stroke();
-
-            // Stats
+            let cx = canvas.width / 2, cy = canvas.height / 2;
+            ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)'; ctx.lineWidth = 2; ctx.setLineDash([6, 6]); ctx.stroke(); ctx.setLineDash([]);
+            ctx.beginPath(); ctx.arc(cx, cy, 6, 0, 2 * Math.PI); ctx.fillStyle = '#fdc500'; ctx.fill();
+            angle += (v / r); if (angle > Math.PI * 2) angle -= Math.PI * 2;
+            let bx = cx + r * Math.cos(angle), by = cy + r * Math.sin(angle);
+            let vx = -Math.sin(angle) * (v * 5), vy = Math.cos(angle) * (v * 5);
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + vx, by + vy); ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 3; ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(cx, cy); ctx.strokeStyle = '#ff6b6b'; ctx.lineWidth = 2.5; ctx.stroke();
+            ctx.beginPath(); ctx.arc(bx, by, 12, 0, 2 * Math.PI); ctx.fillStyle = '#fdc500'; ctx.fill(); ctx.strokeStyle = '#ffffff'; ctx.lineWidth = 2; ctx.stroke();
             let ac = (v * v) / r;
             document.getElementById('acStat').innerText = ac.toFixed(2);
-            document.getElementById('fcStat').innerText = ac.toFixed(2); // assuming m=1
-
+            document.getElementById('fcStat').innerText = ac.toFixed(2);
             requestAnimationFrame(drawLoop);
         }
-        
-        canvas.addEventListener('click', () => { updateSound(v); });
+        canvas.addEventListener('click', toggleSound);
         drawLoop();
-
-        function checkQuiz() {
-            let score = 0;
-            let q1 = document.querySelector('input[name="q1"]:checked');
-            let q2 = document.querySelector('input[name="q2"]:checked');
-            let q3 = document.querySelector('input[name="q3"]:checked');
-            let q4 = document.querySelector('input[name="q4"]:checked');
-            let q5 = document.querySelector('input[name="q5"]:checked');
-            let res = document.getElementById('quiz-result');
-            
-            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!"); return; }
-            
-            if(q1.value === 'b') score++;
-            if(q2.value === 'c') score++;
-            if(q3.value === 'b') score++;
-            if(q4.value === 'a') score++;
-            if(q5.value === 'b') score++;
-            
-            res.style.display = "block";
-            if(score === 5) {
-                res.innerHTML = `🎉 بطل! علامتك (${score}/5).`; res.style.background = "#d4edda"; res.style.color = "#155724";
-            } else if (score >= 3) {
-                res.innerHTML = `👍 جيد، علامتك (${score}/5).`; res.style.background = "#fff3cd"; res.style.color = "#856404";
-            } else {
-                res.innerHTML = `💡 علامتك (${score}/5). راجع الدرس!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
-            }
-        }
     </script>
 </body>
 </html>

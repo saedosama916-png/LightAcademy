@@ -3,243 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الحركة العمودية | منصة الفيزياء</title>
+    <title>الحركة العمودية (السقوط الحر) | Light Academy للفيزياء</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333; }
-        header { background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 25px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        header h1 { margin: 0; font-size: 2.2em; }
-        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
-        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
-        .breadcrumb a:hover { color: #f1c40f; text-decoration: underline; }
-        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
-        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .section h2 { color: #e74c3c; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px; justify-content: space-between;}
-        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; border-radius: 10px; overflow: hidden; }
-        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
-        .summary-list { font-size: 1.2em; line-height: 1.8; }
-        .highlight { color: #2980b9; font-weight: bold; }
-        .sim-container { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap;}
-        .controls { display: flex; flex-direction: column; gap: 20px; background: #f9f9f9; padding: 20px; border-radius: 10px; width: 300px; }
-        canvas { background: #87CEEB; border-radius: 10px; border: 2px solid #ccc; width: 300px; height: 500px; }
-        .stats-box { display: flex; flex-direction: column; gap: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-top: 20px;}
-        button.play-btn { background: #e74c3c; color: white; border: none; padding: 12px; border-radius: 5px; font-size: 1.2em; cursor: pointer; }
-        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #e74c3c; }
-        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em; }
-        .quiz-btn { background: #e74c3c; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; }
-        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none; }
-    </style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.disabled { opacity: 0.45; cursor: not-allowed; border-color: rgba(255, 255, 255, 0.1); }
+.disabled:hover { transform: none; border-color: rgba(255, 255, 255, 0.1); background: rgba(255, 255, 255, 0.035); box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45); }
+.disabled .btn { background-color: #2c2c34; color: #8c8c98; }
+.disabled:hover .btn { background-color: #2c2c34; color: #8c8c98; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+</style>
 </head>
 <body>
+    <div class="bg-lines"></div>
     <header>
-        <h1>🍎 السقوط الحر (الحركة العمودية)</h1>
-        <div class="breadcrumb">
-            <a href="index.html">الرئيسية</a> > 
-            <a href="index.html">الوحدة الثانية</a> > 
-            <a href="1d-motion.html">الحركة في بُعد واحد</a> > السقوط الحر
-        </div>
+        <h1>🍎 الحركة العمودية (السقوط الحر)</h1>
+        <div class="breadcrumb"><a href="index.html">Light Academy</a> &gt; <a href="grade10.html">الصف العاشر</a> &gt; <a href="unit2.html">الوحدة الثانية</a> &gt; <a href="1d-motion.html">الحركة في بُعد واحد</a> &gt; السقوط الحر</div>
     </header>
-
     <div class="container">
         <div class="section">
-            <h2>📝 1. ملخص قوانين السقوط الحر</h2>
-            <ul class="summary-list">
-                <li>في السقوط الحر، الجسم يتحرك تحت تأثير الجاذبية الأرضية فقط (<span dir="ltr">g ≈ 9.8 m/s²</span>).</li>
-                <li>إذا سقط الجسم من السكون (أُفلت)، فإن <span class="highlight">السرعة الابتدائية v₀ = صفر</span>.</li>
-                <li>المعادلة الرئيسية للارتفاع: <span dir="ltr">y = ½ g t²</span></li>
-                <li>سرعة الجسم أثناء النزول تزداد بمقدار 9.8 م/ث في كل ثانية.</li>
-            </ul>
+            <h2>📝 شرح الدرس وأهم المفاهيم</h2>
+            <ul class="summary-list"><li>السقوط الحر هو حركة رأسية تحت تأثير الجاذبية فقط بتسارع ثابت <span dir="ltr" class="formula-pill">g = 9.8 m/s²</span> نحو الأسفل.</li>
+<li>عند إسقاط جسم من السكون (<span dir="ltr" class="formula-pill">v₀ = 0</span>): تصبح معادلات الحركة <span dir="ltr" class="formula-pill">v = g t</span> و <span dir="ltr" class="formula-pill">y = ½ g t²</span>.</li></ul>
         </div>
+        
+<div class="section">
+    <h2>🎮 محاكاة السقوط الحر (g = 9.8 m/s²)</h2>
+    <div style="display:flex; flex-direction:column; gap:16px; align-items:center;">
+        <div style="display:flex; gap:18px; flex-wrap:wrap; justify-content:center; align-items:center;">
+            <label style="font-weight:700;">الارتفاع الابتدائي (y₀): <span id="hVal" style="color:#fdc500;">100</span> م
+                <input type="range" id="hSlider" min="20" max="200" value="100" style="accent-color:#fdc500; vertical-align:middle;">
+            </label>
+            <button type="button" class="quiz-btn" onclick="startFall()">▶️ إسقاط الجسم</button>
+            <button type="button" class="quiz-btn" style="background:#2c2c34; color:#fff; border:1px solid rgba(253,197,0,0.4);" onclick="resetFall()">🔄 إعادة</button>
+        </div>
+        <canvas id="fallCanvas" width="760" height="240" style="width:100%; max-width:760px; background:#141419; border-radius:14px; border:2px solid rgba(253,197,0,0.35);"></canvas>
+        <div style="display:flex; gap:24px; font-weight:800; flex-wrap:wrap; justify-content:center;">
+            <span>⏱️ الزمن: <span id="fTime" dir="ltr" style="color:#fdc500;">0.00</span> s</span>
+            <span>⬇️ المسافة المقطوعة: <span id="fDist" dir="ltr" style="color:#2ecc71;">0.00</span> m</span>
+            <span>💨 السرعة اللحظية: <span id="fVel" dir="ltr" style="color:#3498db;">0.00</span> m/s</span>
+        </div>
+    </div>
+</div>
 
         <div class="section">
-            <h2>🎮 2. محاكاة الإسقاط</h2>
-            <div class="sim-container">
-                <canvas id="simCanvas" width="300" height="500"></canvas>
-                <div class="controls">
-                    <div>
-                        <label>الارتفاع (y): <span id="hVal">40</span> متر</label>
-                        <input type="range" id="hSlider" min="10" max="100" value="40" style="width:100%;">
-                    </div>
-                    <button class="play-btn" onclick="startSim()">🍎 إفلات التفاحة</button>
-                    <button class="play-btn" style="background:#7f8c8d;" onclick="resetSim()">🔄 تجهيز</button>
-                    
-                    <div class="stats-box">
-                        <span>⏱️ الزمن: <span id="timeStat" dir="ltr">0.00</span> ث</span>
-                        <span style="color:#e74c3c;">📏 المسافة المقطوعة: <span id="posStat" dir="ltr">0.0</span> م</span>
-                        <span style="color:#2980b9;">💨 السرعة الحالية: <span id="velStat" dir="ltr">0.0</span> م/ث</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="section">
-            <h2>❓ 3. اختبر فهمك (5 أسئلة)</h2>
+            <h2>❓ اختبر فهمك (5 أسئلة ضع دائرة)</h2>
             <form id="quiz-form">
-                <div class="quiz-question">
-                    <p>س1: تسارع الجاذبية الأرضية (g) يقدر تقريباً بـ:</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q1" value="a"> 9.8 م/ث² نحو الأسفل</label>
-                        <label><input type="radio" name="q1" value="b"> 9.8 م/ث² نحو الأعلى</label>
-                        <label><input type="radio" name="q1" value="c"> صفر</label>
-                    </div>
-                </div>
-                <div class="quiz-question">
-                    <p>س2: عند إفلات جسم ليسقط سقوطاً حراً، فإن سرعته الابتدائية (v₀) تساوي:</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q2" value="a"> 9.8 م/ث</label>
-                        <label><input type="radio" name="q2" value="b"> صفر</label>
-                        <label><input type="radio" name="q2" value="c"> تعتمد على كتلة الجسم</label>
-                    </div>
-                </div>
-                <div class="quiz-question">
-                    <p>س3: أثناء سقوط الجسم للأسفل (بإهمال مقاومة الهواء)، فإن سرعته:</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q3" value="a"> تقل تدريجياً</label>
-                        <label><input type="radio" name="q3" value="b"> تبقى ثابتة</label>
-                        <label><input type="radio" name="q3" value="c"> تزداد تدريجياً</label>
-                    </div>
-                </div>
-                <div class="quiz-question">
-                    <p>س4: إذا قذفنا جسماً للأعلى، فعندما يصل إلى أقصى ارتفاع فإن:</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q4" value="a"> سرعته تصبح صفراً</label>
-                        <label><input type="radio" name="q4" value="b"> تسارعه يصبح صفراً</label>
-                        <label><input type="radio" name="q4" value="c"> كتلته تصبح صفراً</label>
-                    </div>
-                </div>
-                <div class="quiz-question">
-                    <p>س5: لجسم مقذوف للأعلى وعاد لنقطة الإطلاق (بإهمال مقاومة الهواء)، فإن زمن الصعود مقارنة بزمن الهبوط:</p>
-                    <div class="quiz-options">
-                        <label><input type="radio" name="q5" value="a"> أكبر منه</label>
-                        <label><input type="radio" name="q5" value="b"> يساويه</label>
-                        <label><input type="radio" name="q5" value="c"> أقل منه</label>
-                    </div>
-                </div>
+                
+        <div class="quiz-question">
+            <p>س1: عند سقوط جسم سقوطاً حراً من السكون، فإن سرعته الابتدائية تساوي:</p>
+            <div class="quiz-options"><label><input type="radio" name="q1" value="a"> 9.8 m/s</label><label><input type="radio" name="q1" value="b"> صفراً</label><label><input type="radio" name="q1" value="c"> 10 m/s</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س2: اتجاه تسارع السقوط الحر لجسم يتحرك للأعلى ثم يهبط يكون:</p>
+            <div class="quiz-options"><label><input type="radio" name="q2" value="a"> نحو الأسفل دائماً</label><label><input type="radio" name="q2" value="b"> نحو الأعلى دائماً</label><label><input type="radio" name="q2" value="c"> يتغير عند أقصى ارتفاع</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س3: في السقوط الحر بإهمال مقاومة الهواء، يعتمد تسارع الجسم على:</p>
+            <div class="quiz-options"><label><input type="radio" name="q3" value="a"> كتلة الجسم</label><label><input type="radio" name="q3" value="b"> حجم الجسم</label><label><input type="radio" name="q3" value="c"> تسارع الجاذبية فقط</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س4: إذا سقط جسم من السكون لمدة 2 ثانية، فما سرعته اللحظية بتقريب (g = 10 m/s²)؟</p>
+            <div class="quiz-options"><label><input type="radio" name="q4" value="a"> 10 m/s</label><label><input type="radio" name="q4" value="b"> 20 m/s</label><label><input type="radio" name="q4" value="c"> 40 m/s</label></div>
+        </div>
+        
+        <div class="quiz-question">
+            <p>س5: عند أقصى ارتفاع يصل إليه جسم قُذف رأسياً نحو الأعلى، تكون سرعته اللحظية:</p>
+            <div class="quiz-options"><label><input type="radio" name="q5" value="a"> صفراً</label><label><input type="radio" name="q5" value="b"> مساوية لسرعة القذف</label><label><input type="radio" name="q5" value="c"> 9.8 m/s</label></div>
+        </div>
+        
                 <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
                 <div id="quiz-result"></div>
             </form>
         </div>
+        <div class="footer-nav">
+            <a href="1d-motion.html" class="back-btn">🔙 العودة للحركة في بُعد واحد</a>
+        </div>
     </div>
-
     <script>
-        // --- نظام الصوت الديناميكي للسقوط ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        let fallOsc, fallGain;
-
-        function startFallSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            if(fallOsc) stopFallSound();
-            fallOsc = audioCtx.createOscillator();
-            fallGain = audioCtx.createGain();
-            fallOsc.type = 'triangle'; // صوت اهتزازي ناعم يشبه الهواء
-            fallOsc.frequency.setValueAtTime(300, audioCtx.currentTime);
-            // ينخفض التردد مع النزول للإيحاء بالسقوط
-            fallOsc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 3); 
-            fallGain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            fallOsc.connect(fallGain);
-            fallGain.connect(audioCtx.destination);
-            fallOsc.start();
-        }
-
-        function stopFallSound() {
-            if(fallGain) {
-                fallGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 0.1);
-                let oscToStop = fallOsc;
-                setTimeout(() => { if(oscToStop) oscToStop.stop(); }, 100);
-                fallOsc = null;
-            }
-        }
-
-        function playImpactSound() {
-            if(audioCtx.state === 'suspended') audioCtx.resume();
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square'; // صوت ارتطام قوي (Thud)
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            osc.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.2);
-            gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
-            osc.connect(gain); gain.connect(audioCtx.destination);
-            osc.start(); osc.stop(audioCtx.currentTime + 0.2);
-        }
-        // -----------------------------------
-
-        const canvas = document.getElementById('simCanvas');
-        const ctx = canvas.getContext('2d');
-        let animationId; let running = false;
-        let t = 0; let g = 9.8; let h = 40; let y = 0; let v = 0; let scale = 4.5;
         
-        document.getElementById('hSlider').oninput = function() { document.getElementById('hVal').innerText = this.value; h = parseFloat(this.value); if(!running) resetSim(); }
-
-        function drawScene() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#27ae60'; ctx.fillRect(0, canvas.height - 20, canvas.width, 20);
-            let buildingHeightPx = h * scale;
-            ctx.fillStyle = '#95a5a6'; ctx.fillRect(50, canvas.height - 20 - buildingHeightPx, 100, buildingHeightPx);
-            ctx.font = '30px Arial';
-            let appleYPx = canvas.height - 20 - buildingHeightPx + (y * scale);
-            ctx.fillText('🍎', 100, appleYPx + 10);
+function checkQuiz() {
+    const correct = ['b', 'a', 'c', 'b', 'a'];
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+        const chosen = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!chosen) {
+            alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!");
+            return;
         }
+        if (chosen.value === correct[i - 1]) score++;
+    }
+    const res = document.getElementById('quiz-result');
+    res.style.display = "block";
+    if (score === 5) {
+        res.innerHTML = "🎉 ممتاز! علامتك (" + score + "/5). أتقنت الدرس بنجاح.";
+        res.style.background = "rgba(46, 204, 113, 0.2)";
+        res.style.color = "#2ecc71";
+        res.style.border = "1px solid #2ecc71";
+    } else if (score >= 3) {
+        res.innerHTML = "👍 جيد جداً، علامتك (" + score + "/5). راجع النقاط التي أخطأت فيها.";
+        res.style.background = "rgba(253, 197, 0, 0.2)";
+        res.style.color = "#fdc500";
+        res.style.border = "1px solid #fdc500";
+    } else {
+        res.innerHTML = "💡 علامتك (" + score + "/5). أعد قراءة الشرح ثم جرّب مرة أخرى.";
+        res.style.background = "rgba(231, 76, 60, 0.2)";
+        res.style.color = "#ff6b6b";
+        res.style.border = "1px solid #e74c3c";
+    }
+}
 
-        function updateSim() {
-            if(!running) return;
-            t += 0.03; y = 0.5 * g * t * t; v = g * t;
-            
-            // لحظة الارتطام
-            if (y >= h) { 
-                y = h; 
-                v = Math.sqrt(2 * g * h); 
-                running = false;
-                stopFallSound();
-                playImpactSound(); // صوت الارتطام بالأرض
-            }
-            
-            document.getElementById('timeStat').innerText = t.toFixed(2);
-            document.getElementById('posStat').innerText = y.toFixed(1);
-            document.getElementById('velStat').innerText = v.toFixed(1);
-            drawScene();
-            if(running) animationId = requestAnimationFrame(updateSim);
-        }
-
-        function startSim() { if(!running) { resetSim(); startFallSound(); running = true; updateSim(); } }
         
-        function resetSim() { 
-            running = false; 
-            stopFallSound();
-            cancelAnimationFrame(animationId); 
-            t = 0; h = parseFloat(document.getElementById('hSlider').value); y = 0; v = 0; 
-            document.getElementById('timeStat').innerText = "0.00"; 
-            document.getElementById('posStat').innerText = "0.0"; 
-            document.getElementById('velStat').innerText = "0.0"; 
-            drawScene(); 
-        }
-        resetSim(); 
+const fCanvas = document.getElementById('fallCanvas');
+const fCtx = fCanvas.getContext('2d');
+const gFall = 9.8;
+let fAnim = null, fRunning = false, fT = 0, y0Fall = 100;
+document.getElementById('hSlider').oninput = function() {
+    y0Fall = parseFloat(this.value);
+    document.getElementById('hVal').textContent = y0Fall;
+    if (!fRunning) resetFall();
+};
+function drawFall(distMeters) {
+    fCtx.clearRect(0, 0, fCanvas.width, fCanvas.height);
+    const groundY = 205, topY = 30, usableH = groundY - topY;
+    const ballY = topY + Math.min(1, distMeters / y0Fall) * usableH;
+    fCtx.fillStyle = '#24242c'; fCtx.fillRect(0, groundY, fCanvas.width, 35);
+    fCtx.fillStyle = '#fdc500'; fCtx.fillRect(0, groundY - 2, fCanvas.width, 3);
+    fCtx.strokeStyle = 'rgba(253,197,0,0.3)'; fCtx.setLineDash([5, 5]);
+    fCtx.beginPath(); fCtx.moveTo(380, topY); fCtx.lineTo(380, groundY); fCtx.stroke();
+    fCtx.setLineDash([]);
+    fCtx.beginPath(); fCtx.arc(380, ballY, 13, 0, Math.PI * 2);
+    fCtx.fillStyle = '#fdc500'; fCtx.fill(); fCtx.strokeStyle = '#ffffff'; fCtx.lineWidth = 2; fCtx.stroke();
+}
+function stepFall() {
+    if (!fRunning) return;
+    fT += 0.03;
+    let dist = 0.5 * gFall * fT * fT;
+    let vel = gFall * fT;
+    if (dist >= y0Fall) { dist = y0Fall; vel = Math.sqrt(2 * gFall * y0Fall); fRunning = false; }
+    document.getElementById('fTime').textContent = fT.toFixed(2);
+    document.getElementById('fDist').textContent = dist.toFixed(2);
+    document.getElementById('fVel').textContent = vel.toFixed(2);
+    drawFall(dist);
+    if (fRunning) fAnim = requestAnimationFrame(stepFall);
+}
+function startFall() { if (!fRunning) { fRunning = true; stepFall(); } }
+function resetFall() {
+    fRunning = false; cancelAnimationFrame(fAnim); fT = 0;
+    document.getElementById('fTime').textContent = "0.00";
+    document.getElementById('fDist').textContent = "0.00";
+    document.getElementById('fVel').textContent = "0.00";
+    drawFall(0);
+}
+resetFall();
 
-        function checkQuiz() {
-            let score = 0;
-            let q1 = document.querySelector('input[name="q1"]:checked');
-            let q2 = document.querySelector('input[name="q2"]:checked');
-            let q3 = document.querySelector('input[name="q3"]:checked');
-            let q4 = document.querySelector('input[name="q4"]:checked');
-            let q5 = document.querySelector('input[name="q5"]:checked');
-            let res = document.getElementById('quiz-result');
-            
-            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!"); return; }
-            
-            if(q1.value === 'a') score++;
-            if(q2.value === 'b') score++;
-            if(q3.value === 'c') score++;
-            if(q4.value === 'a') score++;
-            if(q5.value === 'b') score++;
-            
-            res.style.display = "block";
-            if(score === 5) {
-                res.innerHTML = `🎉 ممتاز! علامتك (${score}/5). لقد أتقنت قوانين الجاذبية.`; res.style.background = "#d4edda"; res.style.color = "#155724";
-            } else if (score >= 3) {
-                res.innerHTML = `👍 جيد، علامتك (${score}/5). تدرب أكثر لتجنب الأخطاء البسيطة.`; res.style.background = "#fff3cd"; res.style.color = "#856404";
-            } else {
-                res.innerHTML = `💡 علامتك (${score}/5). راجع ملخص القوانين وجرب مجدداً!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
-            }
-        }
     </script>
 </body>
 </html>

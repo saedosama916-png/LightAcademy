@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>القوى ومحصلتها - وحدة 2 تاسع | Light Academy للفيزياء</title>
+    <style>
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+* { box-sizing: border-box; }
+body {
+    font-family: 'Cairo', sans-serif;
+    background-color: #0f0f12;
+    background-image: radial-gradient(circle at top center, #1c1c23 0%, #0f0f12 85%);
+    margin: 0;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-x: hidden;
+}
+.bg-lines {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 150px,
+        rgba(253, 197, 0, 0.04) 150px,
+        rgba(253, 197, 0, 0.04) 153px
+    );
+    z-index: -1;
+    pointer-events: none;
+}
+header {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 2px solid rgba(253, 197, 0, 0.35);
+    text-align: center;
+    padding: 32px 20px;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.6);
+}
+header h1 {
+    margin: 0;
+    font-size: 2.25em;
+    font-weight: 900;
+    color: #fdc500;
+}
+.breadcrumb {
+    font-size: 1.02em;
+    color: #a8a8b5;
+    margin-top: 10px;
+}
+.breadcrumb a {
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 700;
+    transition: color 0.25s;
+}
+.breadcrumb a:hover { color: #fdc500; }
+.container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 36px auto;
+    padding: 0 20px;
+}
+.cards-grid {
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.card {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.2);
+    width: 315px;
+    border-radius: 20px;
+    padding: 34px 24px;
+    text-align: center;
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.card:hover {
+    transform: translateY(-10px);
+    border-color: #fdc500;
+    background: rgba(253, 197, 0, 0.06);
+    box-shadow: 0 16px 35px rgba(253, 197, 0, 0.16);
+}
+.icon { font-size: 4em; margin-bottom: 14px; }
+.card h2, .card h3 { color: #fdc500; margin: 0 0 10px 0; font-size: 1.5em; font-weight: 800; }
+.card p { color: #c4c4d0; line-height: 1.7; margin: 0 0 22px 0; font-size: 1.02em; }
+.btn {
+    background-color: #fdc500;
+    color: #0f0f12;
+    padding: 11px 26px;
+    border-radius: 30px;
+    font-weight: 900;
+    font-size: 1.08em;
+    width: 82%;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.card:hover .btn { background-color: #ffffff; color: #0f0f12; }
+.section {
+    background: rgba(255, 255, 255, 0.035);
+    border: 1px solid rgba(253, 197, 0, 0.18);
+    padding: 28px;
+    border-radius: 18px;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+.section h2 {
+    color: #fdc500;
+    border-bottom: 1px solid rgba(253, 197, 0, 0.22);
+    padding-bottom: 12px;
+    margin-top: 0;
+    font-weight: 800;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.summary-list { font-size: 1.14em; line-height: 1.9; color: #e4e4ec; padding-right: 20px; }
+.summary-list li { margin-bottom: 10px; }
+.highlight { color: #fdc500; font-weight: 800; }
+.formula-pill {
+    display: inline-block;
+    background: rgba(253, 197, 0, 0.12);
+    border: 1px solid rgba(253, 197, 0, 0.4);
+    color: #fdc500;
+    padding: 2px 14px;
+    border-radius: 8px;
+    font-weight: 700;
+    margin: 0 6px;
+}
+.game-box {
+    background: rgba(15, 15, 18, 0.85);
+    border: 1px solid rgba(253, 197, 0, 0.25);
+    border-radius: 14px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.score-badge {
+    background: rgba(253, 197, 0, 0.14);
+    border: 1px solid #fdc500;
+    color: #fdc500;
+    padding: 4px 16px;
+    border-radius: 25px;
+    font-size: 0.78em;
+    font-weight: 900;
+}
+.game-canvas {
+    width: 100%;
+    max-width: 940px;
+    background: #141419;
+    border-radius: 12px;
+    border: 2px solid rgba(253, 197, 0, 0.35);
+    display: block;
+}
+.input-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+.input-row label { font-weight: 700; font-size: 1.06em; }
+.num-input {
+    font-family: 'Cairo', sans-serif;
+    background: #1b1b22;
+    border: 2px solid rgba(253, 197, 0, 0.45);
+    color: #ffffff;
+    padding: 9px 14px;
+    border-radius: 10px;
+    font-size: 1.12em;
+    font-weight: 800;
+    width: 165px;
+    text-align: center;
+    direction: ltr;
+}
+.num-input:focus { outline: none; border-color: #fdc500; }
+.btn-sec {
+    font-family: 'Cairo', sans-serif;
+    background: rgba(255, 255, 255, 0.06);
+    color: #ffffff;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 1.02em;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.btn-sec:hover { background: rgba(253, 197, 0, 0.2); border-color: #fdc500; }
+.feedback {
+    width: 100%;
+    text-align: center;
+    padding: 12px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 1.05em;
+    display: none;
+}
+.hint-text { font-size: 0.96em; color: #b8b8c4; margin: 0; text-align: center; }
+.quiz-question {
+    background: rgba(15, 15, 18, 0.72);
+    padding: 18px 22px;
+    border-radius: 12px;
+    margin-bottom: 18px;
+    border-right: 4px solid #fdc500;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+.quiz-question p { font-weight: 800; font-size: 1.08em; margin-top: 0; color: #ffffff; }
+.quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.03em; color: #d5d5df; }
+.quiz-options input[type="radio"] { accent-color: #fdc500; margin-left: 8px; }
+.quiz-btn {
+    font-family: 'Cairo', sans-serif;
+    background: #fdc500;
+    color: #0f0f12;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    font-size: 1.1em;
+    font-weight: 900;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.quiz-btn:hover { background: #ffffff; transform: scale(1.03); }
+#quiz-result { margin-top: 20px; font-size: 1.2em; font-weight: 800; padding: 16px; border-radius: 12px; display: none; }
+.footer-nav { text-align: center; margin: 28px 0 40px 0; }
+.back-btn {
+    text-decoration: none;
+    color: #fdc500;
+    border: 1px solid rgba(253, 197, 0, 0.45);
+    padding: 10px 28px;
+    border-radius: 30px;
+    font-weight: 700;
+    transition: all 0.3s;
+    display: inline-block;
+}
+.back-btn:hover { background: #fdc500; color: #0f0f12; }
+</style>
+</head>
+<body>
+    <div class="bg-lines"></div>
+    <header>
+        <h1>⚖️ القوى ومحصلتها (الوحدة 2 - تاسع)</h1>
+        <div class="breadcrumb"><a href="index.html">Light Academy</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="grade9_sem1.html">الفصل الأول</a> &gt; <a href="unit2_g9.html">الوحدة الثانية</a> &gt; القوى ومحصلتها</div>
+    </header>
+    <div class="container">
+        <div class="section">
+            <h2>📝 شرح الموضوع وأهم القوانين</h2>
+            <ul class="summary-list"><li>القوة مؤثر خارجي يغير أو يحاول تغيير الحالة الحركية للجسم أو شكله، وتقاس دولياً بـ <span class="formula-pill">نيوتن (N)</span>.</li>
+<li>إذا أثرت قوتان في الاتجاه نفسه فإن المحصلة تساوي <span class="highlight">مجموعهما</span>؛ وإذا كانتا متعاكستين فإن المحصلة تساوي <span class="highlight">الفرق بينهما</span> باتجاه القوة الأكبر.</li>
+<li>إذا كانت القوة المحصلة المؤثرة في جسم تساوي صفراً فإن الجسم يكون <span class="highlight">متزناً</span>.</li></ul>
+        </div>
+        
+        <div class="section">
+            <h2>❓ اختبر فهمك (5 أسئلة ضع دائرة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question"><p>س1: وحدة قياس القوة في النظام الدولي هي:</p><div class="quiz-options"><label><input type="radio" name="q1" value="a"> الجول (J)</label><label><input type="radio" name="q1" value="b"> النيوتن (N)</label><label><input type="radio" name="q1" value="c"> الكيلو غرام (kg)</label></div></div><div class="quiz-question"><p>س2: إذا أثرت قوة 15 N يميناً وقوة 6 N يساراً على صندوق، فإن محصلة القوى تساوي:</p><div class="quiz-options"><label><input type="radio" name="q2" value="a"> 21 N يميناً</label><label><input type="radio" name="q2" value="b"> 9 N يساراً</label><label><input type="radio" name="q2" value="c"> 9 N يميناً</label></div></div><div class="quiz-question"><p>س3: إذا أثرت قوتان متساويتان في المقدار (10 N) ومتعاكستان في الاتجاه على جسم، فإن المحصلة تساوي:</p><div class="quiz-options"><label><input type="radio" name="q3" value="a"> صفراً</label><label><input type="radio" name="q3" value="b"> 20 N</label><label><input type="radio" name="q3" value="c"> 10 N</label></div></div><div class="quiz-question"><p>س4: أي مما يأتي يُعد من آثار القوة في الأجسام؟</p><div class="quiz-options"><label><input type="radio" name="q4" value="a"> تغيير سرعة الجسم أو اتجاهه</label><label><input type="radio" name="q4" value="b"> تغيير كتلة الجسم الأساسية</label><label><input type="radio" name="q4" value="c"> منع الجاذبية الأرضية</label></div></div><div class="quiz-question"><p>س5: متى يكون الجسم متزناً تحت تأثير عدة قوى؟</p><div class="quiz-options"><label><input type="radio" name="q5" value="a"> عندما تكون القوة المحصلة صفراً</label><label><input type="radio" name="q5" value="b"> عندما يتحرك بسرعة متزايدة</label><label><input type="radio" name="q5" value="c"> عندما تكون قوة الاحتكاك أكبر دائماً</label></div></div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+        <div class="footer-nav">
+            <a href="unit2_g9.html" class="back-btn">🔙 العودة لمواضيع الوحدة الثانية</a>
+        </div>
+    </div>
+    <script>
+        
+function checkQuiz() {
+    const correct = ['b', 'c', 'a', 'a', 'a'];
+    let score = 0;
+    for (let i = 1; i <= 5; i++) {
+        const chosen = document.querySelector('input[name="q' + i + '"]:checked');
+        if (!chosen) {
+            alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!");
+            return;
+        }
+        if (chosen.value === correct[i - 1]) score++;
+    }
+    const res = document.getElementById('quiz-result');
+    res.style.display = "block";
+    if (score === 5) {
+        res.innerHTML = "🎉 ممتاز! علامتك (" + score + "/5). أتقنت الدرس بنجاح.";
+        res.style.background = "rgba(46, 204, 113, 0.2)"; res.style.color = "#2ecc71"; res.style.border = "1px solid #2ecc71";
+    } else if (score >= 3) {
+        res.innerHTML = "👍 جيد جداً، علامتك (" + score + "/5). راجع النقاط التي أخطأت فيها.";
+        res.style.background = "rgba(253, 197, 0, 0.2)"; res.style.color = "#fdc500"; res.style.border = "1px solid #fdc500";
+    } else {
+        res.innerHTML = "💡 علامتك (" + score + "/5). أعد قراءة الشرح ثم جرّب مرة أخرى.";
+        res.style.background = "rgba(231, 76, 60, 0.2)"; res.style.color = "#ff6b6b"; res.style.border = "1px solid #e74c3c";
+    }
+}
+
+        
+    </script>
+</body>
+</html>

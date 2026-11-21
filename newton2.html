@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>قانون نيوتن الثاني (القوة والكتلة والتسارع) | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        * { box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background: #0f0f12; color: #fff; margin: 0; padding: 0; line-height: 1.85; }
+        header { background: linear-gradient(135deg, #1b1a14, #09090b); border-bottom: 1px solid rgba(253, 197, 0, 0.3); padding: 25px 15px; text-align: center; }
+        header h1 { margin: 0; color: #fdc500; font-size: 2em; }
+        .breadcrumb { margin-top: 8px; color: #bbb; font-size: 0.95em; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; }
+        .container { max-width: 1020px; margin: 25px auto; padding: 0 15px; }
+        .card { background: #18181f; border: 1px solid rgba(253, 197, 0, 0.25); border-radius: 16px; padding: 25px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+        h2 { color: #fdc500; margin-top: 0; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        h3 { color: #fdc500; margin: 18px 0 8px 0; font-size: 1.2em; }
+        .law-box { background: rgba(253, 197, 0, 0.08); border-right: 4px solid #fdc500; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .controls { display: flex; flex-wrap: wrap; gap: 18px; background: #111116; padding: 16px; border-radius: 12px; margin-bottom: 15px; align-items: center; justify-content: center; }
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 210px; }
+        label { font-weight: bold; color: #e2e2ea; margin-bottom: 6px; font-size: 0.95em; }
+        input[type="range"] { width: 100%; accent-color: #fdc500; cursor: pointer; }
+        .btn { background: #fdc500; color: #111; border: none; padding: 10px 22px; border-radius: 25px; font-weight: 800; font-family: 'Cairo', sans-serif; cursor: pointer; font-size: 1em; }
+        .btn:hover { background: #fff; }
+        .btn-danger { background: #e74c3c; color: #fff; }
+        canvas { width: 100%; max-width: 960px; height: 260px; background: #12131a; border-radius: 12px; border: 1px solid rgba(253, 197, 0, 0.3); display: block; margin: 0 auto; }
+        .stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 10px; margin-top: 15px; background: #111116; padding: 14px; border-radius: 10px; font-weight: bold; }
+        .stats span { color: #fdc500; }
+        .back-link { display: inline-block; margin-top: 10px; color: #fdc500; text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>⚡ قانون نيوتن الثاني (القوة المحصلة والكتلة والتسارع)</h1>
+        <div class="breadcrumb"><a href="index.html">الرئيسية</a> &gt; <a href="grade9.html">الصف التاسع</a> &gt; <a href="unit2_g9.html">الوحدة الثانية: القوى والحركة</a></div>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>📘 شرح تفصيلي: قانون نيوتن الثاني</h2>
+            <div class="law-box">
+                <strong>نص قانون نيوتن الثاني:</strong> «إذا أثرت قوة محصلة في جسم ما فإنها تكسبه تسارعاً يتناسب طردياً مع مقدار القوة المحصلة وعكسياً مع كتلة الجسم، ويكون اتجاه التسارع في اتجاه القوة المحصلة».<br>
+                <strong>الصيغة الرياضية:</strong> <span dir="ltr" style="color:#fdc500; font-weight:bold;">ΣF = m × a</span> &nbsp;&nbsp;|&nbsp;&nbsp; <span dir="ltr" style="color:#fdc500; font-weight:bold;">a = ΣF / m</span>
+            </div>
+
+            <h3>1. العلاقة الطردية بين التسارع والقوة المحصلة (عند ثبات الكتلة)</h3>
+            <p>إذا ضاعفنا القوة المحصلة المؤثرة في جسم كتلته ثابتة، فإن تسارعه يتضاعف أيضاً؛ لأن التغير في السرعة خلال الزمن يكون أكبر.</p>
+
+            <h3>2. العلاقة العكسية بين التسارع والكتلة (عند ثبات القوة المحصلة)</h3>
+            <p>إذا أثّرنا بنفس القوة المحصلة في جسمين مختلفين في الكتلة، فإن الجسم الأكبر كتلة يكتسب تسارعاً أصغر بسبب زيادة قصوره الذاتي.</p>
+
+            <h3>3. مثال حسابي سريع</h3>
+            <p>أثّرت قوة محصلة مقدارها <span dir="ltr">40 N</span> في عربة كتلتها <span dir="ltr">10 kg</span> موضوعة على سطح أملس: يكون التسارع <span dir="ltr">a = 40 / 10 = 4 m/s²</span>، أي تزداد سرعتها بمقدار <span dir="ltr">4 m/s</span> كل ثانية.</p>
+        </div>
+
+        <div class="card">
+            <h2>🎮 لعبة المحاكاة: مختبر القوة والكتلة والتسارع</h2>
+            <div class="controls">
+                <div class="control-group">
+                    <label>القوة المحصلة (ΣF): <span id="forceVal" style="color:#fdc500;">40</span> نيوتن</label>
+                    <input type="range" id="forceSlider" min="10" max="120" step="10" value="40">
+                </div>
+                <div class="control-group">
+                    <label>كتلة العربة (m): <span id="massVal" style="color:#fdc500;">10</span> كغ</label>
+                    <input type="range" id="massSlider" min="5" max="60" step="5" value="10">
+                </div>
+                <button class="btn" onclick="startSim()">▶️ ابدأ التسارع</button>
+                <button class="btn btn-danger" onclick="resetSim()">🔄 إعادة ضبط</button>
+            </div>
+
+            <canvas id="simCanvas" width="960" height="260"></canvas>
+
+            <div class="stats">
+                <div>التسارع (a): <span id="accStat" dir="ltr">4.00</span> م/ث²</div>
+                <div>السرعة (v): <span id="velStat" dir="ltr">0.00</span> م/ث</div>
+                <div>الإزاحة (x): <span id="posStat" dir="ltr">0.0</span> م</div>
+                <div>الزمن (t): <span id="timeStat" dir="ltr">0.0</span> ث</div>
+            </div>
+        </div>
+        <a href="unit2_g9.html" class="back-link">🔙 العودة إلى قائمة ألعاب الوحدة الثانية</a>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        const forceSlider = document.getElementById('forceSlider');
+        const massSlider = document.getElementById('massSlider');
+
+        let F = 40, m = 10, a = 4, v = 0, metersX = 0, pxX = 70, t = 0;
+        let running = false, animId = null;
+
+        function updateLabels() {
+            F = parseFloat(forceSlider.value);
+            m = parseFloat(massSlider.value);
+            a = F / m;
+            document.getElementById('forceVal').textContent = F;
+            document.getElementById('massVal').textContent = m;
+            document.getElementById('accStat').textContent = a.toFixed(2);
+            draw();
+        }
+
+        forceSlider.oninput = updateLabels;
+        massSlider.oninput = updateLabels;
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#232530';
+            ctx.fillRect(0, 205, canvas.width, 55);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.3)';
+            ctx.font = '12px Cairo';
+            for (let i = 70; i < canvas.width - 40; i += 80) {
+                ctx.fillRect(i, 205, 2, 10);
+                ctx.fillText(((i - 70) / 10).toFixed(0) + 'م', i - 8, 232);
+            }
+
+            let boxW = 55 + m * 0.7;
+            let boxH = 42 + m * 0.4;
+            let topY = 197 - boxH;
+
+            ctx.fillStyle = '#fdc500';
+            ctx.fillRect(pxX, topY, boxW, boxH);
+            ctx.fillStyle = '#111';
+            ctx.font = 'bold 13px Cairo';
+            ctx.fillText(m + ' كغ', pxX + 10, topY + boxH / 2 + 4);
+
+            ctx.fillStyle = '#bbb';
+            ctx.beginPath(); ctx.arc(pxX + 14, 198, 7, 0, Math.PI * 2); ctx.fill();
+            ctx.beginPath(); ctx.arc(pxX + boxW - 14, 198, 7, 0, Math.PI * 2); ctx.fill();
+
+            let arrowLen = Math.min(F * 1.1, 130);
+            ctx.beginPath(); ctx.moveTo(pxX + boxW, topY + boxH / 2); ctx.lineTo(pxX + boxW + arrowLen, topY + boxH / 2);
+            ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 4; ctx.stroke();
+            ctx.fillStyle = '#2ecc71'; ctx.fillText('ΣF = ' + F + ' N', pxX + boxW + 5, topY + boxH / 2 - 10);
+        }
+
+        function loop() {
+            if (!running) return;
+            let dt = 0.04;
+            t += dt;
+            v += a * dt;
+            let dxMeters = v * dt;
+            metersX += dxMeters;
+            pxX += dxMeters * 10;
+
+            document.getElementById('velStat').textContent = v.toFixed(2);
+            document.getElementById('posStat').textContent = metersX.toFixed(1);
+            document.getElementById('timeStat').textContent = t.toFixed(1);
+
+            if (pxX > canvas.width - 140) running = false;
+            draw();
+            if (running) animId = requestAnimationFrame(loop);
+        }
+
+        function startSim() {
+            if (!running) {
+                if (pxX > canvas.width - 150) resetSim();
+                running = true;
+                loop();
+            }
+        }
+
+        function resetSim() {
+            running = false;
+            if (animId) cancelAnimationFrame(animId);
+            pxX = 70; metersX = 0; v = 0; t = 0;
+            document.getElementById('velStat').textContent = "0.00";
+            document.getElementById('posStat').textContent = "0.0";
+            document.getElementById('timeStat').textContent = "0.0";
+            updateLabels();
+        }
+
+        updateLabels();
+    </script>
+</body>
+</html>
