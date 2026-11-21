@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الزخم الخطي والتصادمات | Light Academy</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        
+        body { font-family: 'Cairo', 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        
+        /* Header matches the new V8 theme */
+        header { 
+            background: linear-gradient(135deg, #111 0%, #333 100%); 
+            color: white; 
+            padding: 40px 0; 
+            text-align: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 5px solid #fdc500;
+        }
+        header h1 { margin: 0; font-size: 3em; font-weight: 900; color: #fdc500; }
+        .subtitle { font-size: 1.2em; color: #ccc; margin-top: 10px; }
+        
+        .breadcrumb { font-size: 1.1em; color: #ccc; margin-top: 15px; }
+        .breadcrumb a { color: #fdc500; text-decoration: none; font-weight: bold; transition: 0.3s;}
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        
+        .container { max-width: 1100px; margin: 30px auto; padding: 0 20px; }
+        
+        .section { background: white; padding: 35px; border-radius: 15px; margin-bottom: 35px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+        .section h2 { color: #111; border-bottom: 3px solid #fdc500; padding-bottom: 10px; margin-top: 0; display: inline-block;}
+        
+        .summary-box { background: #fdfbf7; border-right: 5px solid #fdc500; padding: 20px; border-radius: 8px; font-size: 1.2em; line-height: 1.8; margin-bottom: 20px;}
+        .highlight { color: #d35400; font-weight: bold; }
+        .formula { background: #111; color: #fdc500; padding: 5px 15px; border-radius: 5px; font-family: monospace; font-size: 1.2em; display: inline-block; margin: 5px 0;}
+        
+        /* Simulation Containers */
+        .sim-container { display: flex; flex-direction: column; gap: 20px; align-items: center; background: #ecf0f1; padding: 30px; border-radius: 12px;}
+        .controls { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; width: 100%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);}
+        .control-group { display: flex; flex-direction: column; align-items: center; min-width: 160px;}
+        
+        canvas { background: #fff; border-radius: 8px; border: 2px solid #bdc3c7; width: 100%; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);}
+        
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; width: 100%; margin-top: 15px;}
+        .stat-card { background: #fff; border: 1px solid #e0e0e0; padding: 15px; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02);}
+        .stat-card .label { font-size: 1.1em; color: #7f8c8d; font-weight: bold; margin-bottom: 5px;}
+        .stat-card .value { font-size: 1.6em; color: #111; font-weight: 900;}
+        
+        button.action-btn { background: #111; color: #fdc500; border: 2px solid #111; padding: 12px 35px; border-radius: 30px; font-size: 1.2em; font-weight:900; cursor: pointer; transition: all 0.3s;}
+        button.action-btn:hover { background: #fdc500; color: #111; border-color: #fdc500;}
+        button.reset-btn { background: transparent; color: #e74c3c; border: 2px solid #e74c3c; padding: 10px 25px; border-radius: 30px; font-size: 1.1em; font-weight:bold; cursor: pointer; transition: 0.3s;}
+        button.reset-btn:hover { background: #e74c3c; color: #fff;}
+        
+        table.collision-table { width: 100%; border-collapse: collapse; margin-top: 15px; text-align: center; font-size: 1.1em;}
+        table.collision-table th, table.collision-table td { border: 1px solid #bdc3c7; padding: 12px; }
+        table.collision-table th { background: #111; color: #fdc500;}
+        table.collision-table tr:nth-child(even) { background: #f9f9f9;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>الزخم الخطي والتصادمات</h1>
+        <div class="subtitle">الدوسية التفاعلية - إعداد: أ. أسامة هديب</div>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="tawjihi.html">التوجيهي</a> > الفصل الأول
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- 1. الزخم والدفع -->
+        <div class="section">
+            <h2>📝 1. الزخم الخطي والدفع</h2>
+            <div class="summary-box">
+                <p><strong>الزخم الخطي (P):</strong> ناتج ضرب كتلة الجسم في سرعته المتجهة. يعبر عن كمية التحرك.<br>
+                <span class="formula">P = m v</span> (الوحدة: kg.m/s)</p>
+                <p><strong>قانون نيوتن الثاني بدلالة الزخم:</strong> القوة المحصلة المؤثرة في جسم تساوي المعدل الزمني للتغير في زخمه الخطي.<br>
+                <span class="formula">ΣF = ΔP / Δt</span></p>
+                <p><strong>الدفع (I):</strong> كمية متجهة ناتجة عن ضرب القوة المحصلة في زمن تأثيرها.<br>
+                <span class="formula">I = ΣF Δt</span> (الوحدة: N.s)</p>
+                <p><strong>مبرهنة (الزخم - الدفع):</strong> دفع قوة محصلة مؤثرة في جسم يساوي التغير في زخمه الخطي (<span class="highlight">I = ΔP</span>). ويمكن حساب الدفع بيانياً من <span class="highlight">المساحة تحت منحنى (القوة - الزمن)</span>.</p>
+            </div>
+            
+            <!-- محاكي الدفع والمساحة تحت المنحنى -->
+            <div class="sim-container">
+                <h3 style="margin:0; color:#111;">المحاكي (1): الدفع والمساحة تحت المنحنى</h3>
+                <canvas id="impulseCanvas" width="800" height="250"></canvas>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="label">القوة (F)</div>
+                        <div class="value" style="color:#d35400;"><span id="fValOut">50</span> N</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">زمن التأثير (Δt)</div>
+                        <div class="value" style="color:#2980b9;"><span id="tValOut">2.0</span> s</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">الدفع = المساحة (I)</div>
+                        <div class="value" style="color:#27ae60;"><span id="iValOut">100</span> N.s</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="label">السرعة المكتسبة (Δv)</div>
+                        <div class="value"><span id="vValOut">20.0</span> m/s</div>
+                    </div>
+                </div>
+
+                <div class="controls">
+                    <div class="control-group">
+                        <label>القوة المؤثرة (F): <span id="fSliderVal">50</span> N</label>
+                        <input type="range" id="fSlider" min="10" max="100" value="50" style="width:150px;">
+                    </div>
+                    <div class="control-group">
+                        <label>زمن التأثير (Δt): <span id="tSliderVal">2.0</span> s</label>
+                        <input type="range" id="tSlider" min="0.5" max="5.0" step="0.5" value="2.0" style="width:150px;">
+                    </div>
+                    <div class="control-group">
+                        <label>كتلة الجسم (m): <span id="mSliderVal">5</span> kg</label>
+                        <input type="range" id="mSlider" min="1" max="20" value="5" style="width:150px;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. حفظ الزخم والتصادمات -->
+        <div class="section">
+            <h2>📝 2. حفظ الزخم والتصادمات</h2>
+            <div class="summary-box">
+                <p><strong>النظام المعزول:</strong> هو النظام الذي تكون القوة المحصلة الخارجية المؤثرة فيه صفراً.</p>
+                <p><strong>قانون حفظ الزخم الخطي:</strong> عندما يتفاعل جسمان أو أكثر في نظام معزول، يظل الزخم الخطي الكلي للنظام ثابتاً.<br>
+                <span class="formula">Σp_i = Σp_f</span></p>
+                <p><strong>أنواع التصادمات (جميعها تحفظ الزخم الخطي):</strong></p>
+                <ul>
+                    <li><strong>تصادم مرن (Elastic):</strong> الطاقة الحركية الكلية للنظام <span class="highlight" style="color:#27ae60;">محفوظة</span> (ΣKE_i = ΣKE_f). الأجسام ترتد وتنفصل عن بعضها بعد التصادم.</li>
+                    <li><strong>تصادم غير مرن (Inelastic):</strong> الطاقة الحركية الكلية للنظام <span class="highlight">غير محفوظة</span> (ΣKE_i ≠ ΣKE_f). الأجسام ترتد وتنفصل عن بعضها بعد التصادم، لكن يُفقد جزء من الطاقة (على شكل حرارة أو تشوه أو صوت).</li>
+                    <li><strong>تصادم عديم المرونة (Perfectly Inelastic):</strong> الطاقة الحركية الكلية للنظام <span class="highlight">غير محفوظة</span>. الأجسام تندمج وتلتحم لتتحرك ككتلة واحدة بعد التصادم.</li>
+                </ul>
+                <p><strong>علاقة الزخم بالطاقة الحركية:</strong> <span class="formula">KE = P² / 2m</span></p>
+            </div>
+
+            <!-- محاكي التصادمات 1D -->
+            <div class="sim-container">
+                <h3 style="margin:0; color:#111;">المحاكي (2): مختبر التصادمات الشامل</h3>
+                <canvas id="collisionCanvas" width="800" height="200"></canvas>
+                
+                <table class="collision-table">
+                    <tr>
+                        <th>الحالة</th>
+                        <th>الزخم الكلي (ΣP) [kg.m/s]</th>
+                        <th>الطاقة الحركية الكلية (ΣKE) [J]</th>
+                    </tr>
+                    <tr>
+                        <td>قبل التصادم</td>
+                        <td id="piStat">0</td>
+                        <td id="keiStat">0</td>
+                    </tr>
+                    <tr>
+                        <td>بعد التصادم</td>
+                        <td id="pfStat" style="color:#2980b9; font-weight:bold;">0</td>
+                        <td id="kefStat">0</td>
+                    </tr>
+                </table>
+
+                <div class="controls" style="align-items: flex-end;">
+                    <div class="control-group">
+                        <label style="color:#e74c3c; font-weight:bold;">الكرة (A) - حمراء</label>
+                        <label>الكتلة (kg):</label>
+                        <input type="number" id="maIn" value="2" min="0.1" style="width:70px; text-align:center;">
+                        <label>السرعة (m/s):</label>
+                        <input type="number" id="vaIn" value="5" style="width:70px; text-align:center;">
+                    </div>
+                    
+                    <div class="control-group">
+                        <label style="color:#2980b9; font-weight:bold;">الكرة (B) - زرقاء</label>
+                        <label>الكتلة (kg):</label>
+                        <input type="number" id="mbIn" value="3" min="0.1" style="width:70px; text-align:center;">
+                        <label>السرعة (m/s):</label>
+                        <input type="number" id="vbIn" value="-3" style="width:70px; text-align:center;">
+                    </div>
+
+                    <div class="control-group">
+                        <label style="font-weight:bold;">نوع التصادم</label>
+                        <select id="collisionType" style="padding:8px; font-size:1.1em;">
+                            <option value="elastic">تصادم مرن (ارتداد مع حفظ الطاقة)</option>
+                            <option value="inelastic">تصادم غير مرن (ارتداد مع فقد طاقة)</option>
+                            <option value="perfectly_inelastic">تصادم عديم المرونة (التحام وفقد طاقة)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group" style="flex-direction:row; gap:10px;">
+                        <button class="action-btn" onclick="startCollision()" id="colBtn">💥 تصادم!</button>
+                        <button class="reset-btn" onclick="resetCollision()">إعادة الترتيب</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playCollisionSound(type) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            if(type === 'elastic') {
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+                gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            } else if (type === 'inelastic') {
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(250, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.15);
+                gain.gain.setValueAtTime(0.5, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.15);
+            } else {
+                // perfectly inelastic (thud)
+                osc.type = 'square';
+                osc.frequency.setValueAtTime(100, audioCtx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.2);
+                gain.gain.setValueAtTime(0.7, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.2);
+            }
+            
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.2);
+        }
+
+        // ==========================================
+        // 1. Impulse & Area Simulator
+        // ==========================================
+        const impCanvas = document.getElementById('impulseCanvas');
+        const ctxI = impCanvas.getContext('2d');
+        
+        let fImp = 50, tImp = 2.0, mImp = 5;
+
+        function drawImpulseGraph() {
+            ctxI.clearRect(0,0, impCanvas.width, impCanvas.height);
+            
+            let padding = 40;
+            let graphW = impCanvas.width - 2*padding;
+            let graphH = impCanvas.height - 2*padding;
+            
+            // Axes
+            ctxI.beginPath();
+            ctxI.moveTo(padding, padding); ctxI.lineTo(padding, impCanvas.height - padding); // Y axis (F)
+            ctxI.lineTo(impCanvas.width - padding, impCanvas.height - padding); // X axis (t)
+            ctxI.strokeStyle = '#333'; ctxI.lineWidth = 2; ctxI.stroke();
+            
+            ctxI.fillStyle = '#333'; ctxI.font = '14px Cairo';
+            ctxI.fillText("F (N)", padding - 15, padding - 10);
+            ctxI.fillText("t (s)", impCanvas.width - padding + 10, impCanvas.height - padding + 5);
+            
+            // Map values to pixels
+            let maxF = 100; let maxT = 5.0;
+            let pxPerF = graphH / maxF;
+            let pxPerT = graphW / maxT;
+            
+            let rectW = tImp * pxPerT;
+            let rectH = fImp * pxPerF;
+            
+            // Draw Area (Impulse)
+            ctxI.fillStyle = 'rgba(253, 197, 0, 0.4)';
+            ctxI.fillRect(padding, impCanvas.height - padding - rectH, rectW, rectH);
+            ctxI.strokeStyle = '#d35400'; ctxI.lineWidth = 3;
+            ctxI.strokeRect(padding, impCanvas.height - padding - rectH, rectW, rectH);
+            
+            // Area Text
+            let impulse = fImp * tImp;
+            ctxI.fillStyle = '#111'; ctxI.font = 'bold 16px Cairo'; ctxI.textAlign = 'center';
+            if(rectW > 50 && rectH > 20) {
+                ctxI.fillText("المساحة = الدفع", padding + rectW/2, impCanvas.height - padding - rectH/2 - 10);
+                ctxI.fillText(impulse.toFixed(0) + " N.s", padding + rectW/2, impCanvas.height - padding - rectH/2 + 10);
+            }
+            
+            // Updates HTML stats
+            document.getElementById('fValOut').innerText = fImp;
+            document.getElementById('tValOut').innerText = tImp.toFixed(1);
+            document.getElementById('iValOut').innerText = impulse.toFixed(0);
+            document.getElementById('vValOut').innerText = (impulse / mImp).toFixed(1); // I = m*dv -> dv = I/m
+        }
+
+        document.getElementById('fSlider').oninput = function() { fImp = parseFloat(this.value); document.getElementById('fSliderVal').innerText = fImp; drawImpulseGraph(); }
+        document.getElementById('tSlider').oninput = function() { tImp = parseFloat(this.value); document.getElementById('tSliderVal').innerText = tImp.toFixed(1); drawImpulseGraph(); }
+        document.getElementById('mSlider').oninput = function() { mImp = parseFloat(this.value); document.getElementById('mSliderVal').innerText = mImp; drawImpulseGraph(); }
+        
+        drawImpulseGraph();
+
+        // ==========================================
+        // 2. Collision Simulator (3 Types)
+        // ==========================================
+        const colCanvas = document.getElementById('collisionCanvas');
+        const ctxC = colCanvas.getContext('2d');
+        
+        let ballA = { x: 100, y: 100, r: 25, m: 2, v: 5, color: '#e74c3c', startX: 100 };
+        let ballB = { x: 700, y: 100, r: 30, m: 3, v: -3, color: '#2980b9', startX: 700 };
+        
+        let colRunning = false;
+        let colAnimId;
+        let hasCollided = false;
+        const pxPerMeter = 20;
+
+        function updateCollisionStats(isFinal) {
+            let pi = (ballA.m * ballA.v) + (ballB.m * ballB.v);
+            let kei = 0.5 * ballA.m * ballA.v * ballA.v + 0.5 * ballB.m * ballB.v * ballB.v;
+            
+            if(!isFinal) {
+                document.getElementById('piStat').innerText = pi.toFixed(1);
+                document.getElementById('keiStat').innerText = kei.toFixed(1);
+                document.getElementById('pfStat').innerText = "-";
+                document.getElementById('kefStat').innerText = "-";
+                document.getElementById('kefStat').style.color = "#333";
+            } else {
+                let pf = (ballA.m * ballA.v) + (ballB.m * ballB.v);
+                let kef = 0.5 * ballA.m * ballA.v * ballA.v + 0.5 * ballB.m * ballB.v * ballB.v;
+                document.getElementById('pfStat').innerText = pf.toFixed(1);
+                document.getElementById('kefStat').innerText = kef.toFixed(1);
+                
+                let colType = document.getElementById('collisionType').value;
+                if(colType === 'elastic') {
+                    document.getElementById('kefStat').style.color = "#27ae60"; // Green indicates conservation
+                } else {
+                    document.getElementById('kefStat').style.color = "#e74c3c"; // Red indicates loss (inelastic / perfectly inelastic)
+                }
+            }
+        }
+
+        function drawBalls() {
+            ctxC.clearRect(0,0, colCanvas.width, colCanvas.height);
+            
+            // Ground
+            ctxC.fillStyle = '#bdc3c7'; ctxC.fillRect(0, 100 + Math.max(ballA.r, ballB.r), colCanvas.width, 10);
+            
+            // Draw A
+            ctxC.beginPath(); ctxC.arc(ballA.x, ballA.y, ballA.r, 0, 2*Math.PI);
+            ctxC.fillStyle = ballA.color; ctxC.fill();
+            ctxC.fillStyle = 'white'; ctxC.font = 'bold 16px Cairo'; ctxC.textAlign='center'; ctxC.textBaseline='middle';
+            ctxC.fillText("A", ballA.x, ballA.y - 8);
+            ctxC.font = '12px Cairo'; ctxC.fillText(ballA.v.toFixed(1) + " m/s", ballA.x, ballA.y + 10);
+            
+            // Draw B
+            ctxC.beginPath(); ctxC.arc(ballB.x, ballB.y, ballB.r, 0, 2*Math.PI);
+            ctxC.fillStyle = ballB.color; ctxC.fill();
+            ctxC.fillStyle = 'white'; ctxC.font = 'bold 16px Cairo'; ctxC.textAlign='center'; ctxC.textBaseline='middle';
+            ctxC.fillText("B", ballB.x, ballB.y - 8);
+            ctxC.font = '12px Cairo'; ctxC.fillText(ballB.v.toFixed(1) + " m/s", ballB.x, ballB.y + 10);
+        }
+
+        function readInputs() {
+            ballA.m = parseFloat(document.getElementById('maIn').value) || 2;
+            ballA.v = parseFloat(document.getElementById('vaIn').value) || 5;
+            ballA.r = 15 + Math.min(ballA.m * 5, 30); // scale visual radius
+            ballA.color = '#e74c3c'; // Reset to red
+            
+            ballB.m = parseFloat(document.getElementById('mbIn').value) || 3;
+            ballB.v = parseFloat(document.getElementById('vbIn').value) || -3;
+            ballB.r = 15 + Math.min(ballB.m * 5, 30);
+            ballB.color = '#2980b9'; // Reset to blue
+            
+            // Adjust y to ground
+            let maxR = Math.max(ballA.r, ballB.r);
+            ballA.y = 100 + maxR - ballA.r;
+            ballB.y = 100 + maxR - ballB.r;
+        }
+
+        function resetCollision() {
+            colRunning = false;
+            hasCollided = false;
+            cancelAnimationFrame(colAnimId);
+            
+            readInputs();
+            ballA.x = 100;
+            ballB.x = 700;
+            
+            document.getElementById('maIn').disabled = false;
+            document.getElementById('vaIn').disabled = false;
+            document.getElementById('mbIn').disabled = false;
+            document.getElementById('vbIn').disabled = false;
+            document.getElementById('colBtn').disabled = false;
+            document.getElementById('collisionType').disabled = false;
+            
+            updateCollisionStats(false);
+            drawBalls();
+        }
+        
+        function animateCollision() {
+            if(!colRunning) return;
+            
+            // Move
+            let dt = 0.05; // 50ms per frame logically
+            ballA.x += ballA.v * pxPerMeter * dt;
+            ballB.x += ballB.v * pxPerMeter * dt;
+            
+            // Check Collision
+            if(!hasCollided && (ballB.x - ballA.x) <= (ballA.r + ballB.r)) {
+                hasCollided = true;
+                
+                // Prevent overlapping visually by snapping them
+                let overlap = (ballA.r + ballB.r) - (ballB.x - ballA.x);
+                ballA.x -= overlap/2;
+                ballB.x += overlap/2;
+                
+                let type = document.getElementById('collisionType').value;
+                playCollisionSound(type);
+                
+                let uA = ballA.v;
+                let uB = ballB.v;
+                let mA = ballA.m;
+                let mB = ballB.m;
+                
+                if(type === 'elastic') {
+                    // Elastic: Kinetic Energy is Conserved.
+                    ballA.v = ((mA - mB)*uA + 2*mB*uB) / (mA + mB);
+                    ballB.v = (2*mA*uA + (mB - mA)*uB) / (mA + mB);
+                } else if(type === 'inelastic') {
+                    // Inelastic (Bouncing, but KE is lost). 
+                    // Using a Coefficient of Restitution (e) = 0.5 as a standard example.
+                    let e = 0.5;
+                    ballA.v = (mA*uA + mB*uB + mB*e*(uB - uA)) / (mA + mB);
+                    ballB.v = (mA*uA + mB*uB + mA*e*(uA - uB)) / (mA + mB);
+                } else if(type === 'perfectly_inelastic') {
+                    // Perfectly inelastic: they stick and move together
+                    let vFinal = (mA*uA + mB*uB) / (mA + mB);
+                    ballA.v = vFinal;
+                    ballB.v = vFinal;
+                    // Visual sticking
+                    ballA.color = '#8e44ad'; // Purple
+                    ballB.color = '#8e44ad';
+                }
+                
+                updateCollisionStats(true);
+            }
+            
+            drawBalls();
+            
+            // Stop if they fly off screen
+            if(ballA.x < -100 || ballA.x > colCanvas.width+100 || ballB.x < -100 || ballB.x > colCanvas.width+100) {
+                if(hasCollided) {
+                    colRunning = false;
+                    document.getElementById('colBtn').innerText = "تم التصادم";
+                    return;
+                }
+            }
+            
+            colAnimId = requestAnimationFrame(animateCollision);
+        }
+
+        function startCollision() {
+            if(!colRunning) {
+                readInputs();
+                
+                // Ensure they are moving towards each other or at least one catches up
+                if(ballA.x < ballB.x && ballA.v <= ballB.v) {
+                    alert("بالسرعات الحالية، الكرة A لن تلحق بالكرة B أبداً ليحدث تصادم!");
+                    return;
+                }
+                
+                document.getElementById('maIn').disabled = true;
+                document.getElementById('vaIn').disabled = true;
+                document.getElementById('mbIn').disabled = true;
+                document.getElementById('vbIn').disabled = true;
+                document.getElementById('collisionType').disabled = true;
+                document.getElementById('colBtn').disabled = true;
+                document.getElementById('colBtn').innerText = "جاري التصادم...";
+                
+                updateCollisionStats(false);
+                colRunning = true;
+                animateCollision();
+            }
+        }
+
+        // Init
+        readInputs();
+        drawImpulseGraph();
+        drawBalls();
+        updateCollisionStats(false);
+    </script>
+</body>
+</html>

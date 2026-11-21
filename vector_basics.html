@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>أساسيات المتجهات | منصة الفيزياء</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        header { background: linear-gradient(135deg, #f39c12, #d35400); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+        header h1 { margin: 0; font-size: 2.5em; }
+        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
+        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section h2 { color: #d35400; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px;}
+        .summary-list { font-size: 1.2em; line-height: 1.8; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        
+        .sim-container { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap;}
+        .controls { display: flex; flex-direction: column; gap: 20px; background: #f9f9f9; padding: 20px; border-radius: 10px; width: 300px; }
+        canvas { background: #ecf0f1; border-radius: 10px; border: 2px solid #ccc; width: 400px; height: 400px;}
+        .stats-box { display: flex; flex-direction: column; gap: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-top: 20px;}
+        
+        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #d35400;}
+        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
+        .quiz-btn { background: #d35400; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.3s;}
+        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>📏 أساسيات المتجهات</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="grade10.html">الصف العاشر</a> > 
+            <a href="unit1.html">الوحدة الأولى</a> > أساسيات المتجهات
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>📝 1. ملخص الكميات الفيزيائية</h2>
+            <ul class="summary-list">
+                <li><strong>الكميات القياسية:</strong> تحدد بمقدار فقط (مثل الكتلة، الزمن، المسافة).</li>
+                <li><strong>الكميات المتجهة:</strong> تحدد <span class="highlight">بمقدار واتجاه</span> معاً (مثل القوة، السرعة المتجهة، الإزاحة).</li>
+                <li>يُمثل المتجه هندسياً بـ <strong>سهم</strong>، طوله يمثل المقدار، ورأسه يمثل الاتجاه.</li>
+                <li>سالب المتجه (-A) هو متجه له نفس مقدار (A) ولكنه يعاكسه في الاتجاه (زاويته + 180 درجة).</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🎮 2. مختبر رسم المتجهات</h2>
+            <div class="sim-container">
+                <canvas id="simCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <div>
+                        <label>مقدار المتجه (A): <span id="magVal">50</span></label>
+                        <input type="range" id="magSlider" min="10" max="150" value="50" style="width:100%;">
+                    </div>
+                    <div>
+                        <label>الزاوية (θ): <span id="angVal">45</span>°</label>
+                        <input type="range" id="angSlider" min="0" max="360" value="45" style="width:100%;">
+                    </div>
+                    
+                    <div class="stats-box">
+                        <span style="color:#c0392b;">المركبة السينية (Ax) = <span id="axStat" dir="ltr">35.36</span></span>
+                        <span style="color:#2980b9;">المركبة الصادية (Ay) = <span id="ayStat" dir="ltr">35.36</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❓ 3. اختبر فهمك (5 أسئلة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: أي من الكميات التالية تعتبر كمية متجهة؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> الزمن</label>
+                        <label><input type="radio" name="q1" value="b"> القوة</label>
+                        <label><input type="radio" name="q1" value="c"> الكتلة</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: ماذا يمثل طول السهم عند رسم المتجه هندسياً؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> اتجاه المتجه</label>
+                        <label><input type="radio" name="q2" value="b"> مقدار المتجه</label>
+                        <label><input type="radio" name="q2" value="c"> نقطة التأثير</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: متجه (A) مقداره 10 وحدات نحو الشرق. متجه (-A) سيكون:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> 10 وحدات نحو الغرب</label>
+                        <label><input type="radio" name="q3" value="b"> -10 وحدات نحو الشرق</label>
+                        <label><input type="radio" name="q3" value="c"> 10 وحدات نحو الشمال</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: متى يتساوى متجهان تماماً؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> إذا تساويا في المقدار والاتجاه</label>
+                        <label><input type="radio" name="q4" value="b"> إذا تساويا في المقدار فقط</label>
+                        <label><input type="radio" name="q4" value="c"> إذا تعاكسا في الاتجاه</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: لإيجاد المركبة السينية لمتجه A يصنع زاوية θ مع محور السينات الموجب، نستخدم:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> A sin(θ)</label>
+                        <label><input type="radio" name="q5" value="b"> A tan(θ)</label>
+                        <label><input type="radio" name="q5" value="c"> A cos(θ)</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClickSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(600, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        let mag = 50;
+        let ang = 45;
+        
+        document.getElementById('magSlider').oninput = function() { document.getElementById('magVal').innerText = this.value; mag = parseFloat(this.value); drawVector(); playClickSound();}
+        document.getElementById('angSlider').oninput = function() { document.getElementById('angVal').innerText = this.value; ang = parseFloat(this.value); drawVector(); playClickSound();}
+
+        function drawVector() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let cx = canvas.width / 2;
+            let cy = canvas.height / 2;
+            
+            // Draw Grid
+            ctx.strokeStyle = '#bdc3c7'; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(0, cy); ctx.lineTo(canvas.width, cy); ctx.stroke();
+            ctx.beginPath(); ctx.moveTo(cx, 0); ctx.lineTo(cx, canvas.height); ctx.stroke();
+            
+            // Calc
+            let rad = ang * Math.PI / 180;
+            let vx = mag * Math.cos(rad);
+            let vy = mag * Math.sin(rad);
+            
+            document.getElementById('axStat').innerText = vx.toFixed(2);
+            document.getElementById('ayStat').innerText = vy.toFixed(2);
+
+            // Draw Vector
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + vx, cy - vy); // Y is inverted in canvas
+            ctx.strokeStyle = '#d35400';
+            ctx.lineWidth = 4;
+            ctx.stroke();
+
+            // Draw Head
+            ctx.beginPath();
+            ctx.arc(cx + vx, cy - vy, 5, 0, 2*Math.PI);
+            ctx.fillStyle = '#2c3e50';
+            ctx.fill();
+        }
+        drawVector();
+
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let res = document.getElementById('quiz-result');
+            
+            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة!"); return; }
+            if(q1.value === 'b') score++;
+            if(q2.value === 'b') score++;
+            if(q3.value === 'a') score++;
+            if(q4.value === 'a') score++;
+            if(q5.value === 'c') score++;
+            
+            res.style.display = "block";
+            if(score === 5) {
+                res.innerHTML = `🎉 ممتاز! علامتك (${score}/5).`; res.style.background = "#d4edda"; res.style.color = "#155724";
+            } else if (score >= 3) {
+                res.innerHTML = `👍 جيد، علامتك (${score}/5).`; res.style.background = "#fff3cd"; res.style.color = "#856404";
+            } else {
+                res.innerHTML = `💡 علامتك (${score}/5). راجع الملخص!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
+            }
+        }
+    </script>
+</body>
+</html>

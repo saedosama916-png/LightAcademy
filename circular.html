@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الحركة الدورانية | منصة الفيزياء</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        header { background: linear-gradient(135deg, #8e44ad, #9b59b6); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+        header h1 { margin: 0; font-size: 2.5em; }
+        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
+        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
+        .breadcrumb a:hover { color: #f1c40f; text-decoration: underline; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section h2 { color: #8e44ad; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0; display: flex; align-items: center; gap: 10px; justify-content: space-between;}
+        .video-wrapper { position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);}
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none;}
+        .summary-list { font-size: 1.2em; line-height: 1.8; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        .fullscreen-btn { background-color: #8e44ad; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 0.9em; font-weight: bold; display: flex; align-items: center; gap: 5px; transition: background 0.3s;}
+        
+        .sim-container { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap;}
+        .controls { display: flex; flex-direction: column; gap: 20px; background: #f9f9f9; padding: 20px; border-radius: 10px; width: 300px; }
+        canvas { background: #1a252f; border-radius: 10px; border: 2px solid #ccc; width: 400px; height: 400px; cursor: pointer;}
+        .stats-box { display: flex; flex-direction: column; gap: 15px; font-size: 1.2em; font-weight: bold; color: #2c3e50; margin-top: 20px;}
+        
+        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #8e44ad;}
+        .quiz-question p { font-weight: bold; font-size: 1.1em; margin-top: 0; }
+        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
+        .quiz-btn { background: #8e44ad; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: background 0.3s;}
+        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎡 الحركة الدورانية</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="grade10.html">الصف العاشر</a> > 
+            <a href="unit2.html">الوحدة الثانية</a> > الحركة الدورانية
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>📺 1. فيديو الشرح</h2>
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/placeholder?autoplay=0" allowfullscreen></iframe>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📝 2. ملخص الحركة الدورانية</h2>
+            <ul class="summary-list">
+                <li>في الحركة الدائرية المنتظمة، يكون مقدار السرعة ثابتاً، ولكن <span class="highlight">اتجاه السرعة (المماسية)</span> يتغير باستمرار.</li>
+                <li>بسبب تغير اتجاه السرعة، ينشأ <strong>تسارع مركزي (ac)</strong> يتجه دائماً نحو مركز الدوران.</li>
+                <li>قانون التسارع المركزي: <span dir="ltr" class="highlight">ac = v² / r</span> (حيث v السرعة، و r نصف القطر).</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>
+                <span>🎮 3. المختبر التفاعلي</span>
+                <button class="fullscreen-btn" onclick="openFullscreen()">⛶ تكبير الشاشة</button>
+            </h2>
+            <div class="sim-container" id="lab-container">
+                <canvas id="simCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <div>
+                        <label>السرعة المماسية (v): <span id="vVal">5</span> م/ث</label>
+                        <input type="range" id="vSlider" min="2" max="15" value="5" style="width:100%;">
+                    </div>
+                    <div>
+                        <label>نصف القطر (r): <span id="rVal">100</span> متر</label>
+                        <input type="range" id="rSlider" min="50" max="180" value="100" style="width:100%;">
+                    </div>
+                    
+                    <div class="stats-box">
+                        <span style="color:#e74c3c;">🔴 التسارع المركزي (ac): <br><span id="acStat" dir="ltr">0.25</span> م/ث²</span>
+                        <span style="color:#3498db;">🔵 القوة الجاذبة المركزية:<br> (باعتبار الكتلة 1 كغ) = <span id="fcStat" dir="ltr">0.25</span> نيوتن</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❓ 4. اختبر فهمك (5 أسئلة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: جسم يتحرك حركة دائرية منتظمة، سرعته القياسية 10 م/ث. هل يتسارع هذا الجسم؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> لا، لأن سرعته 10 م/ث ثابتة</label>
+                        <label><input type="radio" name="q1" value="b"> نعم، بسبب تغير اتجاه سرعته باستمرار</label>
+                        <label><input type="radio" name="q1" value="c"> نعم، بسبب زيادة كتلته</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: اتجاه التسارع المركزي دائماً يكون نحو:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> مماس المسار الدائري</label>
+                        <label><input type="radio" name="q2" value="b"> خارج المسار الدائري</label>
+                        <label><input type="radio" name="q2" value="c"> مركز الدوران</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: العلاقة الرياضية لحساب التسارع المركزي هي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> ac = v / r</label>
+                        <label><input type="radio" name="q3" value="b"> ac = v² / r</label>
+                        <label><input type="radio" name="q3" value="c"> ac = v * r</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: إذا زادت السرعة المماسية (v) للضعف مع بقاء نصف القطر ثابتاً، فإن التسارع المركزي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> يزداد لأربعة أضعاف</label>
+                        <label><input type="radio" name="q4" value="b"> يتضاعف فقط</label>
+                        <label><input type="radio" name="q4" value="c"> يبقى ثابتاً</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: القوة المسببة للتسارع المركزي تسمى:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> قوة الاحتكاك السكوني دائماً</label>
+                        <label><input type="radio" name="q5" value="b"> القوة الجاذبة المركزية</label>
+                        <label><input type="radio" name="q5" value="c"> قوة الطرد المركزي</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openFullscreen() {
+            let elem = document.getElementById("lab-container");
+            if (elem.requestFullscreen) { elem.requestFullscreen(); } 
+            else if (elem.webkitRequestFullscreen) { elem.webkitRequestFullscreen(); } 
+        }
+
+        // --- نظام الصوت الديناميكي ---
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        let spinOsc, spinGain;
+
+        function updateSound(vel) {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            if(!spinOsc) {
+                spinOsc = audioCtx.createOscillator();
+                spinGain = audioCtx.createGain();
+                spinOsc.type = 'sine';
+                spinOsc.connect(spinGain);
+                spinGain.connect(audioCtx.destination);
+                spinGain.gain.value = 0.1;
+                spinOsc.start();
+            }
+            spinOsc.frequency.setValueAtTime(100 + (vel * 15), audioCtx.currentTime);
+        }
+        // ------------------------------
+
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        let angle = 0;
+        let v = 5;
+        let r = 100;
+        
+        document.getElementById('vSlider').oninput = function() { 
+            document.getElementById('vVal').innerText = this.value; 
+            v = parseFloat(this.value); 
+            updateSound(v);
+        }
+        document.getElementById('rSlider').oninput = function() { 
+            document.getElementById('rVal').innerText = this.value; 
+            r = parseFloat(this.value); 
+        }
+
+        function drawLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let cx = canvas.width / 2;
+            let cy = canvas.height / 2;
+
+            // Draw Orbit
+            ctx.beginPath();
+            ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+            ctx.strokeStyle = '#7f8c8d';
+            ctx.setLineDash([5, 5]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Draw Center
+            ctx.beginPath(); ctx.arc(cx, cy, 5, 0, 2 * Math.PI); ctx.fillStyle = 'white'; ctx.fill();
+
+            // Calculate Ball Position
+            angle += (v / r);
+            if(angle > Math.PI * 2) angle -= Math.PI * 2;
+            let bx = cx + r * Math.cos(angle);
+            let by = cy + r * Math.sin(angle);
+
+            // Draw Ball
+            ctx.beginPath(); ctx.arc(bx, by, 12, 0, 2 * Math.PI); ctx.fillStyle = '#f1c40f'; ctx.fill();
+
+            // Draw Velocity Vector (Tangent)
+            let vx = -Math.sin(angle) * (v * 5); // Scale for visual
+            let vy = Math.cos(angle) * (v * 5);
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(bx + vx, by + vy);
+            ctx.strokeStyle = '#2ecc71'; ctx.lineWidth = 3; ctx.stroke();
+            
+            // Draw Acceleration Vector (Inward)
+            ctx.beginPath(); ctx.moveTo(bx, by); ctx.lineTo(cx, cy);
+            ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2; ctx.stroke();
+
+            // Stats
+            let ac = (v * v) / r;
+            document.getElementById('acStat').innerText = ac.toFixed(2);
+            document.getElementById('fcStat').innerText = ac.toFixed(2); // assuming m=1
+
+            requestAnimationFrame(drawLoop);
+        }
+        
+        canvas.addEventListener('click', () => { updateSound(v); });
+        drawLoop();
+
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let res = document.getElementById('quiz-result');
+            
+            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة الخمسة أولاً!"); return; }
+            
+            if(q1.value === 'b') score++;
+            if(q2.value === 'c') score++;
+            if(q3.value === 'b') score++;
+            if(q4.value === 'a') score++;
+            if(q5.value === 'b') score++;
+            
+            res.style.display = "block";
+            if(score === 5) {
+                res.innerHTML = `🎉 بطل! علامتك (${score}/5).`; res.style.background = "#d4edda"; res.style.color = "#155724";
+            } else if (score >= 3) {
+                res.innerHTML = `👍 جيد، علامتك (${score}/5).`; res.style.background = "#fff3cd"; res.style.color = "#856404";
+            } else {
+                res.innerHTML = `💡 علامتك (${score}/5). راجع الدرس!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
+            }
+        }
+    </script>
+</body>
+</html>

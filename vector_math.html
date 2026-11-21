@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>العمليات على المتجهات | منصة الفيزياء</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f4f7f6; margin: 0; color: #333;}
+        header { background: linear-gradient(135deg, #16a085, #1abc9c); color: white; padding: 30px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1);}
+        header h1 { margin: 0; font-size: 2.5em; }
+        .breadcrumb { font-size: 1.1em; color: #ecf0f1; margin-top: 10px; }
+        .breadcrumb a { color: #ecf0f1; text-decoration: none; transition: color 0.3s; font-weight: bold;}
+        .breadcrumb a:hover { color: #fff; text-decoration: underline; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 20px; }
+        .section { background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .section h2 { color: #16a085; border-bottom: 2px solid #ecf0f1; padding-bottom: 10px; margin-top: 0;}
+        .summary-list { font-size: 1.2em; line-height: 1.8; }
+        .highlight { color: #e74c3c; font-weight: bold; }
+        
+        .sim-container { display: flex; gap: 20px; align-items: flex-start; justify-content: center; flex-wrap: wrap;}
+        .controls { display: flex; flex-direction: column; gap: 15px; background: #f9f9f9; padding: 20px; border-radius: 10px; width: 350px; }
+        canvas { background: #ecf0f1; border-radius: 10px; border: 2px solid #ccc; width: 400px; height: 400px;}
+        .stats-box { display: flex; flex-direction: column; gap: 10px; font-size: 1.1em; font-weight: bold; color: #2c3e50; margin-top: 10px;}
+        
+        .quiz-question { background: #f9fbfd; padding: 15px 20px; border-radius: 8px; margin-bottom: 20px; border-right: 4px solid #16a085;}
+        .quiz-options label { display: block; margin-bottom: 10px; cursor: pointer; font-size: 1.1em;}
+        .quiz-btn { background: #16a085; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 1.1em; font-weight: bold; cursor: pointer;}
+        #quiz-result { margin-top: 20px; font-size: 1.3em; font-weight: bold; padding: 15px; border-radius: 8px; display: none;}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>✖️ العمليات على المتجهات</h1>
+        <div class="breadcrumb">
+            <a href="index.html">الرئيسية</a> > 
+            <a href="grade10.html">الصف العاشر</a> > 
+            <a href="unit1.html">الوحدة الأولى</a> > العمليات على المتجهات
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="section">
+            <h2>📝 1. قوانين الجمع والضرب</h2>
+            <ul class="summary-list">
+                <li><strong>جمع المتجهات (المحصلة R):</strong> يمكن إيجادها بالرسم (طريقة المضلع/الذيل للرأس) أو بالتحليل للمركبات.</li>
+                <li><strong>الضرب القياسي (النقطي):</strong> ناتجه كمية <span class="highlight">قياسية (رقم)</span>. قانونه: <span dir="ltr">A · B = A B cos(θ)</span></li>
+                <li><strong>الضرب المتجهي (التقاطعي):</strong> ناتجه كمية <span class="highlight">متجهة</span>. قانونه: <span dir="ltr">|A × B| = A B sin(θ)</span>، واتجاهه يحدد بقاعدة اليد اليمنى.</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🎮 2. مختبر جمع وضرب متجهين</h2>
+            <div class="sim-container">
+                <canvas id="simCanvas" width="400" height="400"></canvas>
+                <div class="controls">
+                    <div>
+                        <label style="color:#d35400">طول المتجه (A): <span id="magAVal">60</span></label>
+                        <input type="range" id="magASlider" min="10" max="100" value="60" style="width:100%;">
+                    </div>
+                    <div>
+                        <label style="color:#2980b9">طول المتجه (B): <span id="magBVal">50</span></label>
+                        <input type="range" id="magBSlider" min="10" max="100" value="50" style="width:100%;">
+                    </div>
+                    <div>
+                        <label>الزاوية بينهما (θ): <span id="angVal">60</span>°</label>
+                        <input type="range" id="angSlider" min="0" max="180" value="60" style="width:100%;">
+                    </div>
+                    
+                    <div class="stats-box">
+                        <span style="color:#27ae60;">🟢 مقدار المحصلة (R) = <span id="rStat" dir="ltr">0.0</span></span>
+                        <span style="color:#8e44ad;">🟣 الضرب القياسي (A·B) = <span id="dotStat" dir="ltr">0.0</span></span>
+                        <span style="color:#e67e22;">🟠 الضرب المتجهي |A×B| = <span id="crossStat" dir="ltr">0.0</span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>❓ 3. اختبر فهمك (5 أسئلة)</h2>
+            <form id="quiz-form">
+                <div class="quiz-question">
+                    <p>س1: ناتج الضرب القياسي لمتجهين هو كمية:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q1" value="a"> قياسية</label>
+                        <label><input type="radio" name="q1" value="b"> متجهة</label>
+                        <label><input type="radio" name="q1" value="c"> متجهة وقياسية معاً</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س2: إذا كانت الزاوية بين متجهين تساوي (90) درجة، فإن ناتج ضربهما القياسي (A·B) يساوي:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q2" value="a"> A * B</label>
+                        <label><input type="radio" name="q2" value="b"> صفر (لأن cos 90 = 0)</label>
+                        <label><input type="radio" name="q2" value="c"> سالب</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س3: الشغل كمية قياسية ناتجة عن ضرب القوة (كمية متجهة) في الإزاحة (كمية متجهة). أي نوع من الضرب هذا؟</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q3" value="a"> ضرب تقاطعي (متجهي)</label>
+                        <label><input type="radio" name="q3" value="b"> ضرب نقطي (قياسي)</label>
+                        <label><input type="radio" name="q3" value="c"> جمع متجهات</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س4: يتم تحديد اتجاه ناتج الضرب المتجهي باستخدام:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q4" value="a"> قاعدة اليد اليمنى</label>
+                        <label><input type="radio" name="q4" value="b"> قاعدة اليد اليسرى</label>
+                        <label><input type="radio" name="q4" value="c"> لا يوجد له اتجاه</label>
+                    </div>
+                </div>
+                <div class="quiz-question">
+                    <p>س5: لإيجاد مقدار الضرب المتجهي |A×B| نستخدم الزاوية θ في العلاقة:</p>
+                    <div class="quiz-options">
+                        <label><input type="radio" name="q5" value="a"> A B cos(θ)</label>
+                        <label><input type="radio" name="q5" value="b"> A B tan(θ)</label>
+                        <label><input type="radio" name="q5" value="c"> A B sin(θ)</label>
+                    </div>
+                </div>
+                <button type="button" class="quiz-btn" onclick="checkQuiz()">تحقق من إجاباتي ✔️</button>
+                <div id="quiz-result"></div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        function playClickSound() {
+            if(audioCtx.state === 'suspended') audioCtx.resume();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(400, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(50, audioCtx.currentTime + 0.1);
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + 0.1);
+        }
+
+        const canvas = document.getElementById('simCanvas');
+        const ctx = canvas.getContext('2d');
+        let A = 60, B = 50, ang = 60;
+        
+        document.getElementById('magASlider').oninput = function() { document.getElementById('magAVal').innerText = this.value; A = parseFloat(this.value); drawVectors(); playClickSound();}
+        document.getElementById('magBSlider').oninput = function() { document.getElementById('magBVal').innerText = this.value; B = parseFloat(this.value); drawVectors(); playClickSound();}
+        document.getElementById('angSlider').oninput = function() { document.getElementById('angVal').innerText = this.value; ang = parseFloat(this.value); drawVectors(); playClickSound();}
+
+        function drawLineWithArrow(x0, y0, x1, y1, color) {
+            ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1);
+            ctx.strokeStyle = color; ctx.lineWidth = 3; ctx.stroke();
+            ctx.beginPath(); ctx.arc(x1, y1, 5, 0, 2*Math.PI); ctx.fillStyle = color; ctx.fill();
+        }
+
+        function drawVectors() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let cx = 50;
+            let cy = canvas.height - 50; // Start at bottom left
+            
+            let rad = ang * Math.PI / 180;
+            
+            // Vector A is along X axis
+            let ax = A; let ay = 0;
+            
+            // Vector B starts at tip of A (tail to tip addition)
+            let bx = B * Math.cos(rad);
+            let by = B * Math.sin(rad);
+            
+            // Resultant R = A + B
+            let rx = ax + bx;
+            let ry = ay + by;
+            
+            // Draw A
+            drawLineWithArrow(cx, cy, cx + ax, cy - ay, '#d35400');
+            // Draw B
+            drawLineWithArrow(cx + ax, cy - ay, cx + rx, cy - ry, '#2980b9');
+            // Draw R
+            ctx.setLineDash([5, 5]);
+            drawLineWithArrow(cx, cy, cx + rx, cy - ry, '#27ae60');
+            ctx.setLineDash([]);
+
+            // Calculations
+            let R_mag = Math.sqrt(rx*rx + ry*ry);
+            let dot = A * B * Math.cos(rad);
+            let cross = A * B * Math.sin(rad);
+            
+            document.getElementById('rStat').innerText = R_mag.toFixed(1);
+            document.getElementById('dotStat').innerText = dot.toFixed(1);
+            document.getElementById('crossStat').innerText = cross.toFixed(1);
+        }
+        drawVectors();
+
+        function checkQuiz() {
+            let score = 0;
+            let q1 = document.querySelector('input[name="q1"]:checked');
+            let q2 = document.querySelector('input[name="q2"]:checked');
+            let q3 = document.querySelector('input[name="q3"]:checked');
+            let q4 = document.querySelector('input[name="q4"]:checked');
+            let q5 = document.querySelector('input[name="q5"]:checked');
+            let res = document.getElementById('quiz-result');
+            
+            if(!q1 || !q2 || !q3 || !q4 || !q5) { alert("الرجاء الإجابة على جميع الأسئلة!"); return; }
+            if(q1.value === 'a') score++;
+            if(q2.value === 'b') score++;
+            if(q3.value === 'b') score++;
+            if(q4.value === 'a') score++;
+            if(q5.value === 'c') score++;
+            
+            res.style.display = "block";
+            if(score === 5) {
+                res.innerHTML = `🎉 ممتاز! علامتك (${score}/5).`; res.style.background = "#d4edda"; res.style.color = "#155724";
+            } else if (score >= 3) {
+                res.innerHTML = `👍 جيد، علامتك (${score}/5).`; res.style.background = "#fff3cd"; res.style.color = "#856404";
+            } else {
+                res.innerHTML = `💡 علامتك (${score}/5). راجع القوانين!`; res.style.background = "#f8d7da"; res.style.color = "#721c24";
+            }
+        }
+    </script>
+</body>
+</html>
